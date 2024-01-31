@@ -1,66 +1,162 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #E6F3FF;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #e6f3ff;
 }
 
 .container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
 .sidebar {
-    flex: 1;
-    background-color: #ffffff;
-    padding: 20px;
-    text-align: center; /* Center the content in the sidebar */
+  flex: 1;
+  background-color: #ffffff;
+  padding: 20px;
+  text-align: center; /* Center the content in the sidebar */
+  border-top-right-radius: 5px; /* Border radius for the top-right corner */
+  border-bottom-right-radius: 5px;
+  max-width: 200px; /* Aseta haluttu maksimileveys */
 }
 
 .sidebar img {
-    width: 50%; /* Adjust the width as needed */
-    height: auto;
-    margin-bottom: 20px;
+  width: 60%; /* Adjust the width as needed */
+  height: auto;
+  margin-bottom: 20px;
 }
 
 .sidebar ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .sidebar ul li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .sidebar ul li a {
-    color: #000000;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
+  color: #000000;
+  text-decoration: none;
+  display: flex;
+  align-items: center; /* Align both image and text vertically */
+  transition: color 0.3s; /* Tehdään värimuutos sulavaksi */
 }
 
 .sidebar ul li a span {
-    margin-right: 10px;
+  text-align: left;
+  width: 35px; /* Kiinteä leveys */
+  height: 20px; /* Kiinteä korkeus */
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-right: 1px;
+  margin-left: 15px;
 }
 
+
+.sidebar ul li a:hover {
+  color: #d6baff; /* Liila väri, kun hiiri on tekstin päällä */
+}
+
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  width: 20px; /* Muuta kuvan leveys tarpeen mukaan */
+  height: auto;
+  margin-right: 10px; /* Aseta tarvittava välimatka käyttäjänimen ja kuvan väliin */
+}
+
+
 .main-content {
-    flex: 3;
-    padding: 20px;
+  flex: 3;
+  padding: 20px;
 }
 
 .top-bar {
-    margin-bottom: 20px;
-    text-align: center; /* Center the content in the top-bar */
+  margin-bottom: 20px;
+  text-align: center; /* Center the content in the top-bar */
 }
 
 .top-bar input[type="text"] {
-    padding: 8px;
-    width: 60%; /* Adjust the width as needed */
-    border-radius: 5px; /* Rounded corners */
-    border: 1px solid #ffffff; /* Add border for better visibility */
+  padding: 8px;
+  text-align: center;
+  width: 60%; /* Adjust the width as needed */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ffffff; /* Add border for better visibility */
 }
 
 .feed {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 5px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+    position: relative;
+    margin: 20px;
+  
+}
+
+.feed-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aseta sarakkeiden sisällöt alkaen vasemmasta laidasta */
+}
+
+
+.feed-image {
+  width: 100%; /* Kuvan täyttäminen vanhemman leveys */
+  height: auto;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px; /* Aseta haluttu välimatka ikonien ja tekstin välille */
+}
+
+
+.icon {
+  width: 28px; /* Muuta ikonien leveys tarpeen mukaan */
+  height: auto;
+  padding-right: 10px;
+}
+
+.likes {
+    text-align: left;
+    margin-left: auto;
+    padding-right: 15px;
+}
+
+.logout {
+  color: #d6baff;
+  font-size: 25px;
+
+}
+
+.logout:hover {
+  color: #000000;
+}
+
+.hashtag{
+color: #d6baff;
+font-weight: bold;
+
+}
+.logout::before {
+  content: ''; /* Tyhjä sisältö, tarvitaan pseudoelementin käyttöön */
+  display: block; /* Tehdään pseudoelementti blokkielementiksi */
+  border-top: 1px solid #ccc; /* Viivan tyyli ja väri */
+  margin: 0 auto 10px; /* Aseta marginaalit viivan ympärille */
+  width: 100%; /* Määritä viivan leveys */
+  padding-bottom: 4rem;
+}
+
+.sidebar ul li:first-child::before {
+  content: ''; /* Tyhjä sisältö, tarvitaan pseudoelementin käyttöön */
+  display: block; /* Tehdään pseudoelementti blokkielementiksi */
+  border-bottom: 1px solid #ccc; /* Viivan tyyli ja väri */
+  margin: 0 auto 10px; /* Aseta marginaalit viivan ympärille */
+  width: 100%; /* Määritä viivan leveys */
 }
