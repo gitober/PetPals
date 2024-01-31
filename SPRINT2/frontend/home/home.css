@@ -19,9 +19,6 @@ body {
 .sidebar img {
     width: 50%; /* Adjust the width as needed */
     height: auto;
-}
-
-.sidebar h1 {
     margin-bottom: 20px;
 }
 
@@ -37,6 +34,12 @@ body {
 .sidebar ul li a {
     color: #000000;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul li a span {
+    margin-right: 10px;
 }
 
 .main-content {
