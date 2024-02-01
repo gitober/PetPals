@@ -1,36 +1,37 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const signUpLink = document.getElementById("signUpLink");
-    const popup = document.getElementById("popup");
-    const closeBtn = document.getElementById("close");
-    loginButton.disabled = true;
 
-    function checkInputs() {
-        const usernameValue = usernameInput.value.trim();
-        const passwordValue = passwordInput.value.trim();
+  let liked = false;
+  let likeCount = 0;
 
-        loginButton.disabled = !(usernameValue && passwordValue);
+  function toggleLike() {
+    const likeIcon = document.getElementById('likeIcon');
+    const likeCountElement = document.getElementById('likeCount');
+
+    if (liked) {
+      liked = false;
+      likeCount--;
+      likeIcon.src = '/PROJECT/SPRINT2/frontend/img/like.png';
+    } else {
+      liked = true;
+      likeCount++;
+      likeIcon.src = '/PROJECT/SPRINT2/frontend/img/like-filled.png';
     }
 
-    signUpLink.addEventListener("click", function() {
-        popup.style.display = "block";
-    });
+    likeCountElement.textContent = likeCount;
+  }
 
-    closeBtn.addEventListener("click", function() {
-        popup.style.display = "none";
-    });
+function openCommentPopup() {
+  const commentPopup = document.getElementById("commentPopup");
+  commentPopup.style.display = "block";
+}
 
-    usernameInput.addEventListener("input", checkInputs);
-    passwordInput.addEventListener("input", checkInputs);
+function closeCommentPopup() {
+  const commentPopup = document.getElementById("commentPopup");
+  commentPopup.style.display = "none";
+}
 
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent form submission
-        const usernameValue = usernameInput.value.trim();
-        const passwordValue = passwordInput.value.trim();
-
-        if (usernameValue && passwordValue) {
-            // Redirect to home.html
-            window.location.href ="../home/home.html";
-        }
-    });
-});
+function submitComment() {
+  // Add logic to handle comment submission
+  // You can send the comment to the server, update the UI, etc.
+  closeCommentPopup();
+}
 
