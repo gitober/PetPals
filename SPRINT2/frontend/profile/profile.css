@@ -98,15 +98,6 @@ body {
   justify-content: center;
 }
 
-.profile-picture-container {
-  text-align: right;
-}
-
-.profile-picture {
-  width: 60px; /* Adjust size as needed */
-  height: auto;
-}
-
 .user-pictures-container {
   margin-top: 20px;
   text-align: center;
@@ -121,7 +112,7 @@ body {
 }
 
 .profile-picture {
-  width: 100%;
+  width: 120px; /* Adjust the size as needed */
   height: auto;
 }
 
@@ -274,11 +265,6 @@ body {
 
 .user-pictures-container p {
   color: #706f6f;
-}
-
-/* Ensure proper spacing between picture containers */
-.picture-container + .picture-container {
-  margin-left: 20px;
 }
 
 /* Ensure three containers in a row on larger screens */
