@@ -194,20 +194,33 @@ body {
 
 @media screen and (max-width: 400px) {
   .container {
-    flex-direction: row;
+    flex-direction: column;
   }
 
   .sidebar {
     width: 100%;
+    max-width: none;
     border-radius: 0;
   }
+
+  
 
   .top-bar {
     width: 100%;
   }
 
   .feed {
-    margin: 0; /* Remove the fixed margin */
-    max-width: 100%; /* Set max-width to 100% */
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .icons .like-container img,
+  .icons img {
+    width: 20px;
+  }
+  
+  .user-icon {
+    width: 15px;
+    margin-right: 5px;
   }
 }
