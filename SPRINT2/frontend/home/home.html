@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homepage</title>
-    <link rel="stylesheet" href="home.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="sidebar">
-        <img src="/PROJECT/SPRINT2/frontend/img/navbar.png" alt="logo" />
-        <ul>
-          <li><a href="home.html"><span><img src="/PROJECT/SPRINT2/frontend/img/home.png" alt="Home" /></span> HOME</a></li>
-          <li><a href="#"><span><img src="/PROJECT/SPRINT2/frontend/img/profile.png" alt="Profile" /></span> PROFILE</a></li>
-          <li><a href="#"><span><img src="/PROJECT/SPRINT2/frontend/img/post.png" alt="Post" /></span> POST</a></li>
-          <li><a href="settings.html"><span><img src="/PROJECT/SPRINT2/frontend/img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
-        </ul>
-        <div class = 'logout'>Log Out</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <link rel="stylesheet" href="home.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <img src="/PROJECT/SPRINT2/frontend/img/navbar.png" alt="logo" />
+      <ul>
+        <li><a href="/PROJECT/SPRINT2/frontend/home/home.html"><span><img src="/PROJECT/SPRINT2/frontend/img/home.png" alt="Home" /></span> HOME</a></li>
+        <li><a href="/PROJECT/SPRINT2/frontend/profile/profile.html"><span><img src="/PROJECT/SPRINT2/frontend/img/profile.png" alt="Profile" /></span> PROFILE</a></li>
+        <li><a href="#"><span><img src="/PROJECT/SPRINT2/frontend/img/post.png" alt="Post" /></span> POST</a></li>
+        <li><a href="settings.html"><span><img src="/PROJECT/SPRINT2/frontend/img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
+      </ul>
+      <div class="logout"><a href="/PROJECT/SPRINT2/frontend/login/login.html">Log Out</a></div>
+    </div>
+    <div class="main-content">
+      <div class="top-bar">
+        <input type="text" placeholder="Search" />
       </div>
-      <div class="main-content">
-        <div class="top-bar">
-          <input type="text" placeholder="Search" />
+      <div class="feed">
+        <!-- Feed content goes here -->
+        <div class="user-info">
+          <img src="/PROJECT/SPRINT2/frontend/img/profile.png" alt="User Icon" class="user-icon" />
+          <h3>username</h3>
         </div>
-        <div class="feed">
-          <!-- Feed content goes here -->
-          <div class="user-info">
-            <img src="/PROJECT/SPRINT2/frontend/img/profile.png" alt="User Icon" class="user-icon" />
-            <h3>username</h3>
-          </div>
-          <img src="https://via.placeholder.com/600x300" alt="Feed Image" />
-          <div class="icons">
-            <img src="/PROJECT/SPRINT2/frontend/img/like.png" alt="Icon 1" class="icon" />
-            <img src="/PROJECT/SPRINT2/frontend/img/comment.png" alt="Icon 2" class="icon" />
-            <p class="likes">Likes: 42</p>
+        <img src="https://via.placeholder.com/600x300" alt="Feed Image" />
+        <div class="icons">
+          <img src="/PROJECT/SPRINT2/frontend/img/like.png" alt="Icon 1" class="icon" />
+          <img src="/PetPals/PROJECT/SPRINT2/frontend/img/comment.png" alt="Icon 2" class="icon" />
+          <p class="likes">Likes: 42</p>
         </div>
         <p class="lorem-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod semper libero, vitae fermentum magna elementum vel. Sed vestibulum lacus ut libero sagittis, id rhoncus nunc ultricies. In auctor est vitae nunc efficitur, vel eleifend dolor vestibulum.</p>
-      <p class="hashtag">#hashtag #hashtag #hashtag #hashtag</p>
-      </div>
-        </div>
+        <p class="hashtag">#hashtag #hashtag #hashtag #hashtag</p>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>

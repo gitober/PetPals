@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="profile.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <img src="/SPRINT2/frontend/img/navbar.png" alt="logo" />
+            <ul>
+                <li><a href="home.html"><span><img src="/SPRINT2/frontend/img/home.png" alt="Home" /></span> HOME</a></li>
+                <li><a href="#"><span><img src="/SPRINT2/frontend/img/profile.png" alt="Profile" /></span> PROFILE</a></li>
+                <li><a href="#"><span><img src="/SPRINT2/frontend/img/post.png" alt="Post" /></span> POST</a></li>
+                <li><a href="settings.html"><span><img src="/SPRINT2/frontend/img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
+            </ul>
+            <div class="logout">Log Out</div>
+        </div>
+        <div class="main-content">
+            <div class="top-bar">
+                <input type="text" placeholder="Search" />
+            </div>
+            <div class="feed-container">
+                <!-- Feed container content goes here -->
+            </div>
+            <div class="feed">
+                <!-- Feed content goes here -->
+                <div class="user-info">
+                    <div class="username">
+                        <h3>username</h3>
+                    </div>
+                    <div class="profile-picture-container">
+                        <img src="/api/users/{userId}/profile-picture" alt="Profile Picture" class="profile-picture" />
+                    </div>
+                </div>
+                <div class="follower-following">
+                    <p>100 Followers</p>
+                    <p>50 Followers</p>
+                </div>
+                <div class="profile-details">
+                    <h4>Profile Details</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod semper libero, vitae fermentum magna elementum vel. Sed vestibulum lacus ut libero sagittis, id rhoncus nunc ultricies. In auctor est vitae nunc efficitur, vel eleifend dolor vestibulum.</p>
+                </div>
+                <!-- HTML Structure -->
+                <div class="user-pictures-container">
+                <div id="picture-container" class="picture-container">
+                    <!-- Pictures will be dynamically added here -->
+                </div>
+                </div>
+                <script>
+                // Simulated data (replace this with actual data from your application)
+const userPictures = [
+    "/SPRINT2/frontend/img/navbar.png",
+    "/SPRINT2/frontend/img/navbar.png",
+    "/SPRINT2/frontend/img/navbar.png",
+    "/SPRINT2/frontend/img/navbar.png",
+    "/SPRINT2/frontend/img/navbar.png",
+    "/SPRINT2/frontend/img/navbar.png",
+    // Add more picture URLs as needed
+];
+// Function to dynamically populate the picture container
+function populatePictures() {
+    const pictureContainer = document.getElementById("picture-container");
+
+    // Clear existing content
+    pictureContainer.innerHTML = '';
+
+    // Iterate through user pictures and create image elements
+    userPictures.forEach((pictureUrl) => {
+        const pictureElement = document.createElement("img");
+        pictureElement.src = pictureUrl;
+        pictureElement.alt = "User Picture";
+        pictureContainer.appendChild(pictureElement);
+    });
+}
+
+// Call the function to populate pictures when the page loads
+window.onload = populatePictures;
+</script>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
