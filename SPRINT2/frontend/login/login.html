@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,21 +10,31 @@
     <div class="container">
         <div class="logo-container">
             <div class="logo">
-                <img src="project_logo.png" alt="Logo">
+                <img src="/PetPals/PROJECT/SPRINT2/frontend/img/project_logo.png" alt="Logo">
             </div>
         </div>
         <div class="login-container">
             <div class="login-form">
-                <form action="login.php" method="POST">
-                    <input type="text" name="username" placeholder="Username" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <input type="submit" value="Login">
-                    <p>forgot your password?</p>
+                <form action="login.php" method="POST" id="loginForm">
+                    <h1 class="h1">Log in</h1>
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <input type="submit" id="loginButton" value="Submit">
+                    <p class="forgot">forgot your password?</p>
                     <br/> 
-                    <p>Don`t have an account? Sign up</p>
+                    <p class="signUp" id="signUpLink">Don't have an account? Sign up</p>
                 </form>
             </div>
         </div>
     </div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="close">&times;</span>
+            <h2>Sign Up Options</h2>
+            <p><a href="signup_email.html">Option 1: Sign up with email</a></p>
+            <p><a href="signup_social.html">Option 2: Sign up with social media</a></p>
+        </div>
+    </div>
+    <script src="login.js"></script>
 </body>
 </html>
