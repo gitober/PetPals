@@ -1,0 +1,282 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  background-color: #e6f3ff;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Follow button styles */
+.follow-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.follow-button {
+    display: inline-block;
+    padding: 12px 42px;
+    background-color: #e6f3ff;
+    color: #706f6f;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #e6f3ff;
+    border-radius: 5px;
+    font-family: 'Poppins';
+}
+
+.follow-button:hover {
+    background-color: #e6f3ff;
+}
+
+.sidebar {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  max-width: 200px;
+}
+
+.sidebar img {
+  width: 60%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: #000000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+.sidebar ul li a span {
+  text-align: left;
+  width: 35px;
+  height: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-right: 1px;
+  margin-left: 15px;
+}
+
+.sidebar ul li a:hover {
+  color: #d6baff;
+}
+
+/* User Info styles */
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  width: 20px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.follow-button-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.user-pictures-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.user-pictures-container p {
+  color: #706f6f;
+}
+
+.profile-picture-container {
+  position: relative;
+}
+
+.profile-picture {
+  width: 90px; /* Adjust the size as needed */
+  height: auto;
+}
+
+.profile-picture-container p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  color: #706f6f;
+  font-size: 14px;
+}
+
+/* Profile Details Separator styles */
+.profile-details::after {
+  content: '';
+  display: block;
+  border-bottom: 1px solid #ccc;
+  margin: 0 auto 10px;
+  width: 100%;
+}
+
+/* Follower/Following styles */
+.follower-following {
+  display: flex;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #D6BAFF;
+}
+.follower-following p {
+  margin-right: 10px; /* Adjust spacing as needed */
+}
+
+/* Main Content styles */
+.main-content {
+  flex: 3;
+  padding: 20px;
+}
+
+/* Top Bar styles */
+.top-bar {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.top-bar input[type="text"] {
+  padding: 8px;
+  text-align: center;
+  width: 60%;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+}
+
+/* Feed styles */
+.feed {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  margin: 20px;
+}
+
+.feed-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.feed-image {
+  width: 100%;
+  height: auto;
+}
+
+/* Icons styles */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.icon {
+  width: 28px;
+  height: auto;
+  padding-right: 10px;
+}
+
+.likes {
+  text-align: left;
+  margin-left: auto;
+  padding-right: 15px;
+}
+
+/* Logout styles */
+.logout {
+  color: #d6baff;
+  font-size: 25px;
+}
+
+.logout:hover {
+  color: #000000;
+}
+
+.hashtag {
+  color: #d6baff;
+  font-weight: bold;
+}
+
+/* Logout Separator styles */
+.logout::before {
+  content: '';
+  display: block;
+  border-top: 1px solid #ccc;
+  margin: 0 auto 10px;
+  width: 100%;
+  padding-bottom: 4rem;
+}
+
+/* Sidebar Separator styles */
+.sidebar ul li:first-child::before {
+  content: '';
+  display: block;
+  border-bottom: 1px solid #ccc;
+  margin: 0 auto 10px;
+  width: 100%;
+}
+
+/* Picture Container styles */
+.picture-container {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 10px;
+  width: calc(33.33% - 20px);
+  text-align: center;
+}
+
+.picture-container img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* User Pictures Container styles */
+.user-pictures-container {
+  box-sizing: border-box;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.user-pictures-container p {
+  color: #706f6f;
+}
+
+/* Ensure three containers in a row on larger screens */
+@media screen and (min-width: 768px) {
+  .picture-container {
+    width: calc(33.33% - 20px);
+  }
+}
