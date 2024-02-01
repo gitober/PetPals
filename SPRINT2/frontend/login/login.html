@@ -20,13 +20,28 @@
                     <input type="text" name="username" id="username" placeholder="Username" required>
                     <input type="password" name="password" id="password" placeholder="Password" required>
                     <input type="submit" id="loginButton" value="Submit">
-                    <p class="forgot">forgot your password?</p>
+                    <p class="signUpClose" id="signUpCloseLink" >forgot your password?</p>
                     <br/> 
                     <p class="signUp" id="signUpLink">Don't have an account? Sign up</p>
                 </form>
             </div>
         </div>
     </div>
+    <div id="popupClose" class="popupClose">
+        <div class="popupClose-content">
+            <span class="closePop" id="closePop">&times;</span> 
+            <h1>Forgot your password?</h1>
+            <p>
+                Problems signing in? <br/>
+                Import your email, phone number, or username <br/>
+                So we will send you a link to reset your password
+            </p>
+            <!-- Input field for text -->
+            <input type="text" id="emailInput" placeholder="Enter your email, phone number, or username">
+            <input type="submit" id="SubmitButton" value="Submit">
+        </div>
+    </div>
+    
     <div id="popup" class="popup">
         <div class="popup-content">
             <span class="close" id="close">&times;</span>
