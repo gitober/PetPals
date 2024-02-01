@@ -249,30 +249,41 @@ body {
   width: 100%;
 }
 
+/* Picture Container styles */
+.picture-container {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 10px;
+  width: calc(33.33% - 20px);
+  text-align: center;
+}
+
+.picture-container img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
 /* User Pictures Container styles */
 .user-pictures-container {
   box-sizing: border-box;
   margin-top: 20px;
+  text-align: center;
 }
 
 .user-pictures-container p {
   color: #706f6f;
 }
 
-/* Picture Container styles */
-.picture-container {
-  margin: 10px;
-  display: inline-block;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden; /* Hide any content that overflows the container */
-  width: calc(33.33% - 20px); /* Calculate width for three containers with margins */
-  text-align: center; /* Center the image within the container */
+/* Ensure proper spacing between picture containers */
+.picture-container + .picture-container {
+  margin-left: 20px;
 }
 
-.picture-container img {
-  width: 100%;
-  height: auto; /* Allow the height to adjust automatically */
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+/* Ensure three containers in a row on larger screens */
+@media screen and (min-width: 768px) {
+  .picture-container {
+    width: calc(33.33% - 20px);
+  }
 }

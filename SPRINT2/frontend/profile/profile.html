@@ -44,42 +44,45 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod semper libero, vitae fermentum magna elementum vel. Sed vestibulum lacus ut libero sagittis, id rhoncus nunc ultricies. In auctor est vitae nunc efficitur, vel eleifend dolor vestibulum.</p>
                 </div>
                 <!-- HTML Structure -->
-                <div class="user-pictures-container">
-                <div id="picture-container" class="picture-container">
+                <div class="user-pictures-container" id="user-pictures-container">
                     <!-- Pictures will be dynamically added here -->
                 </div>
-                </div>
                 <script>
-                // Simulated data (replace this with actual data from your application)
-const userPictures = [
-    "/SPRINT2/frontend/img/navbar.png",
-    "/SPRINT2/frontend/img/navbar.png",
-    "/SPRINT2/frontend/img/navbar.png",
-    "/SPRINT2/frontend/img/navbar.png",
-    "/SPRINT2/frontend/img/navbar.png",
-    "/SPRINT2/frontend/img/navbar.png",
-    // Add more picture URLs as needed
-];
-// Function to dynamically populate the picture container
-function populatePictures() {
-    const pictureContainer = document.getElementById("picture-container");
+                    // Simulated data (replace this with actual data from your application)
+                    const userPictures = [
+                        "/SPRINT2/frontend/img/profiledog.jpg",
+                        "/SPRINT2/frontend/img/profiledog.jpg",
+                        "/SPRINT2/frontend/img/profiledog.jpg",
+                        "/SPRINT2/frontend/img/profiledog.jpg",
+                        "/SPRINT2/frontend/img/profiledog.jpg",
+                        "/SPRINT2/frontend/img/profiledog.jpg",
+                        // Add more picture URLs as needed
+                    ];
 
-    // Clear existing content
-    pictureContainer.innerHTML = '';
+                    // Function to dynamically populate the picture containers
+                    function populatePictures() {
+                        const userPicturesContainer = document.getElementById("user-pictures-container");
 
-    // Iterate through user pictures and create image elements
-    userPictures.forEach((pictureUrl) => {
-        const pictureElement = document.createElement("img");
-        pictureElement.src = pictureUrl;
-        pictureElement.alt = "User Picture";
-        pictureContainer.appendChild(pictureElement);
-    });
-}
+                        // Clear existing content
+                        userPicturesContainer.innerHTML = '';
 
-// Call the function to populate pictures when the page loads
-window.onload = populatePictures;
-</script>
+                        // Iterate through user pictures and create container for each picture
+                        userPictures.forEach((pictureUrl) => {
+                            const pictureContainer = document.createElement("div");
+                            pictureContainer.className = "picture-container";
 
+                            const pictureElement = document.createElement("img");
+                            pictureElement.src = pictureUrl;
+                            pictureElement.alt = "User Picture";
+
+                            pictureContainer.appendChild(pictureElement);
+                            userPicturesContainer.appendChild(pictureContainer);
+                        });
+                    }
+
+                    // Call the function to populate pictures when the page loads
+                    window.onload = populatePictures;
+                </script>
             </div>
         </div>
     </div>
