@@ -227,7 +227,6 @@ body {
   justify-content: center;
   background-color: #F5F5F5;
   width: 40%;
-  height: 58px;
   margin-bottom: 5px;
   border-radius: 5px;
 }
@@ -331,20 +330,50 @@ body {
   .setting-box {
     width: 80%; /* Adjust the width as needed for smaller screens */
     height: auto;
-    
-
   }
 
   .row {
     flex-direction: row; /* Stack setting boxes vertically */
     display: flex;
-
-    }
-
+    padding: 2px;
+  }
 
   .textbox,
   .biotextdiv,
   .passtextdiv {
     width: 80%; /* Adjust the width as needed for smaller screens */
+  }
+
+  body {
+    font-size: 16px; /* Adjust as needed for smaller screens */
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    max-width: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 20px;
+  }
+
+  .main-content {
+    flex: none;
+  }
+
+  .follow-button-container {
+    margin-bottom: 20px;
+  }
+
+  .top-bar input[type="text"] {
+    width: 100%;
+    margin: 10px 0; /* Adjust margins for smaller screens */
+  }
+
+  .picture-container {
+    width: 100%;
+    margin: 10px 0; /* Adjust margins for smaller screens */
   }
 }
