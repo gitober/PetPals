@@ -9,11 +9,11 @@
     if (liked) {
       liked = false;
       likeCount--;
-      likeIcon.src = '/PROJECT/SPRINT2/frontend/img/like.png';
+      likeIcon.src = '../img/like.png';
     } else {
       liked = true;
       likeCount++;
-      likeIcon.src = '/PROJECT/SPRINT2/frontend/img/like-filled.png';
+      likeIcon.src = '../img/like-filled.png';
     }
 
     likeCountElement.textContent = likeCount;
@@ -34,4 +34,3 @@ function submitComment() {
   // You can send the comment to the server, update the UI, etc.
   closeCommentPopup();
 }
-
