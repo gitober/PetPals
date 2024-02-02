@@ -50,6 +50,40 @@
             <p><a href="signup_social.html">Option 2: Sign up with social media</a></p>
         </div>
     </div>
+
+    <!-- Add the JavaScript script just before the closing </body> tag -->
+    <script>
+        // Function to set font size based on screen width
+        function setFontSize() {
+    const elementsToAdjust = document.querySelectorAll('.popupClose-content, .logo img');
+    const screenWidth = window.innerWidth;
+
+    // Define breakpoints and corresponding font sizes
+    const breakpoints = [280, 400, 768];
+    const fontSizes = ['3vw', '5vw', '10px']; // Adjust the font sizes as needed
+
+    // Find the appropriate font size based on the screen width
+    let fontSize = fontSizes[fontSizes.length - 1]; // Default font size
+    for (let i = 0; i < breakpoints.length; i++) {
+        if (screenWidth <= breakpoints[i]) {
+            fontSize = fontSizes[i];
+            break;
+        }
+    }
+
+    // Apply the font size to the specified elements
+    elementsToAdjust.forEach(element => {
+        element.style.fontSize = fontSize;
+    });
+}
+
+// Initial call to set font size
+setFontSize();
+
+// Event listener to update font size on window resize
+window.addEventListener('resize', setFontSize);
+    </script>
+    
     <script src="login.js"></script>
 </body>
 </html>
