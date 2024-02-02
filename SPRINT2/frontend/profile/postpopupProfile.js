@@ -14,5 +14,5 @@ function openPopup() {
   document.getElementById('uploadForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission behavior
     // Handle form submission logic here (e.g., file upload)
-});
+  });
   

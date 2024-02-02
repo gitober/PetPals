@@ -1,7 +1,8 @@
-/* Global styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
   margin: 0;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #e6f3ff;
 }
 
@@ -306,4 +307,102 @@ body {
     width: 100%;
     margin: 10px 0; /* Adjust margins for smaller screens */
   }
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 100%; /* 4 times the original */
+  max-width: 600px; /* 4 times the original */
+  height: 200%;
+  max-height: 500px;
+  padding: 80px; /* Increased padding */
+  border-radius: 40px; /* Increased border radius */
+  z-index: 9999;
+  color: #000;
+  font-weight: bold; /* Added bold font weight */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Added box shadow */
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.closePop {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 40px;
+}
+
+.popup-content input[type="file"] {
+  display: block;
+  margin: 60px auto;
+  background-color: #e6f3ff;
+}
+
+.popup-content button {
+  width: 50%;
+  padding: 20px;
+  border: #fff;
+  border-radius: 5px;
+  background-color: #E6F3FF;
+  color: #000;
+  cursor: pointer;
+  font-size: 30px;
+  position: relative;
+  margin-top: 70px;
+  font-weight: bold;
+}
+
+.popup-content button:hover {
+  background-color: #d6baff;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.empty-area {
+  background-image: url(../img/drag.PNG);
+  background-repeat: no-repeat; 
+  background-position: center; 
+  background-size: cover; 
+  border: 2px dashed #ccc;
+  padding: 60px; /* Increase padding to make the box bigger */
+  margin: 40px auto; /* Increase margin to add space around the box */
+  width: 60%; /* Adjust width as needed, e.g., 80% of the parent container's width */
+  max-width: 500px; /* Optionally set a max-width to limit the size on larger screens */
+  border-radius: 5px;
+}
+
+.drag-area {
+  display: none; /* Hide by default */
+}
+
+.drag-header {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.file-input {
+  display: none;
+}
+
+.select-button {
+  background-color: #E6F3FF;
+  color: #000;
+  padding: 15px 30px; /* Adjusted padding */
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Adjusted margin */
+}
+
+.select-button:hover {
+  background-color: #d6baff;
 }

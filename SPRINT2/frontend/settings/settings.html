@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Homepage</title>
-  <link rel="stylesheet" href="settings.css" /> <!-- Linking to an external CSS file -->
+  <link rel="stylesheet" href="settings.css" /> 
+  <script src="postpopupSettings.js"></script>
 </head>
 
 <body>
@@ -14,51 +15,50 @@
       <ul>
         <li><a href="../home/home.html"><span><img src="../img/home.png" alt="Home" /></span> HOME</a></li>
         <li><a href="../profile/profile.html"><span><img src="../img/profile.png" alt="Profile" /></span> PROFILE</a></li>
-        <li><a href="#"><span><img src="../img/post.png" alt="Post" /></span> POST</a></li>
+        <li><a onclick="openPopup()"><span><img src="../img/post.png" alt="POST" class="signUp" id="signUpLink"/></span> POST</a></li>
         <li><a href="../settings/settings.html"><span><img src="../img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
     </ul>
       </ul>
       <div class="logout"><a href="../login/login.html">Log Out</a></div>
+
+      <div class="popup">
+        <div class="popup-content">
+          <span class="close" onclick="closePopup()">&times;</span>
+          <h2>Add a new picture</h2>
+          <div class="empty-area">
+            <div class="drag-header"></div>
+            <input type="file" id="fileInput" accept="image/*" class="file-input" />
+          </div>
+        </div>
+        <h2>Drag Photos here</h2>
+        <h3 class="popuph3">or</h3>
+        <label for="fileInput" class="select-button">Select from computer</label>
+      </div>
+
     </div>
     <div class="main-content">
       <div class="top-bar">
-        <input type="text" placeholder="Search" /> <!-- Search input -->
+        <input type="text" placeholder="Search" /> 
       </div>
       <div class="feed">
-        <!-- Feed content goes here -->
-        <h2 class="line2">SETTINGS</h2> <!-- Title of the settings section -->
+        <h2 class="line2">SETTINGS</h2> 
 
         <div class="row">
-          <!--
-          <img class="dogprofilepicture" src="/PROJECT/SPRINT2/frontend/img/profiledog.jpg" alt="Profile Picture"
-            onclick="changeProfilePicture()" /> -->
-          <!-- Profile picture -->
-          <!--
-          <script>
-            function changeProfilePicture() {
-              var newProfilePicture = prompt("Enter the URL of your new profile picture:");
-              if (newProfilePicture !== null && newProfilePicture.trim() !== '') {
-                // Update the src attribute of the image element with the new profile picture URL
-                document.querySelector('.dogprofilepicture').src = newProfilePicture;
-              }
-            }
-          </script>
-          -->
           <input type="file" id="profilePictureInput" accept="image/*" style="display: none;"
             onchange="handleProfilePictureChange(event)">
           <label for="profilePictureInput">
-            <img class="dogprofilepicture" src="/PROJECT/SPRINT2/frontend/img/profiledog.jpg" alt="Profile Picture" />
+            <img class="dogprofilepicture" src="../img/profiledog.jpg" alt="Profile Picture" />
           </label>
           <script>
             function handleProfilePictureChange(event) {
-              var file = event.target.files[0]; // Get the selected file
+              var file = event.target.files[0]; 
               if (file) {
-                var reader = new FileReader(); // FileReader to read the selected file
+                var reader = new FileReader(); 
                 reader.onload = function (e) {
-                  var newProfilePicture = e.target.result; // Base64 representation of the selected image
-                  document.querySelector('.dogprofilepicture').src = newProfilePicture; // Update the src attribute of the image element
+                  var newProfilePicture = e.target.result; 
+                  document.querySelector('.dogprofilepicture').src = newProfilePicture; 
                 };
-                reader.readAsDataURL(file); // Read the selected file as a Data URL
+                reader.readAsDataURL(file); 
               }
             }
           </script>
@@ -79,13 +79,11 @@
           <div class="setting-box">
 
             <h3 class="profiletext">change profile picture</h3>
-            <!-- Add functionality to change profile picture -->
           </div>
 
 
           <div class="setting-box">
             <h3>change username</h3>
-            <!-- Add functionality to change username -->
           </div>
         </div>
 
@@ -124,13 +122,11 @@
         <div class="row">
           <div class="setting-box">
             <h3>edit bio</h3>
-            <!-- Add functionality to change bio text -->
           </div>
 
 
           <div class="setting-box">
             <h3>change password</h3>
-            <!-- Add functionality to change password -->
           </div>
         </div>
       </div>

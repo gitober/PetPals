@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Profile</title>
     <link rel="stylesheet" href="profile.css" />
+    <script src="postpopupProfile.js"></script>
 </head>
 <body>
     <div class="container">
@@ -13,10 +14,25 @@
             <ul>
                 <li><a href="../home/home.html"><span><img src="../img/home.png" alt="Home" /></span> HOME</a></li>
                 <li><a href="../profile/profile.html"><span><img src="../img/profile.png" alt="Profile" /></span> PROFILE</a></li>
-                <li><a href="#"><span><img src="../img/post.png" alt="Post" /></span> POST</a></li>
+                <li><a onclick="openPopup()"><span><img src="../img/post.png" alt="POST" class="signUp" id="signUpLink"/></span> POST</a></li>
                 <li><a href="../settings/settings.html"><span><img src="../img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
             </ul>
             <div class="logout"><a href="../login/login.html">Log Out</a></div>
+
+            <div class="popup">
+                <div class="popup-content">
+                  <span class="close" onclick="closePopup()">&times;</span>
+                  <h2>Add a new picture</h2>
+                  <div class="empty-area">
+                    <div class="drag-header"></div>
+                    <input type="file" id="fileInput" accept="image/*" class="file-input" />
+                  </div>
+                </div>
+                <h2>Drag Photos here</h2>
+                <h3 class="popuph3">or</h3>
+                <label for="fileInput" class="select-button">Select from computer</label>
+              </div>
+
         </div>
         <div class="main-content">
             <div class="top-bar">
