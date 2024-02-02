@@ -119,15 +119,7 @@ body {
   padding: 20px;
   border-radius: 5px;
   position: relative;
-  margin: 20px;
-}
-
-
-.feed-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  /* Aseta sarakkeiden sisällöt alkaen vasemmasta laidasta */
+  text-align: center;
 }
 
 
@@ -211,10 +203,10 @@ body {
 /* New styles for setting boxes */
 
 .setting-box h3 {
-  margin-bottom: 10px;
-  font-size: 20px;
+  margin: 5px;
+  font-size: 17px;
   text-align: center;
-  font: poppins;
+  font-family: 'Poppins', sans-serif; /* Fix the font-family property */
 }
 
 .setting-box {
@@ -222,8 +214,8 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #E6F3FF;
-  width: 285px;
-  height: 58px;
+  width: 40%;
+  height: 30%;
   margin-bottom: 90px;
   border-radius: 5px;
 
@@ -234,8 +226,8 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #F5F5F5;
-  width: 285px;
-  height: 58px;
+  width: 40%;
+  margin-bottom: 5px;
   border-radius: 5px;
 }
 
@@ -244,9 +236,9 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #F5F5F5;
-  width: 285px;
-  height: 150px;
+  width: 39%;
   border-radius: 5px;
+  margin-bottom: 5px;
   padding: 5px;
 }
 
@@ -259,10 +251,14 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #F5F5F5;
-  width: 285px;
-  height: 150px;
+  width: 40%;
+  height: 180px;
   border-radius: 5px;
-  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.passtextdiv p {
+  margin: 0; /* Remove default margin for paragraphs */
 }
 
 
@@ -303,12 +299,9 @@ body {
 .row {
   display: flex;
   justify-content: space-between;
-  /* Distribute items evenly along the row */
-  padding: 5px;
+  max-width: 700px; /* Set the maximum width as needed */
+  margin: 0 auto; /* Center the row within the container */
 }
-
-
-
 
 .line2 {
   margin-bottom: 20px;
@@ -330,4 +323,57 @@ body {
   width: 118px;
   border-radius: 5px;
 
+}
+
+
+@media screen and (max-width: 700px) {
+  .setting-box {
+    width: 80%; /* Adjust the width as needed for smaller screens */
+    height: auto;
+  }
+
+  .row {
+    flex-direction: row; /* Stack setting boxes vertically */
+    display: flex;
+    padding: 2px;
+  }
+
+  .textbox,
+  .biotextdiv,
+  .passtextdiv {
+    width: 80%; /* Adjust the width as needed for smaller screens */
+  }
+
+  body {
+    font-size: 16px; /* Adjust as needed for smaller screens */
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    max-width: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 20px;
+  }
+
+  .main-content {
+    flex: none;
+  }
+
+  .follow-button-container {
+    margin-bottom: 20px;
+  }
+
+  .top-bar input[type="text"] {
+    width: 100%;
+    margin: 10px 0; /* Adjust margins for smaller screens */
+  }
+
+  .picture-container {
+    width: 100%;
+    margin: 10px 0; /* Adjust margins for smaller screens */
+  }
 }
