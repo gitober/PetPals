@@ -7,34 +7,33 @@
     <link rel="stylesheet" href="userprofile.css" />
 </head>
 <script>
-        let isFollowing = false;
+    let isFollowing = false;
 
-        function toggleFollow() {
-            const followButton = document.getElementById('followButton');
+    function toggleFollow() {
+        const followButton = document.getElementById('followButton');
 
-            if (isFollowing) {
-                // Unfollow logic here
-                followButton.innerText = 'Follow';
-            } else {
-                // Follow logic here
-                followButton.innerText = 'Following';
-            }
-
-            isFollowing = !isFollowing;
+        if (isFollowing) {
+            // Unfollow logic here
+            followButton.innerText = 'Follow';
+        } else {
+            // Follow logic here
+            followButton.innerText = 'Following';
         }
-    </script>
+
+        isFollowing = !isFollowing;
+    }
+</script>
 <body>
     <div class="container">
         <div class="sidebar">
             <img src="../img/navbar.png" alt="logo" />
-            <ul>
+                <ul>
                 <li><a href="../home/home.html"><span><img src="../img/home.png" alt="Home" /></span> HOME</a></li>
                 <li><a href="../profile/profile.html"><span><img src="../img/profile.png" alt="Profile" /></span> PROFILE</a></li>
                 <li><a href="#"><span><img src="../img/post.png" alt="Post" /></span> POST</a></li>
                 <li><a href="../settings/settings.html"><span><img src="../img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
-            </ul>
-            </ul>
-            <div class="logout"><a href="../login/login.html">Log Out</a></div>
+                </ul>
+                <div class="logout"><a href="../login/login.html">Log Out</a></div>
         </div>
         <div class="main-content">
             <div class="top-bar">
@@ -50,8 +49,8 @@
                         <h3>username</h3>
                     </div>
                     <div class="follow-button-container">
-                    <!-- Follow button goes here -->
-                    <button id="followButton" class="follow-button" onclick="toggleFollow()">Follow</button>
+                        <!-- Follow button goes here -->
+                        <button id="followButton" class="follow-button" onclick="toggleFollow()">Follow</button>
                     </div>
                     <div class="profile-picture-container">
                         <img src="../img/profiledog.jpg" alt="Profile Picture" class="profile-picture" />
@@ -72,7 +71,7 @@
                 <script>
                     // Simulated data (replace this with actual data from your application)
                     const userPictures = [
-                        "../img/profiledog.jpg",
+                        "../img/feed.jpg",
                         "../img/profiledog.jpg",
                         "../img/profiledog.jpg",
                         "../img/profiledog.jpg",
@@ -95,8 +94,9 @@
                             const pictureContainer = document.createElement("div");
                             pictureContainer.className = "picture-container";
 
-                            const pictureElement = document.createElement("img");
-                            pictureElement.src = pictureUrl;
+                            const pictureElement = document.createElement("div");
+                            pictureElement.style.backgroundImage = `url('${pictureUrl}')`;
+                            pictureElement.className = "picture-background";
                             pictureElement.alt = "User Picture";
 
                             pictureContainer.appendChild(pictureElement);

@@ -10,7 +10,7 @@ body {
 
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh; /* TÄMÄ MUUTTAA SIDEBARIN MENEMÄÄN ALAS!!!!*/
 }
 
 .sidebar {
@@ -113,23 +113,22 @@ body {
   
 }
 
-.feed {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
-  position: relative;
-}
-
 .feed-content {
   display: flex;
-  align-items: flex-start; /* Aseta sarakkeiden sisällöt alkaen vasemmasta laidasta */
+  align-items: flex-start;
 }
 
 .feed-image {
-  max-width: 300px; /* Kuva ei koskaan ole isompaa kuin sen alkuperäinen koko */
+  max-width: 50%; /* Adjusted to 100% */
   height: auto;
-  border-radius: 5px; /* Voit lisätä reunat tai rajat kuvan ympärille */
-  margin-bottom: 10px; /* Voit lisätä välimatkaa kuvan ja muun sisällön välille */
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Ensure images are responsive */
+.feed-image img {
+  width: 100%; /* Make sure images fill their containers */
+  height: auto;
 }
 
 .icons {

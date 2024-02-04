@@ -8,7 +8,14 @@ body {
 
 .container {
   display: flex;
-  height: 100vh;
+  min-height: 100vh; /* TÄMÄ MUUTTAA SIDEBARIN MENEMÄÄN ALAS!!!!*/
+}
+
+/* Follow button styles */
+.follow-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .follow-button {
@@ -46,6 +53,7 @@ body {
 .sidebar ul {
   list-style-type: none;
   padding: 0;
+  margin: 0; /* Remove default margin */  
 }
 
 .sidebar ul li {

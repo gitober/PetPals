@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Homepage</title>
-  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="home.css">
   <script src="home.js"></script>
   <script src="postpopup.js"></script>
 </head>
 <body>
   <div class="container">
     <div class="sidebar">
-      <img src="../img/navbar.png" alt="logo" />
+      <img src="../img/navbar.png" alt="logo">
       <ul>
-        <li><a href="../home/home.html"><span><img src="../img/home.png" alt="Home" /></span> HOME</a></li>
-        <li><a href="../profile/profile.html"><span><img src="../img/profile.png" alt="Profile" /></span> PROFILE</a></li>
-        <li><a onclick="openPopup()"><span><img src="../img/post.png" alt="POST" class="signUp" id="signUpLink"/></span> POST</a></li>
-        <li><a href="../settings/settings.html"><span><img src="../img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
+        <li><a href="../home/home.html"><span><img src="../img/home.png" alt="Home"></span> HOME</a></li>
+        <li><a href="../userprofile/userprofile.html"><span><img src="../img/profile.png" alt="Profile"></span> PROFILE</a></li>
+        <li><a onclick="openPopup()"><span><img src="../img/post.png" alt="POST" class="signUp" id="signUpLink"></span> POST</a></li>
+        <li><a href="../settings/settings.html"><span><img src="../img/settings.png" alt="Settings"></span> SETTINGS</a></li>
       </ul>
       <div class="logout"><a href="../login/login.html">Log Out</a></div>
 
@@ -26,41 +26,47 @@
           <h2>Add a new picture</h2>
           <div class="empty-area">
             <div class="drag-header"></div>
-            <input type="file" id="fileInput" accept="image/*" class="file-input" />
+            <input type="file" id="fileInput" accept="image/*" class="file-input">
           </div>
         </div>
         <h2>Drag Photos here</h2>
         <h3 class="popuph3">or</h3>
         <label for="fileInput" class="select-button">Select from computer</label>
       </div>
-      
     </div>
+
     <div class="main-content">
       <div class="top-bar">
-        <input type="text" placeholder="Search" />
+        <input type="text" placeholder="Search">
       </div>
       <div class="feed">
         <!-- Feed content goes here -->
         <div class="user-info">
-          <img src="../img/profile.png" alt="User Icon" class="user-icon" />
-          <h3>username</h3>
-        </div class= feed-image>
-        <img src="/" alt="Feed Image" />
+          <a href="../profile/profile.html">
+            <img src="../img/profile.png" alt="User Icon" class="user-icon">
+          </a>
+          <a href="../userprofile/userprofile.html">
+            <h3>username</h3>
+          </a>
+        </div>
+        <div class="feed-image">
+          <a href="../userprofile/userprofile.html">
+            <img src="../img/feed.jpg" alt="Feed Image">
+          </a>
+        </div>
         <div class="icons">
-
           <div class="like-container">
-            <img src="../img/like.png" alt="Like" class="like-icon" id="likeIcon" onclick="toggleLike()" />
+            <img src="../img/like.png" alt="Like" class="like-icon" id="likeIcon" onclick="toggleLike()">
           </div>
-           <img src="../img/comment.png" alt="Comment" class="icon" onclick="openCommentPopup()" />
+          <img src="../img/comment.png" alt="Comment" class="icon" onclick="openCommentPopup()">
           <p class="likes">LIKES</p>
           <span id="likeCount">0</span>
-          
         </div>
-        <p class="lorem-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod semper libero, vitae fermentum magna elementum vel. Sed vestibulum lacus ut libero sagittis, id rhoncus nunc ultricies. In auctor est vitae nunc efficitur, vel eleifend dolor vestibulum.</p>
+        <p class="lorem-text"> <!-- Your existing text content -->
         <p class="hashtag">#hashtag #hashtag #hashtag #hashtag</p>
       </div>
     </div>
-    </div>
+
     <div class="comment-popup" id="commentPopup">
       <div><span class="close" onclick="closeCommentPopup()">&times;</span></div>
       <div class="popUpCommentHeader">
@@ -76,7 +82,6 @@
         <button>Submit</button>
       </div>
     </div>
-    
-</div>
+  </div>
 </body>
 </html>
