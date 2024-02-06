@@ -100,6 +100,7 @@ body {
 .main-content {
   flex: 3;
   padding: 20px;
+
 }
 
 .top-bar {
@@ -123,7 +124,7 @@ body {
   padding: 20px;
   border-radius: 5px;
   position: relative;
-  text-align: center;
+  margin: 20px;
 }
 
 .feed-content {
@@ -131,17 +132,17 @@ body {
   align-items: flex-start;
 }
 
-.feed-image {
-  max-width: 50%; /* Adjusted to 100% */
-  height: auto;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
 
-/* Ensure images are responsive */
 .feed-image img {
-  width: 100%; /* Make sure images fill their containers */
-  height: auto;
+  width: 100%;
+  height: 100% ;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 5px;
+} 
+
+ .feed-image {
+  text-align: center;
 }
 
 .icons {
@@ -313,11 +314,6 @@ body {
     width: 100%;
   }
 
-  .feed {
-    margin: 0;
-    max-width: 100%;
-  }
-
   .icons .like-container img,
   .icons img {
     width: 20px;
@@ -431,8 +427,4 @@ body {
 .select-button:hover {
   background-color: #d6baff;
 }
-
-
-
-
 
