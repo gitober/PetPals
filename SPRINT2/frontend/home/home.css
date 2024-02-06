@@ -86,6 +86,11 @@ body {
   align-items: center;
 }
 
+.username-link {
+  text-decoration: none;
+  
+}
+
 .user-icon {
   width: 20px; /* Muuta kuvan leveys tarpeen mukaan */
   height: auto;
@@ -111,6 +116,14 @@ body {
   border-radius: 5px; /* Rounded corners */
   border: 1px solid #ffffff; /* Add border for better visibility */
   
+}
+
+.feed {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  text-align: center;
 }
 
 .feed-content {
@@ -162,10 +175,22 @@ body {
   color: #000000;
 }
 
+.user-info h3 {
+  color: #000000;
+  text-decoration: none;  
+}
+
+.user-info h3:hover {
+  color: #d6baff;
+ 
+}
+
 .hashtag {
   color: #d6baff;
   font-weight: bold;
 }
+
+
 .logout::before {
   content: ""; /* Tyhjä sisältö, tarvitaan pseudoelementin käyttöön */
   display: block; /* Tehdään pseudoelementti blokkielementiksi */
@@ -190,11 +215,11 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  width: 100%; /* 4 times the original */
+  width: 70%; /* 4 times the original */
   max-width: 600px; /* 4 times the original */
   height: 200%;
   max-height: 500px;
-  padding: 80px; /* Increased padding */
+  padding: 35px; /* Increased padding */
   border-radius: 40px; /* Increased border radius */
   z-index: 9999;
   color: #000;
@@ -204,24 +229,24 @@ body {
 
 .comment-popup-content {
   background-color: #fefefe;
-  margin: 5% auto;
-  padding: 20px;
-  border: 1px solid #888;
+  margin: 3% auto;
+  border: 1px solid #d6baff;
   width: 80%;
+  text-align: center;
+  padding: 130px 50px;
+  border-radius: 5px;
 }
 
 .close {
-  color: #aaa;
+  color: #000000;
   float: right;
-  font-size: 28px;
+  font-size: 40px;
   font-weight: bold;
-  right: 10px;
-  top: 10px;
 }
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: #d6baff;
   text-decoration: none;
   cursor: pointer;
 }
@@ -231,11 +256,6 @@ body {
   font-size: 20px;
 }
 
-.comment-popup-content {
-  text-align: center;
-  padding: 140px 50px;
-  border-radius: 5px;
-}
 
 .popUpTextField {
   text-align: center;
@@ -245,21 +265,33 @@ body {
   text-align: center;
   padding: 20px;
 }
+
+.popUpSubmit:hover {
+  background-color: #000000;
+}
+
+
 .comment-input input[type="text"] {
   width: 80%; /* Adjust width of input field */
   padding: 15px 56px; /* Adjust spacing between content and input field */
   text-align: center;
   border-radius: 5px; /* Add rounded corners */
+  border: #000000 solid 1px; /* Add border for better visibility */
+}
+
+.submit-comment {
+  text-align: center;
 }
 
 .submit-comment button {
   padding: 15px 30px; /* Increase padding to make button bigger */
-  background-color: #007bff;
+  background-color: #d6baff;
   color: #fff;
   border: none;
   cursor: pointer;
   text-align: center;
   margin-top: 5px;;
+  border-radius: 5px;
 }
 
 
@@ -290,6 +322,7 @@ body {
   .icons img {
     width: 20px;
   }
+
   .likes {
     text-align: left;
     margin-left: 0; /* Reset the margin to ensure it doesn't push outside */
