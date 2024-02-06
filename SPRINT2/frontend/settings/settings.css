@@ -1,17 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #e6f3ff;
 }
-
 
 .container {
   display: flex;
   min-height: 100vh; /* TÄMÄ MUUTTAA SIDEBARIN MENEMÄÄN ALAS!!!!*/
 }
-
 
 .sidebar {
   flex: 1;
@@ -26,7 +24,6 @@ body {
   /* Aseta haluttu maksimileveys */
 }
 
-
 .sidebar img {
   width: 60%;
   /* Adjust the width as needed */
@@ -34,17 +31,14 @@ body {
   margin-bottom: 20px;
 }
 
-
 .sidebar ul {
   list-style-type: none;
   padding: 0;
 }
 
-
 .sidebar ul li {
   margin-bottom: 10px;
 }
-
 
 .sidebar ul li a {
   color: #000000;
@@ -55,7 +49,6 @@ body {
   transition: color 0.3s;
   /* Tehdään värimuutos sulavaksi */
 }
-
 
 .sidebar ul li a span {
   text-align: left;
@@ -69,18 +62,15 @@ body {
   margin-left: 15px;
 }
 
-
 .sidebar ul li a:hover {
   color: #d6baff;
   /* Liila väri, kun hiiri on tekstin päällä */
 }
 
-
 .user-info {
   display: flex;
   align-items: center;
 }
-
 
 .user-icon {
   width: 20px;
@@ -90,19 +80,16 @@ body {
   /* Aseta tarvittava välimatka käyttäjänimen ja kuvan väliin */
 }
 
-
 .main-content {
   flex: 3;
   padding: 20px;
 }
-
 
 .top-bar {
   margin-bottom: 20px;
   text-align: center;
   /* Center the content in the top-bar */
 }
-
 
 .top-bar input[type="text"] {
   padding: 8px;
@@ -115,7 +102,6 @@ body {
   /* Add border for better visibility */
 }
 
-
 .feed {
   background-color: #ffffff;
   padding: 20px;
@@ -124,13 +110,11 @@ body {
   text-align: center;
 }
 
-
 .feed-image {
   width: 100%;
   /* Kuvan täyttäminen vanhemman leveys */
   height: auto;
 }
-
 
 .icons {
   display: flex;
@@ -140,7 +124,6 @@ body {
   /* Aseta haluttu välimatka ikonien ja tekstin välille */
 }
 
-
 .icon {
   width: 28px;
   /* Muuta ikonien leveys tarpeen mukaan */
@@ -148,33 +131,30 @@ body {
   padding-right: 10px;
 }
 
-
 .likes {
   text-align: left;
   margin-left: auto;
   padding-right: 15px;
 }
 
-
-.logout {
+.logout a {
   color: #d6baff;
   font-size: 25px;
+  text-decoration: none; /* Remove underline */
+  align-items: center;
 }
 
-
-.logout:hover {
+.logout a:hover {
   color: #000000;
 }
-
 
 .hashtag {
   color: #d6baff;
   font-weight: bold;
 }
 
-
 .logout::before {
-  content: '';
+  content: "";
   /* Tyhjä sisältö, tarvitaan pseudoelementin käyttöön */
   display: block;
   /* Tehdään pseudoelementti blokkielementiksi */
@@ -187,9 +167,8 @@ body {
   padding-bottom: 4rem;
 }
 
-
 .sidebar ul li:first-child::before {
-  content: '';
+  content: "";
   /* Tyhjä sisältö, tarvitaan pseudoelementin käyttöön */
   display: block;
   /* Tehdään pseudoelementti blokkielementiksi */
@@ -201,33 +180,31 @@ body {
   /* Määritä viivan leveys */
 }
 
-
 /* New styles for setting boxes */
 
 .setting-box h3 {
   margin: 5px;
   font-size: 17px;
   text-align: center;
-  font-family: 'Poppins', sans-serif; /* Fix the font-family property */
+  font-family: "Poppins", sans-serif; /* Fix the font-family property */
 }
 
 .setting-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #E6F3FF;
+  background-color: #e6f3ff;
   width: 40%;
   height: 30%;
   margin-bottom: 90px;
   border-radius: 5px;
-
 }
 
 .textbox {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   width: 40%;
   margin-bottom: 5px;
   border-radius: 5px;
@@ -237,7 +214,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   width: 39%;
   border-radius: 5px;
   margin-bottom: 5px;
@@ -252,7 +229,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   width: 40%;
   height: 180px;
   border-radius: 5px;
@@ -271,7 +248,6 @@ body {
   border: 1px solid #ccc;
 }
 
-
 .setting-box button {
   padding: 10px 20px;
   margin-top: 10px;
@@ -281,7 +257,6 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
-
 
 .setting-box button:hover {
   background-color: #45a049;
@@ -299,7 +274,7 @@ body {
 }
 
 .line2::after {
-  content: '';
+  content: "";
   display: block;
   border-top: 1px solid #ccc;
   margin-top: 20px;
@@ -313,7 +288,6 @@ body {
   height: 118px;
   width: 118px;
   border-radius: 5px;
-
 }
 
 .popup {
@@ -358,7 +332,7 @@ body {
   padding: 20px;
   border: #fff;
   border-radius: 5px;
-  background-color: #E6F3FF;
+  background-color: #e6f3ff;
   color: #000;
   cursor: pointer;
   font-size: 30px;
@@ -377,9 +351,9 @@ body {
 
 .empty-area {
   background-image: url(../img/drag.PNG);
-  background-repeat: no-repeat; 
-  background-position: center; 
-  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   border: 2px dashed #ccc;
   padding: 60px; /* Increase padding to make the box bigger */
   margin: 40px auto; /* Increase margin to add space around the box */
@@ -402,7 +376,7 @@ body {
 }
 
 .select-button {
-  background-color: #E6F3FF;
+  background-color: #e6f3ff;
   color: #000;
   padding: 15px 30px; /* Adjusted padding */
   border-radius: 5px;
@@ -413,9 +387,6 @@ body {
 .select-button:hover {
   background-color: #d6baff;
 }
-
-
-
 
 @media screen and (max-width: 700px) {
   .setting-box {
@@ -468,4 +439,3 @@ body {
     margin: 10px 0; /* Adjust margins for smaller screens */
   }
 }
-
