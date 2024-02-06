@@ -119,7 +119,18 @@ body {
 }
 
 .profile-picture-container {
-  position: relative;
+  margin-top: 20px;
+  text-align: right; /* Align the content to the right */
+  margin-left: auto; /* Push the container to the right */
+}
+
+.profile-picture-container img {
+  width: 20%;
+  height: 20% ;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 5px;
+
 }
 
 .profile-picture {
@@ -136,6 +147,14 @@ body {
   color: #706f6f;
   font-size: 14px;
 }
+
+.user-pictures-container img {
+  width: 100%;
+  height: 100% ;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 5px;
+} 
 
 /* Profile Details Separator styles */
 .profile-details::after {

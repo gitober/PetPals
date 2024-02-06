@@ -154,16 +154,20 @@ body {
 
 .icons .like-container img,
 .icons img {
-  width: 30px; /* Set the width to your desired size */
-  height: auto;
+  width: 30px;
+  
 }
 
+.like-container {
+  height: 27px;
 
-.likes {
-  text-align: left;
-  margin-left: auto;
-  padding-right: 15px;
 }
+
+.likes-container {
+  color: #000000;
+  margin-left: auto; /* Siirtää "likes" -elementin oikeaan reunaan */
+  font-weight: 600;
+  }
 
 .logout a {
   color: #d6baff;
@@ -297,7 +301,7 @@ body {
 
 
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 700px) {
   .container {
     flex-direction: column;
     align-items: center; /* Center items vertically */
@@ -314,16 +318,7 @@ body {
     width: 100%;
   }
 
-  .icons .like-container img,
-  .icons img {
-    width: 20px;
-  }
 
-  .likes {
-    text-align: left;
-    margin-left: 0; /* Reset the margin to ensure it doesn't push outside */
-    padding-right: 15px;
-  }
   .user-icon {
     width: 15px;
     margin-right: 5px;

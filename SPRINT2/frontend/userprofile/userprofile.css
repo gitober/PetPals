@@ -107,13 +107,22 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
-  margin-top: 10px; /* Add margin to create space between username and follow button */
+  margin-left: 2rem; /* Add margin to create space between username and follow button */
 }
 
 .profile-picture-container {
-  width: 90px;
-  height: auto;
-  margin-top: 10px; /* Add margin to create space between follow button and profile picture */
+  margin-top: 20px;
+  text-align: right; /* Align the content to the right */
+  margin-left: auto; /* Push the container to the right */
+}
+
+.profile-picture-container img {
+  width: 20%;
+  height: 20% ;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 5px;
+
 }
 
 .profile-picture {
@@ -215,6 +224,18 @@ body {
 .logout {
   color: #d6baff;
   font-size: 25px;
+  text-decoration: none;
+}
+
+.logout a {
+  color: #d6baff;
+  font-size: 25px;
+  text-decoration: none; /* Remove underline */
+  align-items: center;
+}
+
+.logout a:hover {
+  color: #000000;
 }
 
 .logout:hover {
@@ -253,6 +274,7 @@ body {
     text-align: center;
     width: 100%;
 }
+
 .picture-background {
     width: 100%;
     height: 0;
@@ -262,6 +284,7 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
 .picture-container img {
     width: 100%;
     height: 100%;
@@ -335,4 +358,150 @@ body {
     width: 100%;
     margin: 10px 0; /* Adjust margins for smaller screens */
   }
+}
+
+/* Ensure three containers in a row on larger screens */
+@media screen and (min-width: 768px) {
+  .picture-container {
+    width: calc(33.33% - 20px);
+  }
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 767px) {
+  body {
+    font-size: 16px; /* Adjust as needed for smaller screens */
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    max-width: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 20px;
+  }
+
+  .main-content {
+    flex: none;
+  }
+
+  .follow-button-container {
+    margin-bottom: 20px;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  .top-bar input[type="text"] {
+    width: 100%;
+    margin: 0 auto; /* Center the input horizontally */
+  }
+
+  .picture-container {
+    width: 100%;
+    margin: 10px 0; /* Adjust margins for smaller screens */
+  }
+}
+/* Popup styles */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 100%;
+  max-width: 600px;
+  height: 200%;
+  max-height: 500px;
+  padding: 80px;
+  border-radius: 40px;
+  z-index: 9999;
+  color: #000;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.closePop {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 40px;
+}
+
+.popup-content input[type="file"] {
+  display: block;
+  margin: 60px auto;
+  background-color: #e6f3ff;
+}
+
+.popup-content button {
+  width: 50%;
+  padding: 20px;
+  border: #fff;
+  border-radius: 5px;
+  background-color: #E6F3FF;
+  color: #000;
+  cursor: pointer;
+  font-size: 30px;
+  position: relative;
+  margin-top: 70px;
+  font-weight: bold;
+}
+
+.popup-content button:hover {
+  background-color: #d6baff;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.empty-area {
+  background-image: url(../img/drag.PNG);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border: 2px dashed #ccc;
+  padding: 60px;
+  margin: 40px auto;
+  width: 60%;
+  max-width: 500px;
+  border-radius: 5px;
+}
+
+.drag-area {
+  display: none;
+}
+
+.drag-header {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.file-input {
+  display: none;
+}
+
+.select-button {
+  background-color: #E6F3FF;
+  color: #000;
+  padding: 15px 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.select-button:hover {
+  background-color: #d6baff;
 }
