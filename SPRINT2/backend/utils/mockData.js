@@ -1,4 +1,4 @@
-// mockData.js
+// OLD mockData.js
 
 // For my group: Mock data is primarily used during the development and testing phases of a software project.
 // It is a way to test the functionality of the application before the actual data is available.

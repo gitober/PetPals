@@ -1,0 +1,13 @@
+npm install express
+npm install mongoose
+npm install dotenv
+npm install nodemon --save-dev
+
+(learn more about these)
+npm install cookie-parser 
+npm install bcrypt 
+npm install jsonwebtoken
+
+(START)
+npm run dev
+npm start

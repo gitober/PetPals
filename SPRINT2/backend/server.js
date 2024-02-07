@@ -1,20 +1,32 @@
-// server.js
+const connectDB = require("./config/db");
 const express = require("express");
-const loggerMiddleware = require("./middleware/loggerMiddleware"); // Adjust the middleware path
-const petRoutes = require("./routes/petRoutes");
-const postRoutes = require("./routes/postRoutes");
+const mongoose = require("mongoose"); // CHECKCHECK
+const cookieParser = require("cookie-parser"); // CHECKCHECK
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(loggerMiddleware);
+app.use(express.json());
+app.use(cookieParser());
+
+// Connect to MongoDB
+connectDB();
 
 // Routes
-app.use("/api", petRoutes);
-app.use("/api", postRoutes);
+const authRoutes = require("./routes/authRoutes");
+const postRoutes = require("./routes/postRoutes");
+const userRoutes = require("./routes/userRoutes");
+
+// Use the routes
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/users", userRoutes);
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+const PORT = process.env.PORT || 5000; // MUISTA PORTTI!!
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
