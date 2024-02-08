@@ -14,10 +14,9 @@ app.use(cookieParser());
 // Connect to MongoDB
 connectDB();
 
-// Routes
-const authRoutes = require("../routes/authRoutes");
-const postRoutes = require("../routes/postRoutes");
-const userRoutes = require("../routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
+const postRoutes = require("./routes/postRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 // Use the routes
 app.use("/api/auth", authRoutes);

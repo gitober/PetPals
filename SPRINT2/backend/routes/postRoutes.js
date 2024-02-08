@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
-const { authenticateUser } = require("../middleware"); // Adjust the path if necessary
+const { authenticateUser } = require("../middleware/authMiddleware"); 
 
 router.get("/posts", postController.getAllPosts);
 router.post("/posts", authenticateUser, postController.createPost);
