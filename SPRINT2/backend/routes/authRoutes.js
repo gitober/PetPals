@@ -1,10 +1,25 @@
+/*
 const express = require("express");
+const authController = require("../controllers/authController");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User } = require("./userModel"); // Adjust the path as needed
+const { User } = require("../models/userModel"); // Adjust the path as needed
 
+const router = express.Router();*/
+
+// authRoutes.js
+const express = require("express");
 const router = express.Router();
+const authController = require("../controllers/authController");
 
+router.post("/register", authController.registerUser);
+router.post("/login", authController.loginUser);
+
+module.exports = router;
+
+
+
+/*
 // Register a new user
 router.post("/register", async (req, res) => {
   try {
@@ -62,4 +77,5 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router
+*/

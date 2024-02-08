@@ -1,6 +1,5 @@
 const connectDB = require("./config/db");
 const express = require("express");
-const mongoose = require("mongoose"); // CHECKCHECK
 const cookieParser = require("cookie-parser"); // CHECKCHECK
 
 const dotenv = require("dotenv");
@@ -16,9 +15,9 @@ app.use(cookieParser());
 connectDB();
 
 // Routes
-const authRoutes = require("./routes/authRoutes");
-const postRoutes = require("./routes/postRoutes");
-const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("../routes/authRoutes");
+const postRoutes = require("../routes/postRoutes");
+const userRoutes = require("../routes/userRoutes");
 
 // Use the routes
 app.use("/api/auth", authRoutes);
