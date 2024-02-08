@@ -358,8 +358,8 @@ body {
   width: 100%;
   max-width: 600px;
   height: 200%;
-  max-height: 500px;
-  padding: 80px;
+  max-height: 490px;
+  padding: 10px;
   border-radius: 40px;
   z-index: 9999;
   color: #000;
@@ -371,10 +371,22 @@ body {
   text-align: center;
 }
 
+.close {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  margin-right: 20px; /* Add margin to the right */
+  font-size: 40px;
+}
+
+.close:hover,
+.close:focus {
+  color: #d6baff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
 .closePop {
-  position: absolute;
-  top: 10px;
-  right: 20px;
   cursor: pointer;
   font-size: 40px;
 }
@@ -395,16 +407,11 @@ body {
   cursor: pointer;
   font-size: 30px;
   position: relative;
-  margin-top: 70px;
   font-weight: bold;
 }
 
 .popup-content button:hover {
   background-color: #d6baff;
-}
-
-.popup-content {
-  text-align: center;
 }
 
 .empty-area {
@@ -413,10 +420,10 @@ body {
   background-position: center;
   background-size: cover;
   border: 2px dashed #ccc;
-  padding: 60px;
-  margin: 40px auto;
+  padding: 15px;
+  margin: 15px auto;
   width: 60%;
-  max-width: 500px;
+  max-width: 300px;
   border-radius: 5px;
 }
 
@@ -439,7 +446,6 @@ body {
   padding: 15px 30px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .select-button:hover {
