@@ -21,6 +21,8 @@
     - authRoutes.js
     - postRoutes.js
     - userRoutes.js
+  /scripts
+    - seedData.js
   /utils
     - mockData.js (old mockdata)
   /docs
