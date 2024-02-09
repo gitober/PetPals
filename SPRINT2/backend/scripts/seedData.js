@@ -1,79 +1,41 @@
-const mongoose = require('mongoose');
-const { Post, posts } = require('./post.js'); // Import the Post model and posts array
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
+const { seedUsersToDatabase } = require("../models/userModel");
+const { seedPostsToDatabase } = require("../models/postModel");
+const connectDB = require("../config/db");
 
-// MongoDB Atlas connection string
-const uri = 'mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>';
+console.log("Starting script");
+console.log("MONGO_URI:", process.env.MONGO_URI);
 
-// Connect to MongoDB Atlas
-mongoose.connect(uri, {
-})
-.then(() => {
-  console.log('Connected to MongoDB Atlas');
-  // Insert documents
-  return Post.insertMany(posts);
-})
-.then((result) => {
-  console.log('Documents inserted:', result);
-  // Optionally do something after insertion
-})
-.catch((error) => {
-  console.error('Error connecting to MongoDB Atlas or inserting documents:', error);
-});
+if (!process.env.MONGO_URI) {
+  console.error("MONGO_URI is not defined in the environment variables");
+  process.exit(1);
+}
 
+async function runScript() {
+  let connection;
+  try {
+    console.log("Connecting to MongoDB");
+    connection = await connectDB();
 
+    // Seed users
+    console.log("Seeding users...");
+    await seedUsersToDatabase();
 
-/*
-const mongoose = require('mongoose');
-const { Post } = require('../models/postModel.js');
-const { posts } = require('../models/Post.js');
+    // Seed posts after users are seeded
+    console.log("Seeding posts...");
+    await seedPostsToDatabase();
 
-// Connect to MongoDB Atlas
-mongoose.connect('mongodb+srv://savye:hello@cluster0.rjeisil.mongodb.net/?retryWrites=true&w=majority', {
-});
+    console.log("Data seeding completed successfully");
+  } catch (error) {
+    console.error("Error during script execution:", error.message);
+  } finally {
+    if (connection) {
+      console.log("Closing MongoDB connection");
+      connection.disconnect();
+    }
+    console.log("Script completed");
+  }
+}
 
-// Insert documents
-Post.insertMany(posts)
-  .then((result) => {
-    console.log('Documents inserted:', result);
-    // Optionally do something after insertion
-  })
-  .catch((error) => {
-    console.error('Error inserting documents:', error);
-  });
-*/
-/*
-const mongoose = require('mongoose');
-const connectDB = require('../config/db'); // Assuming your database connection logic is in this file
-const Post = require('../models/Post'); // Assuming you have a Post model defined
-const User = require('../models/User'); // Assuming you have a User model defined
-
-// Connect to MongoDB Atlas
-connectDB();
-
-// Create sample data
-const samplePosts = [
-  {
-    username: 'user1',
-    caption: 'Sample caption 1',
-    // Other fields...
-  },
-  {
-    username: 'user2',
-    caption: 'Sample caption 2',
-    // Other fields...
-  },
-  // More sample posts...
-];
-
-// Insert sample posts
-Post.insertMany(samplePosts)
-  .then(posts => {
-    console.log('Sample posts inserted:', posts);
-    // Do something after insertion if needed
-  })
-  .catch(error => {
-    console.error('Error inserting sample posts:', error);
-  });
-
-// Similarly, you can insert sample users or other data as needed
-*/
+runScript();

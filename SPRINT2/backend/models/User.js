@@ -1,13 +1,13 @@
-// user.js
-const User = require("./userModel.js");
-const bcrypt = require("bcrypt"); // the bcrypt library is used for password hashing, install it using npm install bcrypt!!
-const connectDB = require("./db");
+require("dotenv").config();
+const mongoose = require("mongoose");
+const { seedUsersToDatabase } = require("./userModel");
+const bcrypt = require("bcrypt");
 
-connectDB();
+const MONGO_URI = process.env.MONGO_URI;
 
-const users = [
+const seedUsers = [
   {
-    _id: "user1", // Unique identifier (MongoDB ObjectId)
+    _id: "uniqueID1",
     username: "petlover1",
     email: "petlover1@example.com",
     password: bcrypt.hashSync("password123", 10),
@@ -18,7 +18,7 @@ const users = [
     },
   },
   {
-    _id: "user2",
+    _id: "uniqueID2",
     username: "animalfanatic",
     email: "animalfanatic@example.com",
     password: bcrypt.hashSync("password456", 10),
@@ -29,7 +29,7 @@ const users = [
     },
   },
   {
-    _id: "user3",
+    _id: "uniqueID3",
     username: "natureexplorer",
     email: "natureexplorer@example.com",
     password: bcrypt.hashSync("password789", 10),
@@ -40,7 +40,7 @@ const users = [
     },
   },
   {
-    _id: "user4",
+    _id: "uniqueID4",
     username: "furryfriend",
     email: "furryfriend@example.com",
     password: bcrypt.hashSync("passwordABC", 10),
@@ -50,16 +50,45 @@ const users = [
       profileImage: "https://example.com/profile4.jpg",
     },
   },
+  {
+    _id: "uniqueID5",
+    username: "adventurelover",
+    email: "petfriendly@example.com",
+    password: bcrypt.hashSync("passwordXXX", 10),
+    profile: {
+      name: "Larry Month",
+      bio: "Dedicated to adventurous life",
+    },
+  },
   // Add more advanced user data as needed
 ];
 
-const seedUsersToDatabase = async () => {
+const seedUsersAndCloseConnection = async () => {
   try {
-    await User.create(users);
-    console.log("Users seeded successfully");
+    console.log("MONGO_URI:", MONGO_URI); // Print MONGO_URI for debugging
+    await mongoose.connect(MONGO_URI);
+
+    // Seed users and get existing usernames
+    const existingUsernames = await seedUsersToDatabase(seedUsers);
+
+    // Handle Duplicates: Filter out existing usernames
+    const newUsers = seedUsers.filter(
+      (user) => !existingUsernames.includes(user.username)
+    );
+
+    if (newUsers.length > 0) {
+      // Insert new users into the database
+      await seedUsersToDatabase(newUsers);
+      console.log(`${newUsers.length} new users seeded successfully`);
+    } else {
+      console.log("No new users to seed");
+    }
   } catch (error) {
     console.error("Error seeding users:", error.message);
+  } finally {
+    mongoose.connection.close();
   }
 };
 
-module.exports = { User, seedUsersToDatabase };
+// Call the seeding function
+seedUsersAndCloseConnection();

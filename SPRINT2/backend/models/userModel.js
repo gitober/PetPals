@@ -1,27 +1,32 @@
 // userModel.js
+require("dotenv").config();
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
-  {
-    _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // Unique identifier (MongoDB ObjectId)
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    profile: {
-      name: { type: String },
-      bio: { type: String },
-      profileImage: { type: String },
-      location: { type: String },
-      website: { type: String },
-      // Add other user-related fields as needed
-    },
-    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }], // Reference to user's posts
-    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Reference to followers
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Reference to users being followed
+const userSchema = new mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  profile: {
+    name: { type: String },
+    bio: { type: String },
+    profileImage: { type: String },
   },
-  { timestamps: true } // Enable timestamps
-);
+});
+
+module.exports = mongoose.model("User", userSchema);
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+const seedUsersToDatabase = async () => {
+  try {
+    // Implementation to seed users to the database
+    // ...
+    console.log("Users seeded successfully");
+  } catch (error) {
+    console.error("Error seeding users:", error.message);
+  } finally {
+    mongoose.connection.close();
+  }
+};
+
+module.exports = { User, seedUsersToDatabase };
