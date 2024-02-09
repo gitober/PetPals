@@ -1,11 +1,34 @@
 const mongoose = require('mongoose');
+const { Post, posts } = require('./post.js'); // Import the Post model and posts array
+
+// MongoDB Atlas connection string
+const uri = 'mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>';
+
+// Connect to MongoDB Atlas
+mongoose.connect(uri, {
+})
+.then(() => {
+  console.log('Connected to MongoDB Atlas');
+  // Insert documents
+  return Post.insertMany(posts);
+})
+.then((result) => {
+  console.log('Documents inserted:', result);
+  // Optionally do something after insertion
+})
+.catch((error) => {
+  console.error('Error connecting to MongoDB Atlas or inserting documents:', error);
+});
+
+
+
+/*
+const mongoose = require('mongoose');
 const { Post } = require('../models/postModel.js');
 const { posts } = require('../models/Post.js');
 
 // Connect to MongoDB Atlas
 mongoose.connect('mongodb+srv://savye:hello@cluster0.rjeisil.mongodb.net/?retryWrites=true&w=majority', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 });
 
 // Insert documents
@@ -17,8 +40,7 @@ Post.insertMany(posts)
   .catch((error) => {
     console.error('Error inserting documents:', error);
   });
-
-
+*/
 /*
 const mongoose = require('mongoose');
 const connectDB = require('../config/db'); // Assuming your database connection logic is in this file
