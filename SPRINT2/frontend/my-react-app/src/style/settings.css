@@ -349,18 +349,17 @@ body {
   text-align: center;
 }
 
-.empty-area {
-  background-image: url(../img/drag.PNG);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+/* .empty-area {
+  background-image: url("../img/drag.PNG");
+  background-repeat: no-repeat; 
+  background-position: center; 
+  background-size: cover; 
   border: 2px dashed #ccc;
-  padding: 60px; /* Increase padding to make the box bigger */
-  margin: 40px auto; /* Increase margin to add space around the box */
-  width: 60%; /* Adjust width as needed, e.g., 80% of the parent container's width */
-  max-width: 500px; /* Optionally set a max-width to limit the size on larger screens */
+  padding: 60px; 
+  margin: 40px auto; 
+  width: 60%; 
   border-radius: 5px;
-}
+} */
 
 .drag-area {
   display: none; /* Hide by default */

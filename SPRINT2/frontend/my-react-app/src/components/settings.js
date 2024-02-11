@@ -1,5 +1,7 @@
 import React from "react";
-import "./settings.css"; // Import CSS file
+import "../style/settings.css";
+import Layout from "../Layout";
+
 
 function Settings() {
   const handleProfilePictureChange = (event) => {
@@ -41,12 +43,13 @@ function Settings() {
   };
 
   return (
+    <Layout>
     <div className="container">
       <div className="sidebar">
         <img src="../img/navbar.png" alt="logo" />
         <ul>
           <li>
-            <a href="../home/home.html">
+            <a href="../home">
               <span>
                 <img src="../img/home.png" alt="Home" />
               </span>{" "}
@@ -54,7 +57,7 @@ function Settings() {
             </a>
           </li>
           <li>
-            <a href="../profile/profile.html">
+            <a href="../profile">
               <span>
                 <img src="../img/profile.png" alt="Profile" />
               </span>{" "}
@@ -75,7 +78,7 @@ function Settings() {
             </a>
           </li>
           <li>
-            <a href="../settings/settings.html">
+            <a href="../settings">
               <span>
                 <img src="../img/settings.png" alt="Settings" />
               </span>{" "}
@@ -84,7 +87,7 @@ function Settings() {
           </li>
         </ul>
         <div className="logout">
-          <a href="../login/login.html">Log Out</a>
+          <a href="../login">Log Out</a>
         </div>
 
         <div className="popup">
@@ -170,6 +173,7 @@ function Settings() {
         </div>
       </div>
     </div>
+  </Layout>
   );
 }
 

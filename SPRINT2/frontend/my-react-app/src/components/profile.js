@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
-import "./profile.css"; // Import CSS file
+import "../style/profile.css";
+import Layout from "../Layout";
 
-function UserProfile() {
+function Profile() {
   // Simulated data (replace this with actual data from your application)
   const userPictures = [
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
+    "/img/profiledog.jpg",
+    "/img/profiledog.jpg",
+    "/img/profiledog.jpg",
+    "/img/profiledog.jpg",
+    "/img/profiledog.jpg",
+    "/img/profiledog.jpg",
+    "/img/profiledog.jpg",
+    "/img/profiledog.jpg",
     // Add more picture URLs as needed
   ];
 
@@ -44,22 +45,23 @@ function UserProfile() {
   }, []);
 
   return (
+    <Layout>
     <div className="container">
       <div className="sidebar">
-        <img src="/SPRINT2/frontend/img/navbar.png" alt="logo" />
+        <img src="../img/navbar.png" alt="logo" />
         <ul>
           <li>
-            <a href="/SPRINT2/frontend/home/home.html">
+            <a href="../home">
               <span>
-                <img src="/SPRINT2/frontend/img/home.png" alt="Home" />
+                <img src="../img/home.png" alt="Home" />
               </span>{" "}
               HOME
             </a>
           </li>
           <li>
-            <a href="/SPRINT2/frontend/profile/profile.html">
+            <a href="../profile">
               <span>
-                <img src="/SPRINT2/frontend/img/profile.png" alt="Profile" />
+                <img src="../img/profile.png" alt="Profile" />
               </span>{" "}
               PROFILE
             </a>
@@ -68,7 +70,7 @@ function UserProfile() {
             <a href="#">
               <span>
                 <img
-                  src="/SPRINT2/frontend/img/post.png"
+                  src="../img/post.png"
                   alt="POST"
                   className="signUp"
                   id="signUpLink"
@@ -78,16 +80,16 @@ function UserProfile() {
             </a>
           </li>
           <li>
-            <a href="/SPRINT2/frontend/settings/settings.html">
+            <a href="../settings">
               <span>
-                <img src="/SPRINT2/frontend/img/settings.png" alt="Settings" />
+                <img src="../img/settings.png" alt="Settings" />
               </span>{" "}
               SETTINGS
             </a>
           </li>
         </ul>
         <div className="logout">
-          <a href="/SPRINT2/frontend/login/login.html">Log Out</a>
+          <a href="../login">Log Out</a>
         </div>
       </div>
       <div className="main-content">
@@ -105,7 +107,7 @@ function UserProfile() {
             </div>
             <div className="profile-picture-container">
               <img
-                src="/SPRINT2/frontend/img/profiledog.jpg"
+                src="../img/profiledog.jpg"
                 alt="Profile Picture"
                 className="profile-picture"
               />
@@ -131,7 +133,9 @@ function UserProfile() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
+  
 
-export default UserProfile;
+export default Profile;

@@ -1,56 +1,52 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Profile</title>
-    <link rel="stylesheet" href="userprofile.css" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile.css" />
+    <script src="postpopupProfile.js"></script>
 </head>
-<script>
-    let isFollowing = false;
-
-    function toggleFollow() {
-        const followButton = document.getElementById('followButton');
-
-        if (isFollowing) {
-            // Unfollow logic here
-            followButton.innerText = 'Follow';
-        } else {
-            // Follow logic here
-            followButton.innerText = 'Following';
-        }
-
-        isFollowing = !isFollowing;
-    }
-</script>
 <body>
     <div class="container">
         <div class="sidebar">
             <img src="../img/navbar.png" alt="logo" />
-                <ul>
+            <ul>
                 <li><a href="../home/home.html"><span><img src="../img/home.png" alt="Home" /></span> HOME</a></li>
                 <li><a href="../profile/profile.html"><span><img src="../img/profile.png" alt="Profile" /></span> PROFILE</a></li>
-                <li><a href="#"><span><img src="../img/post.png" alt="Post" /></span> POST</a></li>
+                <li><a onclick="openPopup()"><span><img src="../img/post.png" alt="POST" class="signUp" id="signUpLink"/></span> POST</a></li>
                 <li><a href="../settings/settings.html"><span><img src="../img/settings.png" alt="Settings" /></span> SETTINGS</a></li>
-                </ul>
-                <div class="logout"><a href="../login/login.html">Log Out</a></div>
+            </ul>
+            <div class="logout"><a href="../login/login.html">Log Out</a></div>
+
+            <div class="popup">
+                <div class="popup-content">
+                  <span class="close" onclick="closePopup()">&times;</span>
+                  <h2 class="add-new">Add a new picture</h2>
+                  <div class="empty-area">
+                    <div class="drag-header"></div>
+                    <input type="file" id="fileInput" accept="image/*" class="file-input" />
+                  </div>
+                </div>
+                <h2>Drag Photos here</h2>
+                <h3 class="popuph3">or</h3>
+                <label for="fileInput" class="select-button">Select from computer</label>
+                
+              </div>
+
         </div>
         <div class="main-content">
             <div class="top-bar">
                 <input type="text" placeholder="Search" />
             </div>
             <div class="feed-container">
-                <!-- Feed container content goes here -->
+                
             </div>
             <div class="feed">
-                <!-- Feed content goes here -->
+                
                 <div class="user-info">
                     <div class="username">
                         <h3>username</h3>
-                    </div>
-                    <div class="follow-button-container">
-                        <!-- Follow button goes here -->
-                        <button id="followButton" class="follow-button" onclick="toggleFollow()">Follow</button>
                     </div>
                     <div class="profile-picture-container">
                         <img src="../img/profiledog.jpg" alt="Profile Picture" class="profile-picture" />
@@ -61,17 +57,17 @@
                     <p>50 Following</p>
                 </div>
                 <div class="profile-details">
-                    <h4>USER Profile Details</h4>
+                    <h4>Profile Details</h4>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod semper libero, vitae fermentum magna elementum vel. Sed vestibulum lacus ut libero sagittis, id rhoncus nunc ultricies. In auctor est vitae nunc efficitur, vel eleifend dolor vestibulum.</p>
                 </div>
-                <!-- HTML Structure -->
+                
                 <div class="user-pictures-container" id="user-pictures-container">
-                    <!-- Pictures will be dynamically added here -->
+                    
                 </div>
                 <script>
                     // Simulated data (replace this with actual data from your application)
                     const userPictures = [
-                        "../img/feed.jpg",
+                        "../img/profiledog.jpg",
                         "../img/profiledog.jpg",
                         "../img/profiledog.jpg",
                         "../img/profiledog.jpg",
@@ -94,9 +90,8 @@
                             const pictureContainer = document.createElement("div");
                             pictureContainer.className = "picture-container";
 
-                            const pictureElement = document.createElement("div");
-                            pictureElement.style.backgroundImage = `url('${pictureUrl}')`;
-                            pictureElement.className = "picture-background";
+                            const pictureElement = document.createElement("img");
+                            pictureElement.src = pictureUrl;
                             pictureElement.alt = "User Picture";
 
                             pictureContainer.appendChild(pictureElement);
@@ -111,4 +106,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> -->

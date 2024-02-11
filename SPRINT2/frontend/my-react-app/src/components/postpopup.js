@@ -15,4 +15,3 @@ function openPopup() {
     event.preventDefault(); // Prevent default form submission behavior
     // Handle form submission logic here (e.g., file upload)
   });
-  

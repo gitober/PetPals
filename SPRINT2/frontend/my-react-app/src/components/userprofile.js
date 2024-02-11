@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./userprofile.css"; // Import CSS file
+import "../style/userprofile.css";
+import Layout from "../Layout";
 
 const UserProfile = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -10,14 +11,14 @@ const UserProfile = () => {
 
   // Simulated data (replace this with actual data from your application)
   const userPictures = [
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
-    "/SPRINT2/frontend/img/profiledog.jpg",
+    "../img/profiledog.jpg",
+    "../img/profiledog.jpg",
+    "../img/profiledog.jpg",
+    "../img/profiledog.jpg",
+    "../img/profiledog.jpg",
+    "../img/profiledog.jpg",
+    "../img/profiledog.jpg",
+    "../img/profiledog.jpg",
     // Add more picture URLs as needed
   ];
 
@@ -50,22 +51,23 @@ const UserProfile = () => {
   }, []);
 
   return (
+    <Layout>
     <div className="container">
       <div className="sidebar">
-        <img src="/SPRINT2/frontend/img/navbar.png" alt="logo" />
+        <img src="../img/navbar.png" alt="logo" />
         <ul>
           <li>
-            <a href="/SPRINT2/frontend/home/home.html">
+            <a href="../home">
               <span>
-                <img src="/SPRINT2/frontend/img/home.png" alt="Home" />
+                <img src="../img/home.png" alt="Home" />
               </span>{" "}
               HOME
             </a>
           </li>
           <li>
-            <a href="/SPRINT2/frontend/profile/profile.html">
+            <a href="../profile">
               <span>
-                <img src="/SPRINT2/frontend/img/profile.png" alt="Profile" />
+                <img src="../img/profile.png" alt="Profile" />
               </span>{" "}
               PROFILE
             </a>
@@ -73,15 +75,15 @@ const UserProfile = () => {
           <li>
             <a href="#">
               <span>
-                <img src="/SPRINT2/frontend/img/post.png" alt="Post" />
+                <img src="../img/post.png" alt="Post" />
               </span>{" "}
               POST
             </a>
           </li>
           <li>
-            <a href="/SPRINT2/frontend/settings/settings.html">
+            <a href="../settings">
               <span>
-                <img src="/SPRINT2/frontend/img/settings.png" alt="Settings" />
+                <img src="../img/settings.png" alt="Settings" />
               </span>{" "}
               SETTINGS
             </a>
@@ -114,7 +116,7 @@ const UserProfile = () => {
             </div>
             <div className="profile-picture-container">
               <img
-                src="/SPRINT2/frontend/img/profiledog.jpg"
+                src="/img/profiledog.jpg"
                 alt="Profile Picture"
                 className="profile-picture"
               />
@@ -140,6 +142,7 @@ const UserProfile = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

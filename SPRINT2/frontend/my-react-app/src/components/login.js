@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./login.css"; // Import CSS file
+import "../style/login.css";
+import Layout from "../Layout";
 
 function Login() {
   // State variables for inputs
@@ -21,15 +22,16 @@ function Login() {
     // Simulate login logic
     if (username && password) {
       // Redirect to home page
-      window.location.href = "../home/home.html";
+      window.location.href = "../home";
     }
   }
 
   return (
+    <Layout>
     <div className="container">
       <div className="logo-container">
         <div className="logo">
-          <img src="../img/project_logo.png" alt="Logo" />
+          <img src="../img/navbar.png" alt="Logo" /> 
         </div>
       </div>
       <div className="login-container">
@@ -107,6 +109,7 @@ function Login() {
         </div>
       </div>
     </div>
+  </Layout>
   );
 }
 

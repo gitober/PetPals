@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./home.css"; // Import CSS file
+import "../style/home.css";
+import Layout from "../Layout";
 
 function Home() {
   // State variables for like status and count
@@ -17,47 +18,157 @@ function Home() {
     }
   }
 
-  // Function to open comment popup
-  function openCommentPopup() {
-    // Add logic to show comment popup
+  function openPopup() {
+    var popup = document.querySelector('.popup');
+    popup.style.display = 'block';
   }
 
-  // Function to close comment popup
+  function closePopup() {
+    var popup = document.querySelector('.popup');
+    popup.style.display = 'none';
+  }
+  // Function to open comment popup
+  function openCommentPopup() {
+    const commentPopup = document.getElementById("commentPopup");
+    commentPopup.style.display = "block";
+  }
+
   function closeCommentPopup() {
-    // Add logic to close comment popup
+    const commentPopup = document.getElementById("commentPopup");
+    commentPopup.style.display = "none";
   }
 
   // Function to submit comment
   function submitComment() {
-    // Add logic to handle comment submission
-    // You can send the comment to the server, update the UI, etc.
-    closeCommentPopup();
   }
 
+
   return (
-    <div className="home-container">
-      <div className="like-section">
-        <img
-          src={liked ? "../img/like-filled.png" : "../img/like.png"}
-          alt="Like"
-          id="likeIcon"
-          onClick={toggleLike}
-        />
-        <span id="likeCount">{likeCount}</span>
-      </div>
-      <button onClick={openCommentPopup}>Open Comment Popup</button>
-      {/* Comment Popup */}
-      <div id="commentPopup" className="comment-popup">
-        <div className="comment-popup-content">
-          <span className="close" onClick={closeCommentPopup}>
-            &times;
-          </span>
-          <h2 className="add-comment">Add a comment</h2>
-          <textarea placeholder="Write your comment here..." />
-          <button onClick={submitComment}>Submit</button>
+    <Layout>
+      <div className="container">
+        <div className="sidebar">
+          <img srcset="/img/navbar.png" alt="logo" />
+          <ul>
+            <li>
+              <a href="../home">
+                <span>
+                  <img srcset="/img/home.png" alt="Home" />
+                </span>{' '}
+                HOME
+              </a>
+            </li>
+            <li>
+              <a href="../profile">
+                <span>
+                  <img srcset="/img/profile.png" alt="Profile" />
+                </span>{' '}
+                PROFILE
+              </a>
+            </li>
+            <li>
+              <a onClick={() => openPopup()}>
+                <span>
+                  <img srcset="/img/post.png" alt="POST" className="signUp" id="signUpLink" />
+                </span>{' '}
+                POST
+              </a>
+            </li>
+            <li>
+              <a href="../settings">
+                <span>
+                  <img srcset="/img/settings.png" alt="Settings" />
+                </span>{' '}
+                SETTINGS
+              </a>
+            </li>
+          </ul>
+          <div className="logout">
+            <a href="/login">Log Out</a>
+          </div>
+
+          <div className="popup">
+            <div className="popup-content">
+              <span className="close" onClick={() => closePopup()}> 
+                &times;
+              </span>
+              <h2>Add a new picture</h2>
+              <div className="empty-area">
+                <div className="drag-header"></div>
+                <input type="file" id="fileInput" accept="image/*" className="file-input" />
+              </div>
+            </div>
+            <h2>Drag Photos here</h2>
+            <h3 className="popuph3">or</h3>
+            <label htmlFor="fileInput" className="select-button">
+              Select from computer
+            </label>
+          </div>
+        </div>
+
+        <div className="main-content">
+          <div className="top-bar">
+            <input type="text" placeholder="Search" />
+          </div>
+          <div className="feed">
+            <div className="user-info">
+              <a href="../userprofile">
+                <h3>username</h3>
+              </a>
+            </div>
+            <div className="feed-image">
+              <a href="/userprofile">
+                <img srcset="/img/profiledog.jpg" alt="Feed Image" />
+              </a>
+            </div>
+            <div className="icons">
+              <div className="like-container">
+                <img
+                  src="../img/like.png"
+                  alt="Like"
+                  className="like-icon"
+                  id="likeIcon"
+                  onClick={() => toggleLike()}
+                />
+              </div>
+              <img
+                srcset="../img/comment.png"
+                alt="Comment"
+                className="icon"
+                onClick={() => openCommentPopup()}
+              />
+            
+              <div className="likes-container">
+                <p className="likes">
+                  likes <span id="likeCount">0</span>
+                </p>
+              </div>
+            </div>
+            <p className="lorem-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris. 
+              lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris.
+            </p>
+          </div>
+        </div>
+
+        <div className="comment-popup" id="commentPopup">
+          <div>
+            <span className="close" onClick={() => closeCommentPopup()}>
+              &times;
+            </span>
+          </div>
+          <div className="popUpCommentHeader">
+            <h2>Add your comment</h2>
+          </div>
+          <div className="comment-popup-content"></div>
+          <div className="comment-input">
+            <input type="text" placeholder="Write your comment here..." />
+          </div>
+          <div className="submit-comment">
+            <button onClick={() => submitComment}>Submit</button>
+          </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 
