@@ -1,25 +1,23 @@
-// postModel.js
-require("dotenv").config();
+// Mongoose schema for posts with fields such as content, images, likes, comments, and user. The schema establishes 
+// relationships with the "user" and "comment" models using ObjectId references. It includes timestamps and is 
+// exported as the "post" model for MongoDB operations. 
+
 const mongoose = require("mongoose");
 
-const postSchema = new mongoose.Schema({
-  username: { type: String, required: true },
-  caption: { type: String, required: true },
-  likes: { type: Number, default: 0 },
-});
-
-const Post = mongoose.model("Post", postSchema);
-
-const seedPostsToDatabase = async () => {
-  try {
-    // Implementation to seed posts to the database
-    // ...
-    console.log("Posts seeded successfully");
-  } catch (error) {
-    console.error("Error seeding posts:", error.message);
-  } finally {
-    mongoose.connection.close();
+const postSchema = mongoose.Schema(
+  {
+    content: String,
+    images: {
+      type: Array,
+      required: true,
+    },
+    likes: [{ type: mongoose.Types.ObjectId, ref: "user" }],
+    commentss: [{ type: mongoose.Types.ObjectId, ref: "comment" }],
+    user: { type: mongoose.Types.ObjectId, ref: "user" },
+  },
+  {
+    timestamps: true,
   }
-};
+);
 
-module.exports = { Post, seedPostsToDatabase };
+module.exports = mongoose.model("post", postSchema);

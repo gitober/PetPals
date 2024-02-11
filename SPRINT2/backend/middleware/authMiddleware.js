@@ -1,22 +1,31 @@
-// LEARN JWT!! Express Middleware for Token-Based Authentication and User Authorization using JWTs.
+// Middleware for validating user access tokens. It checks the presence, validity, and user existence based on
+// the access token. If valid, it attaches the user object to the request for further processing.
+// Handles errors by returning appropriate responses for invalid or missing tokens.
 
+const Users = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
-// Middleware to check if the request has a valid token
-const authenticateUser = (req, res, next) => {
-  // Get the token from the request headers, cookies, or wherever you store it
-  const token = req.headers.authorization || req.cookies.token;
-
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized - Missing token" });
-  }
-
+const authenticateUser = async (req, res, next) => {
   try {
-    // Verify the token
-    const decoded = jwt.verify(token, "your-secret-key"); // Replace with your actual secret key
+    const token = req.header("Authorization");
 
-    // Attach user information to the request
-    req.user = decoded.user;
+    if (!token) {
+      return res.status(500).json({ message: "Not valid" });
+    }
+
+    const decoded = jwt.verify(token, process.env.ACCESSTOKENSECRET);
+
+    if (!decoded) {
+      return res.status(500).json({ message: "Not valid" });
+    }
+
+    const user = await Users.findOne({ _id: decoded.id });
+
+    if (!user) {
+      return res.status(500).json({ message: "User not found" });
+    }
+
+    req.user = user;
     next();
   } catch (error) {
     console.error("Authentication error:", error);
@@ -24,4 +33,4 @@ const authenticateUser = (req, res, next) => {
   }
 };
 
-module.exports = { authenticateUser };
+module.exports = authenticateUser;
