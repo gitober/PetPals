@@ -134,7 +134,7 @@ body {
 }
 
 .profile-picture {
-  width: 120px;
+  width: 100px;
   height: auto;
 }
 
@@ -357,7 +357,6 @@ body {
   background-color: #fff;
   width: 100%;
   max-width: 600px;
-  height: 200%;
   max-height: 490px;
   padding: 10px;
   border-radius: 40px;
@@ -451,3 +450,4 @@ body {
 .select-button:hover {
   background-color: #d6baff;
 }
+

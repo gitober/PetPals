@@ -13,7 +13,6 @@ function Profile() {
     "/img/profiledog.jpg",
     "/img/profiledog.jpg",
     "/img/profiledog.jpg",
-    // Add more picture URLs as needed
   ];
 
   // Function to dynamically populate the picture containers
@@ -39,59 +38,83 @@ function Profile() {
         userPicturesContainer.appendChild(pictureContainer);
       });
     };
+    
 
     // Call the function to populate pictures when the component mounts
     populatePictures();
   }, []);
 
+  function openPopup() {
+    var popup = document.querySelector('.popup');
+    popup.style.display = 'block';
+  }
+
+  function closePopup() {
+    var popup = document.querySelector('.popup');
+    popup.style.display = 'none';
+  }
+
   return (
     <Layout>
     <div className="container">
-      <div className="sidebar">
-        <img src="../img/navbar.png" alt="logo" />
-        <ul>
-          <li>
-            <a href="../home">
-              <span>
-                <img src="../img/home.png" alt="Home" />
-              </span>{" "}
-              HOME
-            </a>
-          </li>
-          <li>
-            <a href="../profile">
-              <span>
-                <img src="../img/profile.png" alt="Profile" />
-              </span>{" "}
-              PROFILE
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <span>
-                <img
-                  src="../img/post.png"
-                  alt="POST"
-                  className="signUp"
-                  id="signUpLink"
-                />
-              </span>{" "}
-              POST
-            </a>
-          </li>
-          <li>
-            <a href="../settings">
-              <span>
-                <img src="../img/settings.png" alt="Settings" />
-              </span>{" "}
-              SETTINGS
-            </a>
-          </li>
-        </ul>
-        <div className="logout">
-          <a href="../login">Log Out</a>
+    <div className="sidebar">
+          <img srcset="/img/navbar.png" alt="logo" />
+          <ul>
+            <li>
+              <a href="../home">
+                <span>
+                  <img srcset="/img/home.png" alt="Home" />
+                </span>{' '}
+                HOME
+              </a>
+            </li>
+            <li>
+              <a href="../profile">
+                <span>
+                  <img srcset="/img/profile.png" alt="Profile" />
+                </span>{' '}
+                PROFILE
+              </a>
+            </li>
+            <li>
+              <a onClick={() => openPopup()}>
+                <span>
+                  <img srcset="/img/post.png" alt="POST" className="signUp" id="signUpLink" />
+                </span>{' '}
+                POST
+              </a>
+            </li>
+            <li>
+              <a href="../settings">
+                <span>
+                  <img srcset="/img/settings.png" alt="Settings" />
+                </span>{' '}
+                SETTINGS
+              </a>
+            </li>
+          </ul>
+          <div className="logout">
+            <a href="/login">Log Out</a>
+          </div>
+
+          <div className="popup">
+            <div className="popup-content">
+              <span className="close" onClick={() => closePopup()}> 
+                &times;
+              </span>
+              <h2>Add a new picture</h2>
+              <div className="empty-area">
+                <div className="drag-header"></div>
+                <input type="file" id="fileInput" accept="image/*" className="file-input" />
+              </div>
+            </div>
+            <h2>Drag Photos here</h2>
+            <h3 className="popuph3">or</h3>
+            <label htmlFor="fileInput" className="select-button">
+              Select from computer
+            </label>
+          </div>
         </div>
-      </div>
       <div className="main-content">
         <div className="top-bar">
           <input type="text" placeholder="Search" />
