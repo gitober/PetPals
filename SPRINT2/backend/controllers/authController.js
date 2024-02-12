@@ -1,3 +1,7 @@
+// authController handles user authentication operations in a social media application.
+// It includes functions for user registration, login, logout, and generating access tokens.
+// The controller ensures secure user authentication and token management within the application.
+
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -221,4 +225,3 @@ const createRefreshToken = (payload) => {
 };
 
 module.exports = authController;
-

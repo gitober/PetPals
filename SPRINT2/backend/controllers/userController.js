@@ -51,7 +51,7 @@ const userController = {
       return res.status(500).json({ message: "Internal Server Error" });
     }
   },
-  
+
   // Update user profile information
   updateUser: async (req, res) => {
     try {
@@ -69,6 +69,7 @@ const userController = {
     }
   },
 
+  // Follow or Unfollow a User
   friend: async (req, res) => {
     try {
       const userToFollow = await Users.findOne({
@@ -107,6 +108,7 @@ const userController = {
     }
   },
 
+// Unfollow a User
   unfriend: async (req, res) => {
     try {
       const userToUnfollow = await Users.findOne({
@@ -138,7 +140,7 @@ const userController = {
         { $pull: { following: req.params.id } },
         { new: true }
       );
-
+      // Friend Removed Successfully
       res.json({ message: "Friend removed" });
     } catch (error) {
       return res.status(500).json({ message: error.message });
