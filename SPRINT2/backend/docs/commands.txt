@@ -12,3 +12,7 @@ npm install jsonwebtoken
 (START)
 npm run dev
 npm start
+
+Get tokens in terminal
+-node
+-require('crypto').randomBytes(64).toString('hex')

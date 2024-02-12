@@ -1,0 +1,11 @@
+POST http://localhost:5000/api/register
+Authorization: Bearer (my-access-token)
+Content-Type: application/json
+
+{
+  "fullname": "Moro Mauno",
+  "username": "Moro",
+  "email": "moro@mauno.com",
+  "password": "securepassword",
+  "gender": "male"
+}

@@ -1,0 +1,15 @@
+IN THE TERMINAL TO MONGODB!!!! voi juma
+
+$headers = @{
+    "Content-Type" = "application/json"
+}
+
+$body = @{
+    "fullname" = "Moro Mauno"
+    "username" = "Moro"
+    "email" = "moro@mauno.com"
+    "password" = "securepassword"
+    "gender" = "male"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri http://localhost:5000/api/register -Method POST -Headers $headers -Body $body

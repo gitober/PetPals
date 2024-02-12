@@ -1,7 +1,3 @@
-// authController is a module that handles user authentication operations, including user registration, login, logout,
-// and the generation of access tokens using refresh tokens. It ensures secure user authentication and provides
-// endpoints for registration, login, and managing authentication tokens for user sessions.
-
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -13,22 +9,47 @@ const authController = {
       // Extract user details from request body
       const { fullname, username, email, password, gender } = req.body;
 
+      // Check if user is already logged in
+      if (req.user) {
+        return res.status(200).json({
+          message: "You are already logged in.",
+          status: "success",
+        });
+      }
+
       // Generate a unique username and check for duplicates
-      const newUsername = username.toLowerCase().replace(/ /g, "");
-      const user_name = await Users.findOne({ username: newUsername });
-      if (user_name)
-        return res.status(400).json({ message: "Username already exists" });
+      const newUsername = (username || "").toLowerCase().replace(/ /g, "");
+      const userWithUsername = await Users.findOne({ username: newUsername });
+      if (userWithUsername) {
+        return res.status(400).json({
+          message: "Username already exists",
+          field: "username",
+        });
+      }
 
       // Check for duplicate email
-      const Email = await Users.findOne({ email: email });
-      if (Email)
-        return res.status(400).json({ message: "Email already exists" });
+      const userWithEmail = await Users.findOne({ email });
+      if (userWithEmail) {
+        return res.status(400).json({
+          message: "Email already exists",
+          field: "email",
+        });
+      }
 
       // Validate password length
-      if (password.length < 8)
-        return res
-          .status(400)
-          .json({ message: "Password must be at least 8 characters long" });
+      if (!password) {
+        return res.status(400).json({
+          message: "Password is missing or undefined",
+          field: "password",
+        });
+      }
+
+      if (password.length < 8) {
+        return res.status(400).json({
+          message: "Password must be at least 8 characters long",
+          field: "password",
+        });
+      }
 
       // Hash the password
       const passwordHash = await bcrypt.hash(password, 13);
@@ -64,6 +85,7 @@ const authController = {
         },
       });
     } catch (err) {
+      console.error(`Error in registration: ${err.message}`);
       return res.status(500).json({ message: err.message });
     }
   },
@@ -71,6 +93,14 @@ const authController = {
   // Login user
   login: async (req, res) => {
     try {
+      // Check if user is already logged in
+      if (req.user) {
+        return res.status(200).json({
+          message: "You are already logged in.",
+          status: "success",
+        });
+      }
+
       // Extract login credentials from request body
       const { email, password } = req.body;
 
@@ -82,12 +112,18 @@ const authController = {
 
       // Check if user exists
       if (!user)
-        return res.status(400).json({ message: "User does not exist" });
+        return res.status(404).json({
+          message: "User not found",
+          field: "email",
+        });
 
       // Compare passwords
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
-        return res.status(400).json({ message: "Password is incorrect" });
+        return res.status(401).json({
+          message: "Incorrect password",
+          field: "password",
+        });
 
       // Generate tokens and set cookies
       const access_token = createAccessToken({ id: user._id });
@@ -115,6 +151,14 @@ const authController = {
   // Logout user
   logout: async (req, res) => {
     try {
+      const requestData = req.body;
+
+      if (Object.keys(requestData).length === 0) {
+        console.log("Logout request received with no additional data.");
+      } else {
+        console.log("Logout request received. Additional data:", requestData);
+      }
+
       // Clear refresh token cookie
       res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
       res.json({ message: "Logged out" });
@@ -177,3 +221,4 @@ const createRefreshToken = (payload) => {
 };
 
 module.exports = authController;
+

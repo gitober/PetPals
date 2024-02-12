@@ -3,18 +3,22 @@
 // middleware (authMiddleware) is used to secure certain routes, and the router is connected to corresponding 
 // functions in the postController for implementing the logic.
 
-const router = require("express").Router();
+const express = require("express");
 const postController = require("../controllers/postController");
 const authMiddleware = require("../middleware/authMiddleware");
 
-router.route("/posts")
-.post(authMiddleware, postController.createPost)
-.get(postController.getPost);
+const router = express.Router();
 
-router.route("/posts/:id")
-.patch(authMiddleware, postController.updatePost)
-.get(authMiddleware, postController.getSinglePost)
-.delete(authMiddleware, postController.deletePost);
+router
+  .route("/posts")
+  .post(authMiddleware, postController.createPost)
+  .get(postController.getPost);
+
+router
+  .route("/posts/:id")
+  .patch(authMiddleware, postController.updatePost)
+  .get(authMiddleware, postController.getSinglePost)
+  .delete(authMiddleware, postController.deletePost);
 
 router.patch("/posts/:id/like", authMiddleware, postController.likePost);
 router.patch("/posts/:id/unlike", authMiddleware, postController.unlikePost);

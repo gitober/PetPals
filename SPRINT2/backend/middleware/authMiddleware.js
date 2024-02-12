@@ -9,20 +9,23 @@ const authenticateUser = async (req, res, next) => {
   try {
     const token = req.header("Authorization");
 
-    if (!token) {
-      return res.status(500).json({ message: "Not valid" });
+    if (!token || !token.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Invalid or missing token" });
     }
 
-    const decoded = jwt.verify(token, process.env.ACCESSTOKENSECRET);
+    const decoded = jwt.verify(
+      token.split(" ")[1],
+      process.env.ACCESSTOKENSECRET
+    );
 
     if (!decoded) {
-      return res.status(500).json({ message: "Not valid" });
+      return res.status(401).json({ message: "Invalid token" });
     }
 
     const user = await Users.findOne({ _id: decoded.id });
 
     if (!user) {
-      return res.status(500).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     req.user = user;

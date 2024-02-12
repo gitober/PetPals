@@ -16,7 +16,7 @@ const errorHandlerMiddleware = require("./middleware/errorHandler");
 
 const app = express();
 
-app.use(express.json()); // Move this line here to parse the request body
+app.use(express.json()); // Use express.json() for parsing the request body
 app.use(cors());
 app.use(cookieParser());
 
@@ -24,13 +24,9 @@ app.use(cookieParser());
 app.use((req, res, next) => {
   console.log(`Received ${req.method} request to ${req.originalUrl}`);
   if (
-    req.method === "GET" ||
-    req.method === "PUT" ||
-    req.method === "POST" ||
-    req.method === "DELETE" ||
-    req.method === "HEAD" ||
-    req.method === "OPTIONS" ||
-    req.method === "PATCH"
+    ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS", "PATCH"].includes(
+      req.method
+    )
   ) {
     console.log("Data received:", req.body);
   }
@@ -41,14 +37,15 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
 
-  // Check if the error is a known type
-  if (err.name === 'ValidationError') {
-    // Handle validation errors
-    return res.status(400).json({ error: 'Validation Error', message: err.message });
+  if (err.name === "ValidationError") {
+    return res
+      .status(400)
+      .json({ error: "Validation Error", message: err.message });
   }
 
-  // Handle other types of errors
-  res.status(500).json({ error: 'Internal Server Error', message: err.message });
+  res
+    .status(500)
+    .json({ error: "Internal Server Error", message: err.message });
 });
 
 app.use("/api", authRouter);
@@ -62,12 +59,10 @@ app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 const PORT = process.env.PORT || 5000;
-const URL = process.env.MONGO_URI;
 
 connectDB();
 
-// FOR BACKEND SERVER TESTING!! LET'S KEEP THIS UNTIL WE CONNECT FRONTEND TO BACKEND
-app.listen(PORT || 5000, () => {
+app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
