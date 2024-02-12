@@ -1,55 +1,58 @@
-### Authentication ###
 
-# Register User:
+# Authentication
+
+
+##  Register User:
 
 Method: POST
 URL: http://localhost:5000/api/register
 Headers: None
 Body (JSON):
 {
-  "fullname": "John Doe",
-  "username": "johndoe",
-  "email": "john.doe@example.com",
-  "password": "securepassword",
-  "gender": "male"
+"fullname": "John Doe",
+"username": "johndoe",
+"email": "john.doe@example.com",
+"password": "securepassword",
+"gender": "male"
 }
 
 Expected Response:
 {
-  "message": "Registration Successful!",
-  "access_token": "your_access_token",
-  "user": {
-    "fullname": "John Doe",
-    "username": "johndoe",
-    "email": "john.doe@example.com",
-    "gender": "male"
-  }
-}  
-
-# Login User:
+"message": "Registration Successful!",
+"access_token": "your_access_token",
+"user": {
+"fullname": "John Doe",
+"username": "johndoe",
+"email": "john.doe@example.com",
+"gender": "male"
+}
+}
+  
+##  Login User:
 
 Method: POST
 URL: http://localhost:5000/api/login
 Headers: None
 Body (JSON):
+
 {
-  "email": "john.doe@example.com",
-  "password": "securepassword"
+"email": "john.doe@example.com",
+"password": "securepassword"
 }
 
 Expected Response:
 {
-  "message": "Login Successful!",
-  "access_token": "your_access_token",
-  "user": {
-    "fullname": "John Doe",
-    "username": "johndoe",
-    "email": "john.doe@example.com",
-    "gender": "male"
-  }
+"message": "Login Successful!",
+"access_token": "your_access_token",
+"user": {
+"fullname": "John Doe",
+"username": "johndoe",
+"email": "john.doe@example.com",
+"gender": "male"
+}
 }
 
-# Logout User:
+##  Logout User:
 
 Method: POST
 URL: http://localhost:5000/api/logout
@@ -58,31 +61,32 @@ Body: None
 
 Expected Response:
 {
-  "message": "Logged out"
+"message": "Logged out"
 }
 
-# Refresh Access Token:
+##  Refresh Access Token:
 
 Method: POST
 URL: http://localhost:5000/api/refresh_token
 Headers: None
 Body: None
 
-Expected Response:
+Expected Response
 {
-  "access_token": "your_new_access_token",
-  "user": {
-    "fullname": "John Doe",
-    "username": "johndoe",
-    "email": "john.doe@example.com",
-    "gender": "male"
-  }
+"access_token": "your_new_access_token",
+"user": {
+"fullname": "John Doe",
+"username": "johndoe",
+"email": "john.doe@example.com",
+"gender": "male"
+}
 }
 
+# User  
 
-### User ###
+ 
+##  Get All Users:
 
-# Get All Users:
 
 Method: GET
 URL: http://localhost:5000/api/users
@@ -92,45 +96,44 @@ Body: None
 
 Expected Response:
 {
-  "message": "All users retrieved successfully",
-  "users": [
-    {
-      "fullname": "User 1",
-      "username": "user1",
-      "email": "user1@example.com",
-      "gender": "male"
-    },
-    // Additional users...
-  ]
+"message": "All users retrieved successfully",
+"users": [
+{
+"fullname": "User 1",
+"username": "user1",
+"email": "user1@example.com",
+"gender": "male"
+},
+// Additional users...
+]
 }
 
-# Search Users:
+##  Search Users:
 
 Method: GET
 URL: http://localhost:5000/api/search
 Headers:
 Key: Authorization, Value: Bearer your_access_token
-
 Body (Optional):
 {
-  "query": "search_term"
+"query": "search_term"
 }
 
 Expected Response:
 {
-  "message": "Users found successfully",
-  "users": [
-    {
-      "fullname": "User A",
-      "username": "userA",
-      "email": "userA@example.com",
-      "gender": "female"
-    },
-    // Additional users...
-  ]
+"message": "Users found successfully",
+"users": [
+{
+"fullname": "User A",
+"username": "userA",
+"email": "userA@example.com",
+"gender": "female"
+},
+// Additional users...
+]
 }
 
-# Get User by ID:
+##  Get User by ID:
 
 Method: GET
 URL: http://localhost:5000/api/user/:id
@@ -140,16 +143,16 @@ Body: None
 
 Expected Response:
 {
-  "message": "User retrieved successfully",
-  "user": {
-    "fullname": "User XYZ",
-    "username": "userXYZ",
-    "email": "userXYZ@example.com",
-    "gender": "male"
-  }
+"message": "User retrieved successfully",
+"user": {
+"fullname": "User XYZ",
+"username": "userXYZ",
+"email": "userXYZ@example.com",
+"gender": "male"
+}
 }
 
-# Update User:
+##  Update User:
 
 Method: PATCH
 URL: http://localhost:5000/api/user
@@ -157,22 +160,22 @@ Headers:
 Key: Authorization, Value: Bearer your_access_token
 Body (JSON):
 {
-  "fullname": "Updated User",
-  "gender": "female"
-
+"fullname": "Updated User",
+"gender": "female"
 }
+
 Expected Response:
 {
-  "message": "User updated successfully",
-  "user": {
-    "fullname": "Updated User",
-    "username": "userXYZ",
-    "email": "userXYZ@example.com",
-    "gender": "female"
-  }
+"message": "User updated successfully",
+"user": {
+"fullname": "Updated User",
+"username": "userXYZ",
+"email": "userXYZ@example.com",
+"gender": "female"
+}
 }
 
-# Send Friend Request:
+## Send Friend Request:
 
 Method: PATCH
 URL: http://localhost:5000/api/user/:id/friend
@@ -182,10 +185,10 @@ Body: None
 
 Expected Response:
 {
-  "message": "Friend request sent successfully"
+"message": "Friend request sent successfully"
 }
 
-# Unfriend User:
+##  Unfriend User:
 
 Method: PATCH
 URL: http://localhost:5000/api/user/:id/unfriend
@@ -195,34 +198,37 @@ Body: None
 
 Expected Response:
 {
-  "message": "User unfriended successfully"
+"message": "User unfriended successfully"
 }
 
 
-### Posts ###
+# Posts 
 
-# Create Post:
+
+##  Create Post:
+
 Method: POST
 URL: http://localhost:5000/api/posts
 Headers:
 Key: Authorization, Value: Bearer your_access_token
 Body (JSON):
 {
-  "content": "This is a new post."
+"content": "This is a new post."
 }
 
 Expected Response:
 {
-  "message": "Post created successfully",
-  "post": {
-    "content": "This is a new post.",
-    "author": "your_user_id",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp"
-  }
+"message": "Post created successfully",
+"post": {
+"content": "This is a new post.",
+"author": "your_user_id",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
 }
 
-# Get All Posts:
+##  Get All Posts:
+
 Method: GET
 URL: http://localhost:5000/api/posts
 Headers:
@@ -231,22 +237,23 @@ Body: None
 
 Expected Response:
 {
-  "message": "Posts retrieved successfully",
-  "posts": [
-    {
-      "content": "Post content.",
-      "author": {
-        "fullname": "Author Name",
-        "username": "author_username"
-      },
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp"
-    },
-    // More posts...
-  ]
+"message": "Posts retrieved successfully",
+"posts": [
+{
+"content": "Post content.",
+"author": {
+"fullname": "Author Name",
+"username": "author_username"
+},
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+},
+// More posts...
+]
 }
 
-# Get Single Post:
+##  Get Single Post:
+
 Method: GET
 URL: http://localhost:5000/api/posts/:id
 Headers:
@@ -255,38 +262,40 @@ Body: None
 
 Expected Response:
 {
-  "message": "Post retrieved successfully",
-  "post": {
-    "content": "Post content.",
-    "author": {
-      "fullname": "Author Name",
-      "username": "author_username"
-    },
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp"
-  }
+"message": "Post retrieved successfully",
+"post": {
+"content": "Post content.",
+"author": {
+"fullname": "Author Name",
+"username": "author_username"
+},
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
 }
 
-# Update Post:
+##  Update Post:
+
 Method: PATCH
 URL: http://localhost:5000/api/posts/:id
 Headers:
 Key: Authorization, Value: Bearer your_access_token
 Body (JSON):
 {
-  "content": "Updated post content."
+"content": "Updated post content."
 }
 
 Expected Response:
 {
-  "message": "Post updated successfully",
-  "post": {
-    "content": "Updated post content.",
-    "updatedAt": "timestamp"
-  }
+"message": "Post updated successfully",
+"post": {
+"content": "Updated post content.",
+"updatedAt": "timestamp"
+}
 }
 
-# Delete Post:
+##  Delete Post:
+
 Method: DELETE
 URL: http://localhost:5000/api/posts/:id
 Headers:
@@ -295,16 +304,17 @@ Body: None
 
 Expected Response:
 {
-  "message": "Post deleted successfully",
-  "post": {
-    "content": "Deleted post content.",
-    "author": "your_user_id",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp"
-  }
+"message": "Post deleted successfully",
+"post": {
+"content": "Deleted post content.",
+"author": "your_user_id",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
 }
 
-# Like Post:
+##  Like Post:
+
 Method: PATCH
 URL: http://localhost:5000/api/posts/:id/like
 Headers:
@@ -313,18 +323,19 @@ Body: None
 
 Expected Response:
 {
-  "message": "Post liked successfully",
-  "post": {
-    "content": "Post content.",
-    "likes": [
-      "user_id_1",
-      "user_id_2",
-      // More user IDs...
-    ]
-  }
+"message": "Post liked successfully",
+"post": {
+"content": "Post content.",
+"likes": [
+"user_id_1",
+"user_id_2",
+// More user IDs...
+]
+}
 }
 
-# Unlike Post:
+##  Unlike Post:
+
 Method: PATCH
 URL: http://localhost:5000/api/posts/:id/unlike
 Headers:
@@ -333,17 +344,18 @@ Body: None
 
 Expected Response:
 {
-  "message": "Post unliked successfully",
-  "post": {
-    "content": "Post content.",
-    "likes": [
-      "user_id_2",
-      // More user IDs...
-    ]
-  }
+"message": "Post unliked successfully",
+"post": {
+"content": "Post content.",
+"likes": [
+"user_id_2",
+// More user IDs...
+]
+}
 }
 
-# Get User's Posts:
+##  Get User's Posts:
+
 Method: GET
 URL: http://localhost:5000/api/user_posts/:id
 Headers:
@@ -351,18 +363,19 @@ Key: Authorization, Value: Bearer your_access_token
 Body: None
 Expected Response:
 {
-  "message": "User's posts retrieved successfully",
-  "posts": [
-    {
-      "content": "Post content.",
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp"
-    },
-    // More posts...
-  ]
+"message": "User's posts retrieved successfully",
+"posts": [
+{
+"content": "Post content.",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+},
+// More posts...
+]
 }
 
-# Save Post:
+## Save Post:
+
 Method: PATCH
 URL: http://localhost:5000/api/save_post/:id
 Headers:
@@ -371,18 +384,19 @@ Body: None
 
 Expected Response:
 {
-  "message": "Post saved successfully",
-  "post": {
-    "content": "Post content.",
-    "saves": [
-      "user_id_1",
-      "user_id_2",
-      // More user IDs...
-    ]
-  }
+"message": "Post saved successfully",
+"post": {
+"content": "Post content.",
+"saves": [
+"user_id_1",
+"user_id_2",
+// More user IDs...
+]
+}
 }
 
-# Unsave Post:
+##  Unsave Post:
+
 Method: PATCH
 URL: http://localhost:5000/api/unsave_post/:id
 Headers:
@@ -391,17 +405,18 @@ Body: None
 
 Expected Response:
 {
-  "message": "Post unsaved successfully",
-  "post": {
-    "content": "Post content.",
-    "saves": [
-      "user_id_2",
-      // More user IDs...
-    ]
-  }
+"message": "Post unsaved successfully",
+"post": {
+"content": "Post content.",
+"saves": [
+"user_id_2",
+// More user IDs...
+]
+}
 }
 
-# Get Saved Posts:
+##  Get Saved Posts:
+
 Method: GET
 URL: http://localhost:5000/api/savedpost
 Headers:
@@ -410,65 +425,70 @@ Body: None
 
 Expected Response:
 {
-  "message": "Saved posts retrieved successfully",
-  "posts": [
-    {
-      "content": "Post content.",
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp"
-    },
-    // More posts...
-  ]
+"message": "Saved posts retrieved successfully",
+"posts": [
+{
+"content": "Post content.",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+},
+// More posts...
+]
 }
 
 Please replace placeholders like your_access_token, your_user_id, and adjust content as needed.
 
+  
+# Comments 
 
-### Comments ###
+  
 
-# Create Comment:
+##  Create Comment:
+
 Method: POST
 URL: http://localhost:5000/api/comment
 Headers:
 Key: Authorization, Value: Bearer your_access_token
 Body (JSON):
 {
-  "post_id": "your_post_id",
-  "content": "This is a new comment."
+"post_id": "your_post_id",
+"content": "This is a new comment."
 }
 
 Expected Response:
 {
-  "message": "Comment created successfully",
-  "comment": {
-    "content": "This is a new comment.",
-    "author": "your_user_id",
-    "post": "your_post_id",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp"
-  }
+"message": "Comment created successfully",
+"comment": {
+"content": "This is a new comment.",
+"author": "your_user_id",
+"post": "your_post_id",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
 }
 
-# Update Comment:
+##  Update Comment:
+
 Method: PATCH
 URL: http://localhost:5000/api/comment/:id
 Headers:
 Key: Authorization, Value: Bearer your_access_token
 Body (JSON):
 {
-  "content": "Updated comment content."
+"content": "Updated comment content."
 }
 
 Expected Response:
 {
-  "message": "Comment updated successfully",
-  "comment": {
-    "content": "Updated comment content.",
-    "updatedAt": "timestamp"
-  }
+"message": "Comment updated successfully",
+"comment": {
+"content": "Updated comment content.",
+"updatedAt": "timestamp"
+}
 }
 
-# Like Comment:
+##  Like Comment:
+
 Method: PATCH
 URL: http://localhost:5000/api/comment/:id/like
 Headers:
@@ -477,18 +497,19 @@ Body: None
 
 Expected Response:
 {
-  "message": "Comment liked successfully",
-  "comment": {
-    "content": "Comment content.",
-    "likes": [
-      "user_id_1",
-      "user_id_2",
-      // More user IDs...
-    ]
-  }
+"message": "Comment liked successfully",
+"comment": {
+"content": "Comment content.",
+"likes": [
+"user_id_1",
+"user_id_2",
+// More user IDs...
+]
+}
 }
 
-# Unlike Comment:
+##  Unlike Comment:
+
 Method: PATCH
 URL: http://localhost:5000/api/comment/:id/unlike
 Headers:
@@ -497,17 +518,18 @@ Body: None
 
 Expected Response:
 {
-  "message": "Comment unliked successfully",
-  "comment": {
-    "content": "Comment content.",
-    "likes": [
-      "user_id_2",
-      // More user IDs...
-    ]
-  }
+"message": "Comment unliked successfully",
+"comment": {
+"content": "Comment content.",
+"likes": [
+"user_id_2",
+// More user IDs...
+]
+}
 }
 
-# Delete Comment:
+##  Delete Comment:
+
 Method: DELETE
 URL: http://localhost:5000/api/comment/:id
 Headers:
@@ -516,46 +538,50 @@ Body: None
 
 Expected Response:
 {
-  "message": "Comment deleted successfully",
-  "comment": {
-    "content": "Deleted comment content.",
-    "author": "your_user_id",
-    "post": "your_post_id",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp"
-  }
+"message": "Comment deleted successfully",
+"comment": {
+"content": "Deleted comment content.",
+"author": "your_user_id",
+"post": "your_post_id",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
 }
 
 Please replace placeholders like your_access_token, your_user_id, your_post_id, and adjust content as needed.
 
 
-### Notification ###
+# Notifications
 
-# Create Notification:
+  
+
+##  Create Notification:
+
 Method: POST
 URL: http://localhost:5000/api/notify
 Headers:
 Key: Authorization, Value: Bearer your_access_token
 Body (JSON):
 {
-  "user": "user_id",
-  "content": "This is a new notification."
+"user": "user_id",
+"content": "This is a new notification."
 }
 
 Expected Response:
 {
-  "message": "Notification created successfully",
-  "notification": {
-    "_id": "notification_id",
-    "user": "user_id",
-    "content": "This is a new notification.",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp",
-    "isRead": false
-  }
+"message": "Notification created successfully",
+"notification": {
+"_id": "notification_id",
+"user": "user_id",
+"content": "This is a new notification.",
+"createdAt": "timestamp",
+"updatedAt": "timestamp",
+"isRead": false
+}
 }
 
-# Remove Notification:
+##  Remove Notification:
+
 Method: DELETE
 URL: http://localhost:5000/api/notify/:id
 Headers:
@@ -564,18 +590,19 @@ Body: None
 
 Expected Response:
 {
-  "message": "Notification removed successfully",
-  "notification": {
-    "_id": "notification_id",
-    "user": "user_id",
-    "content": "Notification content.",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp",
-    "isRead": false
-  }
+"message": "Notification removed successfully",
+"notification": {
+"_id": "notification_id",
+"user": "user_id",
+"content": "Notification content.",
+"createdAt": "timestamp",
+"updatedAt": "timestamp",
+"isRead": false
+}
 }
 
-# Get Notifications:
+##  Get Notifications:
+
 Method: GET
 URL: http://localhost:5000/api/notifies
 Headers:
@@ -584,29 +611,30 @@ Body: None
 
 Expected Response:
 {
-  "message": "Notifications retrieved successfully",
-  "notifications": [
-    {
-      "_id": "notification_id_1",
-      "user": "user_id",
-      "content": "Notification content 1.",
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp",
-      "isRead": false
-    },
-    {
-      "_id": "notification_id_2",
-      "user": "user_id",
-      "content": "Notification content 2.",
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp",
-      "isRead": false
-    },
-    // More notifications...
-  ]
+"message": "Notifications retrieved successfully",
+"notifications": [
+{
+"_id": "notification_id_1",
+"user": "user_id",
+"content": "Notification content 1.",
+"createdAt": "timestamp",
+"updatedAt": "timestamp",
+"isRead": false
+},
+{
+"_id": "notification_id_2",
+"user": "user_id",
+"content": "Notification content 2.",
+"createdAt": "timestamp",
+"updatedAt": "timestamp",
+"isRead": false
+},
+// More notifications...
+]
 }
 
-# Delete All Notifications:
+##  Delete All Notifications:
+
 Method: DELETE
 URL: http://localhost:5000/api/deleteallnotify
 Headers:
@@ -615,10 +643,11 @@ Body: None
 
 Expected Response:
 {
-  "message": "All notifications deleted successfully"
+"message": "All notifications deleted successfully"
 }
 
-# Mark Notification as Read:
+##  Mark Notification as Read:
+
 Method: PATCH
 URL: http://localhost:5000/api/isreadnotify/:id
 Headers:
@@ -627,46 +656,50 @@ Body: None
 
 Expected Response:
 {
-  "message": "Notification marked as read successfully",
-  "notification": {
-    "_id": "notification_id",
-    "user": "user_id",
-    "content": "Notification content.",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp",
-    "isRead": true
-  }
+"message": "Notification marked as read successfully",
+"notification": {
+"_id": "notification_id",
+"user": "user_id",
+"content": "Notification content.",
+"createdAt": "timestamp",
+"updatedAt": "timestamp",
+"isRead": true
+}
 }
 
 Please replace placeholders like your_access_token, user_id, notification_id, and adjust content as needed.
 
-### Messages ###
 
-# Create Message:
+# Messages
+
+  
+##  Create Message:
+
 Method: POST
 URL: http://localhost:5000/api/message
 Headers:
 Key: Authorization, Value: Bearer your_access_token
 Body (JSON):
 {
-  "content": "Hello, this is a new message.",
-  "to": "recipient_user_id"
+"content": "Hello, this is a new message.",
+"to": "recipient_user_id"
 }
 
 Expected Response:
 {
-  "message": "Message sent successfully",
-  "message": {
-    "_id": "message_id",
-    "content": "Hello, this is a new message.",
-    "from": "sender_user_id",
-    "to": "recipient_user_id",
-    "createdAt": "timestamp",
-    "updatedAt": "timestamp"
-  }
+"message": "Message sent successfully",
+"message": {
+"_id": "message_id",
+"content": "Hello, this is a new message.",
+"from": "sender_user_id",
+"to": "recipient_user_id",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
 }
 
-# Get Conversations:
+##  Get Conversations:
+
 Method: GET
 URL: http://localhost:5000/api/conversations/:id
 Headers:
@@ -674,37 +707,38 @@ Key: Authorization, Value: Bearer your_access_token
 Body: None
 Expected Response:
 {
-  "message": "Conversations retrieved successfully",
-  "conversations": [
-    {
-      "_id": "conversation_id_1",
-      "members": ["user_id_1", "user_id_2"],
-      "lastMessage": {
-        "_id": "last_message_id_1",
-        "content": "Last message content 1.",
-        "from": "user_id_1",
-        "to": "user_id_2",
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp"
-      }
-    },
-    {
-      "_id": "conversation_id_2",
-      "members": ["user_id_1", "user_id_3"],
-      "lastMessage": {
-        "_id": "last_message_id_2",
-        "content": "Last message content 2.",
-        "from": "user_id_1",
-        "to": "user_id_3",
-        "createdAt": "timestamp",
-        "updatedAt": "timestamp"
-      }
-    },
-    // More conversations...
-  ]
+"message": "Conversations retrieved successfully",
+"conversations": [
+{
+"_id": "conversation_id_1",
+"members": ["user_id_1", "user_id_2"],
+"lastMessage": {
+"_id": "last_message_id_1",
+"content": "Last message content 1.",
+"from": "user_id_1",
+"to": "user_id_2",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
+},
+{
+"_id": "conversation_id_2",
+"members": ["user_id_1", "user_id_3"],
+"lastMessage": {
+"_id": "last_message_id_2",
+"content": "Last message content 2.",
+"from": "user_id_1",
+"to": "user_id_3",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+}
+},
+// More conversations...
+]
 }
 
-# Get Messages:
+##  Get Messages:
+
 Method: GET
 URL: http://localhost:5000/api/message/:id
 Headers:
@@ -713,29 +747,30 @@ Body: None
 
 Expected Response:
 {
-  "message": "Messages retrieved successfully",
-  "messages": [
-    {
-      "_id": "message_id_1",
-      "content": "Message content 1.",
-      "from": "user_id_1",
-      "to": "user_id_2",
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp"
-    },
-    {
-      "_id": "message_id_2",
-      "content": "Message content 2.",
-      "from": "user_id_2",
-      "to": "user_id_1",
-      "createdAt": "timestamp",
-      "updatedAt": "timestamp"
-    },
-    // More messages...
-  ]
+"message": "Messages retrieved successfully",
+"messages": [
+{
+"_id": "message_id_1",
+"content": "Message content 1.",
+"from": "user_id_1",
+"to": "user_id_2",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+},
+{
+"_id": "message_id_2",
+"content": "Message content 2.",
+"from": "user_id_2",
+"to": "user_id_1",
+"createdAt": "timestamp",
+"updatedAt": "timestamp"
+},
+// More messages...
+]
 }
 
-# Delete Messages:
+##  Delete Messages:
+
 Method: DELETE
 URL: http://localhost:5000/api/message/:id
 Headers:
@@ -744,16 +779,18 @@ Body: None
 
 Expected Response:
 {
-  "message": "Messages deleted successfully"
+"message": "Messages deleted successfully"
 }
 
 Please replace placeholders like your_access_token, user_id, recipient_user_id, message_id, conversation_id, and adjust content as needed.
 
+***
+  
 
-****
+#  About AUTHORIZATION TOKEN
 
-# About AUTHORIZATION TOKEN
-
+  
+  
 
 If you want to retrieve a list of all users and this operation requires authentication, you need to obtain an access token through your authentication mechanism and include it in the request headers.
 
@@ -762,53 +799,72 @@ Here are the general steps:
 Authenticate the User:
 
 Use your authentication endpoint (e.g., login) to obtain an access token.
+
 This typically involves sending a POST request with the user's credentials (username, password) to the authentication endpoint.
 
 Get the Access Token:
+
 Extract the access token from the response after successful authentication.
 
 Include Token in Requests:
+
 For every subsequent request that requires authentication, include the obtained access token in the "Authorization" header.
 
 Example in Postman:
+
 Open Postman.
+
 Select the request to get all users (e.g., "GET /api/users").
+
 Click on the "Headers" tab.
+
 Add a new header with the key "Authorization" and the value "Bearer YOUR_ACCESS_TOKEN," replacing "YOUR_ACCESS_TOKEN" with the actual access token.
 
 
-# About id:s (after we have data)
+#  About id:s (after we have data)
 
-When you send a GET request to retrieve data, the server will respond with the details of the requested resource, 
-including its unique identifier (ID). For example, if you make a GET request to /api/user/123, the server should 
+  
+
+When you send a GET request to retrieve data, the server will respond with the details of the requested resource,
+
+including its unique identifier (ID). For example, if you make a GET request to /api/user/123, the server should
+
 respond with information about the user with the ID 123, and you can find the ID in the response.
+ 
 
 Here's a simplified example:
 {
-  "id": "123",
-  "username": "example_user",
-  "email": "user@example.com",
-  "otherDetails": "..."
+"id": "123",
+"username": "example_user",
+"email": "user@example.com",
+"otherDetails": "..."
 }
 
-In this response, the "id" field contains the unique identifier for the user, which is 123 in this case. 
+
+In this response, the "id" field contains the unique identifier for the user, which is 123 in this case.
+
 You can use this ID in subsequent requests if you need to update or perform other actions related to this specific user.
 
-When you retrieve data from an API, the response includes the unique identifier (ID) of the requested resource. 
+When you retrieve data from an API, the response includes the unique identifier (ID) of the requested resource.
+
 This applies not only to user data but also to other resources such as posts, comments, messages, etc.
 
-For example, if you make a GET request to /api/post/456, the server should respond with details about the post 
+For example, if you make a GET request to /api/post/456, the server should respond with details about the post
+
 with the ID 456, and you can find the ID in the response.
 
+
 Here's a simplified example for a post:
+
 {
-  "id": "456",
-  "title": "Example Post",
-  "content": "This is the content of the post.",
-  "author": "user123",
-  "timestamp": "2024-02-10T12:34:56Z",
-  "otherDetails": "..."
+"id": "456",
+"title": "Example Post",
+"content": "This is the content of the post.",
+"author": "user123",
+"timestamp": "2024-02-10T12:34:56Z",
+"otherDetails": "..."
 }
-In this response, the "id" field contains the unique identifier for the post, which is 456 in this case. 
-You can use this ID for subsequent actions related to this specific post. The same principle applies 
-to other resources like comments, messages, etc.
+
+In this response, the "id" field contains the unique identifier for the post, which is 456 in this case.
+
+You can use this ID for subsequent actions related to this specific post. The same principle applies to other resources like comments, messages, etc.
