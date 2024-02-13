@@ -19,8 +19,8 @@ body {
 }
 
 .logo-container {
-    max-width: 40%; /* Adjusted max-width for the logo container */
-    margin: 0 auto; /* Center the logo container */
+    max-width: 30%; /* Adjusted max-width for the logo container */
+    margin-right: 40px;
 }
 
 .logo {

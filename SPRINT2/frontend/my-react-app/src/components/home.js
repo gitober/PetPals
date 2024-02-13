@@ -153,7 +153,7 @@ function Home() {
             <input type="text" placeholder="Write your comment here..." />
           </div>
           <div className="submit-comment">
-            <button onClick={() => submitComment}>Submit</button>
+            <button onClick={() => submitComment()}>Submit</button>
           </div>
         </div>
       </div>
