@@ -3,9 +3,9 @@ Authorization: Bearer (my-access-token)
 Content-Type: application/json
 
 {
-  "fullname": "Moro Mauno",
-  "username": "Moro",
-  "email": "moro@mauno.com",
+  "fullname": "Jukka Mono",
+  "username": "Jukka",
+  "email": "jukka@mono.com",
   "password": "securepassword",
   "gender": "male"
 }

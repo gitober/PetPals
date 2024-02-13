@@ -5,9 +5,9 @@ $headers = @{
 }
 
 $body = @{
-    "fullname" = "Moro Mauno"
-    "username" = "Moro"
-    "email" = "moro@mauno.com"
+    "fullname" = "Matti Kinnunen"
+    "username" = "Masa"
+    "email" = "matti@kinnunen.com"
     "password" = "securepassword"
     "gender" = "male"
 } | ConvertTo-Json
