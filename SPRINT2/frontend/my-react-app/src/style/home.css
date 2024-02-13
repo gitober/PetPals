@@ -32,8 +32,8 @@ body {
 
 .sidebar img {
   width: 80%;
-  margin-top: 80px; /* Adjust as needed */
-  padding-bottom: 100px;
+  margin-top: 30px; /* Adjust as needed */
+  padding-bottom: 10px;
 }
 
 .sidebar ul li a, .sidebar ul li p {
@@ -44,7 +44,7 @@ body {
   transition: color 0.3s;
   font-size: 25px;
   margin-top: 90px;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 }
 
 
@@ -54,7 +54,6 @@ body {
   height: auto; 
   margin-right: 15px; 
 } */
-
 .sidebar ul li p button {
   text-align: left;
   width: 35px; /* Adjust width as needed */
@@ -255,7 +254,7 @@ body {
     justify-content: center;
   }
   .main-content {
-    width: 70%;
+    width: 50%;
   }
   .lorem-text {
     margin: 1px 50px;
@@ -266,7 +265,7 @@ body {
   }
 
   .user-icon {
-    width: 15px;
+    width: 12px;
     margin-right: 5px;
   }
 
