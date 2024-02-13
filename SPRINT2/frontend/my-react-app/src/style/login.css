@@ -136,13 +136,13 @@ body {
     align-items: center; /* Center the content inside the pop-up */
 }
 
-.close {
+.closePop {
     position: absolute;
-    top: -20px;
-    right: 10px;
+    top: 10px;
+    right: 20px;
     cursor: pointer;
-    font-size: 24px;
-}
+    font-size: 40px;
+  }
 
 .signUp {
     text-align: center;

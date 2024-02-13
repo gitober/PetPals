@@ -47,64 +47,54 @@ function Home() {
     <Layout>
       <div className="container">
         <div className="sidebar">
-          <img srcset="/img/navbar.png" alt="logo" />
-          <ul>
-            <li>
-              <a href="../home">
-                <span>
-                  <img srcset="/img/home.png" alt="Home" />
-                </span>{' '}
-                HOME
-              </a>
-            </li>
-            <li>
-              <a href="../profile">
-                <span>
-                  <img srcset="/img/profile.png" alt="Profile" />
-                </span>{' '}
-                PROFILE
-              </a>
-            </li>
-            <li>
-              <a onClick={() => openPopup()}>
-                <span>
-                  <img srcset="/img/post.png" alt="POST" className="signUp" id="signUpLink" />
-                </span>{' '}
-                POST
-              </a>
-            </li>
-            <li>
-              <a href="../settings">
-                <span>
-                  <img srcset="/img/settings.png" alt="Settings" />
-                </span>{' '}
-                SETTINGS
-              </a>
-            </li>
-          </ul>
-          <div className="logout">
-            <a href="/login">Log Out</a>
-          </div>
-
-          <div className="popup">
-            <div className="popup-content">
-              <span className="close" onClick={() => closePopup()}> 
-                &times;
-              </span>
-              <h2>Add a new picture</h2>
-              <div className="empty-area">
-                <div className="drag-header"></div>
-                <input type="file" id="fileInput" accept="image/*" className="file-input" />
-              </div>
-            </div>
-            <h2>Drag Photos here</h2>
-            <h3 className="popuph3">or</h3>
-            <label htmlFor="fileInput" className="select-button">
-              Select from computer
-            </label>
-          </div>
+        <img srcset="/img/navbar.png" alt="logo" />
+        <ul>
+          <li>
+            <a href="../home">
+              {/* <img srcset="/img/home.png" alt="Home" /> */}
+              HOME
+            </a>
+          </li>
+          <li>
+            <a href="../profile">
+              {/* <img srcset="/img/profile.png" alt="Profile" /> */}
+              PROFILE
+            </a>
+          </li>
+          <li>
+            <a onClick={() => openPopup()}>
+              {/* <img srcset="/img/post.png" alt="POST" className="signUp" id="signUpLink" /> */}
+              POST
+            </a>
+          </li>
+          <li>
+            <a href="../settings">
+              {/* <img srcset="/img/settings.png" alt="Settings" /> */}
+              SETTINGS
+            </a>
+          </li>
+        </ul>
+        <div className="logout">
+          <a href="/login">Log Out</a>
         </div>
 
+      <div className="popup">
+        <span className="closePop" onClick={() => closePopup()}> &times;</span>
+        <div className="popup-content">
+          <h2>Add a new picture</h2>
+          <div className="empty-area">
+            <div className="drag-header"></div>
+            <input type="file" id="fileInput" accept="image/*" className="file-input" />
+          </div>
+        </div>
+        <h2>Drag Photos here</h2>
+        <h3 className="popuph3">or</h3>
+        <label htmlFor="fileInput" className="select-button">
+          Select from computer
+        </label>
+          </div>
+        </div>
+        
         <div className="main-content">
           <div className="top-bar">
             <input type="text" placeholder="Search" />
@@ -144,8 +134,7 @@ function Home() {
               </div>
             </div>
             <p className="lorem-text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris. 
-              lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
             </p>
           </div>
         </div>

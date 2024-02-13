@@ -19,51 +19,57 @@ body {
 
 /* Sidebar styles */
 .sidebar {
+  display: flex;
+  flex-direction: column;/* Vertically distribute content */
   background-color: #ffffff;
   padding: 40px 20px;
-  text-align: center;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  width: 300px;
+  width: 350px;
+  height: 100%;
+  align-items: center;
 }
 
 .sidebar img {
   width: 80%;
-  height: auto;
-  margin-bottom: 40px;
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin-bottom: 10px;
+  margin-top: 30px; /* Adjust as needed */
+  padding-bottom: 10px;
 }
 
 .sidebar ul li a, .sidebar ul li p {
+  display: flex;
+  align-items: center; /* Align items vertically */
   color: #000000;
   text-decoration: none;
-  display: flex;
-  align-items: center;
   transition: color 0.3s;
   font-size: 25px;
+  margin-top: 90px;
+  margin-bottom: 80px;
 }
 
-.sidebar ul li a span, .sidebar ul li p button {
+
+
+/* .sidebar ul li img {
+  width: 35px; 
+  height: auto; 
+  margin-right: 15px; 
+} */
+.sidebar ul li p button {
   text-align: left;
-  width: 35px;
-  height: 20px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-right: 1px;
-  margin-left: 15px;
+  width: 35px; /* Adjust width as needed */
+  height: 20px; /* Adjust height as needed */
+  margin-right: 15px; /* Adjust margin as needed */
 }
 
-
-.sidebar ul li p:hover, .sidebar ul li a:hover {
+.sidebar ul li p:hover,
+.sidebar ul li a:hover,
+.sidebar ul li text:hover  {
   color: #d6baff;
+}
+
+.popup {
+  display: none;
+  /* Add any styles you need for the popup */
 }
 
 /* Main content styles */
@@ -114,12 +120,12 @@ body {
 }
 
 .icons {
-  
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: 10px;
 }
+
 .icons .like-container img, .icons img {
   width: 30px;
 }
@@ -137,14 +143,7 @@ body {
 }
 .lorem-text {
   font-size: 15px;
-  margin: 1px 150px;
-}
-
-.logout a {
-  color: #d6baff;
-  font-size: 25px;
-  text-decoration: none;
-  align-items: center;
+  padding-bottom: 20px;
 }
 
 .logout a:hover {
@@ -164,23 +163,6 @@ body {
 .hashtag {
   color: #d6baff;
   font-weight: bold;
-}
-
-.logout::before {
-  content: "";
-  display: block;
-  border-top: 1px solid #ccc;
-  margin: 0 auto 10px;
-  width: 100%;
-  padding-bottom: 4rem;
-}
-
-.sidebar ul li:first-child::before {
-  content: "";
-  display: block;
-  border-bottom: 1px solid #ccc;
-  margin: 0 auto 10px;
-  width: 100%;
 }
 
 .comment-popup {
@@ -212,12 +194,12 @@ body {
 }
 
 .close {
-  color: #000000;
-  float: right;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
   font-size: 40px;
-  font-weight: bold;
 }
-
 .close:hover, .close:focus {
   color: #d6baff;
   text-decoration: none;
@@ -271,11 +253,11 @@ body {
     align-items: center;
     justify-content: center;
   }
-
-  .sidebar {
-    width: 100%;
-    max-width: none;
-    border-radius: 0;
+  .main-content {
+    width: 50%;
+  }
+  .lorem-text {
+    margin: 1px 50px;
   }
 
   .top-bar {
@@ -283,9 +265,40 @@ body {
   }
 
   .user-icon {
-    width: 15px;
+    width: 12px;
     margin-right: 5px;
   }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;/* Vertically distribute content */
+    background-color: #ffffff;
+    padding: 40px 20px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 350px;
+    height: 100%;
+    align-items: center;
+  }
+  
+  .sidebar img {
+    width: 40%;
+    margin-top: 180px; /* Adjust as needed */
+    padding-bottom: 1px;
+  }
+  
+  .sidebar ul li a, .sidebar ul li p {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    color: #000000;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-size: 25px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+  }
+
+  
 }
 
 .popup {

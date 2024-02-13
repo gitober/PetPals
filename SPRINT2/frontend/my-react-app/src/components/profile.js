@@ -98,10 +98,10 @@ function Profile() {
           </div>
 
           <div className="popup">
-            <div className="popup-content">
-              <span className="close" onClick={() => closePopup()}> 
+          <span className="close" onClick={() => closePopup()}> 
                 &times;
               </span>
+            <div className="popup-content">
               <h2>Add a new picture</h2>
               <div className="empty-area">
                 <div className="drag-header"></div>
