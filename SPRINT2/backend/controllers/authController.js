@@ -56,7 +56,7 @@ const authController = {
       }
 
       // Hash the password
-      const passwordHash = await bcrypt.hash(password, 13);
+      const passwordHash = await authController.hashPassword(password);
 
       // Create a new user
       const newUser = new Users({
@@ -68,8 +68,12 @@ const authController = {
       });
 
       // Create and set cookies for tokens
-      const access_token = createAccessToken({ id: newUser._id });
-      const refresh_token = createRefreshToken({ id: newUser._id });
+      const access_token = authController.createAccessToken({
+        id: newUser._id,
+      });
+      const refresh_token = authController.createRefreshToken({
+        id: newUser._id,
+      });
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/api/refresh_token",
@@ -122,7 +126,10 @@ const authController = {
         });
 
       // Compare passwords
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await authController.comparePassword(
+        password,
+        user.password
+      );
       if (!isMatch)
         return res.status(401).json({
           message: "Incorrect password",
@@ -130,8 +137,8 @@ const authController = {
         });
 
       // Generate tokens and set cookies
-      const access_token = createAccessToken({ id: user._id });
-      const refresh_token = createRefreshToken({ id: user._id });
+      const access_token = authController.createAccessToken({ id: user._id });
+      const refresh_token = authController.createRefreshToken({ id: user._id });
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/api/refresh_token",
@@ -197,7 +204,9 @@ const authController = {
             return res.status(400).json({ message: "User does not exist" });
 
           // Generate new access token
-          const access_token = createAccessToken({ id: result.id });
+          const access_token = authController.createAccessToken({
+            id: result.id,
+          });
 
           // Respond with new access token and user details
           res.json({
@@ -210,18 +219,30 @@ const authController = {
       return res.status(500).json({ message: err.message });
     }
   },
-};
 
-// Function to create access token
-const createAccessToken = (payload) => {
-  return jwt.sign(payload, process.env.ACCESSTOKENSECRET, { expiresIn: "1d" });
-};
+  // Function to hash a password
+  hashPassword: async (password) => {
+    return await bcrypt.hash(password, 13);
+  },
 
-// Function to create refresh token
-const createRefreshToken = (payload) => {
-  return jwt.sign(payload, process.env.REFRESHTOKENSECRET, {
-    expiresIn: "30d",
-  });
+  // Function to compare a password with a hashed password
+  comparePassword: async (inputPassword, hashedPassword) => {
+    return await bcrypt.compare(inputPassword, hashedPassword);
+  },
+
+  // Function to create access token
+  createAccessToken: (payload) => {
+    return jwt.sign(payload, process.env.ACCESSTOKENSECRET, {
+      expiresIn: "1d",
+    });
+  },
+
+  // Function to create refresh token
+  createRefreshToken: (payload) => {
+    return jwt.sign(payload, process.env.REFRESHTOKENSECRET, {
+      expiresIn: "30d",
+    });
+  },
 };
 
 module.exports = authController;
