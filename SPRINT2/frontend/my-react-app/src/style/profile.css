@@ -10,7 +10,6 @@ body {
 /* Container styles */
 .container {
   display: flex;
-  min-height: 100vh;
 }
 
 /* Follow button styles */
@@ -198,13 +197,6 @@ body {
 }
 
 /* Feed styles */
-.feed {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 5px;
-  position: relative;
-  margin: 20px;
-}
 
 .feed-content {
   display: flex;

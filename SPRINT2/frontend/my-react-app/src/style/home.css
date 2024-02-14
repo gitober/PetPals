@@ -43,8 +43,8 @@ body {
   text-decoration: none;
   transition: color 0.3s;
   font-size: 25px;
-  margin-top: 90px;
-  margin-bottom: 80px;
+  margin-top: 60px;
+  margin-bottom: 50px;
 }
 
 
@@ -150,10 +150,12 @@ body {
   color: #000000;
 }
 
+
 .user-info a {
   margin: auto ;
   font-size: 15px;
   color: #000000;
+  text-decoration: none;
 }
 
 .user-info h3:hover {
@@ -254,7 +256,7 @@ body {
     justify-content: center;
   }
   .main-content {
-    width: 50%;
+    width: 100%;
   }
   .lorem-text {
     margin: 1px 50px;
@@ -309,9 +311,9 @@ body {
   transform: translate(-50%, -50%);
   background-color: #fff;
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   height: 200%;
-  max-height: 500px;
+  max-height: 400px;
   padding: 80px;
   border-radius: 40px;
   z-index: 9999;
