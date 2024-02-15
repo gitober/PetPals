@@ -362,6 +362,23 @@ body {
 
 /* Ensure three containers in a row on larger screens */
 @media screen and (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    max-width: 200px;
+    flex: 1;
+  }
+
+  .main-content {
+    flex: 3;
+  }
+
+  .top-bar input[type="text"] {
+    width: 60%;
+  }
+
   .picture-container {
     width: calc(33.33% - 20px);
   }
@@ -379,6 +396,7 @@ body {
 
   .sidebar {
     max-width: none;
+    flex: none;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     margin-bottom: 20px;

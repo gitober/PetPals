@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
-import Home from "./components/home";
-import Login from "./components/login";
-import Profile from "./components/profile";
-import Settings from "./components/settings";
-import UserProfile from "./components/userprofile";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Profile from "./pages/profile";
+import Settings from "./pages/settings";
+import UserProfile from "./pages/userprofile";
 import "./app.css";
 import "./style/login.css";
 

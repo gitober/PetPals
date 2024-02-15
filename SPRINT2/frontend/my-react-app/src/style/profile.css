@@ -10,13 +10,16 @@ body {
 /* Container styles */
 .container {
   display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: flex-start; /* Align the content to the top */
 }
 
 /* Follow button styles */
 .follow-button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* Adjusted for spacing */
 }
 
 .follow-button {
@@ -44,56 +47,69 @@ body {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   max-width: 200px;
+  margin-bottom: 20px; /* Adjusted for spacing */
 }
 
 .sidebar img {
-  width: 60%;
+  width: 80%; /* Adjusted the width for responsiveness */
+  max-width: 100%; /* Ensures the image does not exceed its original size */
   height: auto;
-  margin-bottom: 20px;
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  margin-bottom: 10px; /* Adjusted margin to make it closer to the text */
 }
 
 .sidebar ul li {
-  margin-bottom: 10px;
+  list-style: none; /* Remove default list style */
 }
 
 .sidebar ul li a {
-  color: #000000;
-  text-decoration: none;
   display: flex;
   align-items: center;
-  transition: color 0.3s;
+  text-align: left; /* Adjusted text alignment */
+  text-decoration: none; /* Remove underlines from links */
+  color: #000000; /* Set link color */
 }
 
-.sidebar ul li a span {
-  text-align: left;
-  width: 35px;
-  height: 20px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-right: 1px;
-  margin-left: 15px;
+.sidebar ul li a img {
+  width: 20px; /* Adjust the width as needed */
+  height: auto;
+  margin-right: 10px; /* Adjusted the margin */
 }
 
 .sidebar ul li a:hover {
   color: #d6baff;
 }
 
+.sidebar ul li a span {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar ul li a span img {
+  width: 20px; /* Adjust the width as needed */
+  height: auto;
+  margin-right: 5px; /* Adjust the margin as needed */
+}
+
+
 /* User Info styles */
 .user-info {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column; /* Adjusted for smaller screens */
+  align-items: center; /* Adjusted for smaller screens */
+}
+.user-info .profile-picture {
+  width: 150px; /* PROFIILIKUVA */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px;
 }
 
 .username {
   display: flex;
   align-items: center;
+}
+
+.username-text {
+  margin-left: 0; /* Adjust margin-left to 0 */
 }
 
 .user-icon {
@@ -106,54 +122,67 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
+  margin-bottom: 20px; /* Adjusted for spacing */
 }
 
 .user-pictures-container {
   margin-top: 20px;
   text-align: center;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
-.user-pictures-container p {
-  color: #706f6f;
+.user-pictures-container .picture-container {
+  box-sizing: border-box;
+  margin: 10px;
+  width: calc(33.33% - 10px);
+  text-align: center;
+}
+
+.user-pictures-container .picture-container img {
+  width: 50%; /* Adjust the width as needed */
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .profile-picture-container {
   margin-top: 20px;
-  text-align: right; /* Align the content to the right */
-  margin-left: auto; /* Push the container to the right */
+  text-align: right;
+  margin-left: auto;
 }
 
 .profile-picture-container img {
-  width: 20%;
-  height: 20% ;
+  width: 100%;
+  height: auto;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 5px;
-
 }
 
 .profile-picture {
-  width: 100px;
-  height: auto;
+  width: 120px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px;
 }
 
 .profile-picture-container p {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 100%;
+  left: 100%;
   transform: translate(-50%, -50%);
   margin: 0;
   color: #706f6f;
   font-size: 14px;
 }
 
-.user-pictures-container img {
-  width: 20%;
-  height: 20% ;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 5px;
-} 
+/* Profile Details styles */
+.profile-details {
+  padding: 0 20px; /* Add padding to the left and right */
+}
 
 /* Profile Details Separator styles */
 .profile-details::after {
@@ -170,6 +199,7 @@ body {
   margin-bottom: 10px;
   font-weight: bold;
   color: #D6BAFF;
+  justify-content: center;
 }
 
 .follower-following p {
@@ -178,7 +208,8 @@ body {
 
 /* Main Content styles */
 .main-content {
-  flex: 3;
+  height: 100vh; /* Set the desired height, e.g., 100% of the viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
   padding: 20px;
 }
 
@@ -197,6 +228,12 @@ body {
 }
 
 /* Feed styles */
+
+.feed {
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
 
 .feed-content {
   display: flex;
@@ -233,7 +270,7 @@ body {
 .logout a {
   color: #d6baff;
   font-size: 25px;
-  text-decoration: none; /* Remove underline */
+  text-decoration: none;
   align-items: center;
 }
 
@@ -269,7 +306,7 @@ body {
 .picture-container {
   display: inline-block;
   box-sizing: border-box;
-  margin: 10px;
+  margin: 5px; /* Adjust the margin as needed */
   width: calc(33.33% - 20px);
   text-align: center;
 }
@@ -281,64 +318,85 @@ body {
   box-sizing: border-box;
 }
 
-/* User Pictures Container styles */
-.user-pictures-container {
-  box-sizing: border-box;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.user-pictures-container p {
-  color: #706f6f;
-}
-
-/* Ensure three containers in a row on larger screens */
-@media screen and (min-width: 768px) {
-  .picture-container {
-    width: calc(33.33% - 20px);
-  }
-}
-
-/* Responsive adjustments for smaller screens */
+/* Responsive adjustments for smaller screens including iPhone SE */
 @media screen and (max-width: 767px) {
   body {
-    font-size: 16px; /* Adjust as needed for smaller screens */
+    font-size: 16px;
   }
 
   .container {
     flex-direction: column;
+    align-items: center;
+    padding: 10px; /* Add padding for smaller screens */
   }
 
   .sidebar {
-    max-width: none;
-    border-top-right-radius: 0;
+    max-width: 100%; /* Adjusted for smaller screens */
+    border-top-right-radius: 5px;
     border-bottom-right-radius: 0;
     margin-bottom: 20px;
+    padding: 10px; /* Add padding for smaller screens */
+    position: relative; /* Add relative positioning */
   }
 
-  .main-content {
-    flex: none;
+  .sidebar img {
+    width: 100%; /* Adjusted the width for responsiveness */
   }
 
-  .follow-button-container {
-    margin-bottom: 20px;
+  .sidebar ul li a img {
+    width: 20px; /* Adjust the width as needed */
+    height: auto;
+    margin-right: 5px; /* Adjusted the margin */
   }
 
   .top-bar {
-    display: flex;
-    align-items: center;
+    margin-bottom: 20px;
+    text-align: center;
   }
 
   .top-bar input[type="text"] {
-    width: 100%;
-    margin: 0 auto; /* Center the input horizontally */
+    padding: 8px;
+    text-align: center;
+    width: 100%; /* Adjusted for smaller screens */
+    border-radius: 5px;
+    border: 1px solid #ffffff;
   }
 
   .picture-container {
     width: 100%;
-    margin: 10px 0; /* Adjust margins for smaller screens */
+    margin: 10px 0;
+  }
+
+  .profile-picture-container img {
+    width: 80px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .main-content {
+    overflow-y: auto; /* Enable vertical scrolling for the main content */
+  }
+
+  .popup {
+    max-width: 100%;
+    width: 100%;
+    max-height: 100%;
+  }
+
+  .popup-content {
+    padding: 10px;
+  }
+
+  .popup-content input[type="file"] {
+    margin: 20px auto; /* Adjusted margin for smaller screens */
+  }
+
+  .popup-content button {
+    width: 80%; /* Adjusted width for smaller screens */
+    padding: 15px;
+    font-size: 20px; /* Adjusted font size for smaller screens */
   }
 }
+
 /* Popup styles */
 .popup {
   display: none;
@@ -377,12 +435,6 @@ body {
   cursor: pointer;
 }
 
-
-.closePop {
-  cursor: pointer;
-  font-size: 40px;
-}
-
 .popup-content input[type="file"] {
   display: block;
   margin: 60px auto;
@@ -405,42 +457,3 @@ body {
 .popup-content button:hover {
   background-color: #d6baff;
 }
-
-/* .empty-area {
-  background-image: url(../img/drag.PNG);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border: 2px dashed #ccc;
-  padding: 15px;
-  margin: 15px auto;
-  width: 60%;
-  max-width: 300px;
-  border-radius: 5px;
-} */
-
-.drag-area {
-  display: none;
-}
-
-.drag-header {
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-
-.file-input {
-  display: none;
-}
-
-.select-button {
-  background-color: #E6F3FF;
-  color: #000;
-  padding: 15px 30px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.select-button:hover {
-  background-color: #d6baff;
-}
-
