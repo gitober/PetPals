@@ -12,59 +12,45 @@ body {
 }
 
 .sidebar {
-  flex: 1;
+  display: flex;
+  flex-direction: column;/* Vertically distribute content */
   background-color: #ffffff;
-  padding: 20px;
-  text-align: center;
-  /* Center the content in the sidebar */
+  padding: 40px 20px;
   border-top-right-radius: 5px;
-  /* Border radius for the top-right corner */
   border-bottom-right-radius: 5px;
-  max-width: 200px;
-  /* Aseta haluttu maksimileveys */
+  width: 350px;
+  height: 100%;
+  align-items: center;
 }
 
 .sidebar img {
-  width: 60%;
-  /* Adjust the width as needed */
-  height: auto;
-  margin-bottom: 20px;
+  width: 80%;
+  margin-top: 30px; /* Adjust as needed */
+  padding-bottom: 10px;
 }
 
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  margin-bottom: 10px;
-}
-
-.sidebar ul li a {
+.sidebar ul li a, .sidebar ul li p {
+  display: flex;
+  align-items: center; /* Align items vertically */
   color: #000000;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  /* Align both image and text vertically */
   transition: color 0.3s;
-  /* Tehdään värimuutos sulavaksi */
+  font-size: 25px;
+  margin-top: 60px;
+  margin-bottom: 50px;
 }
 
-.sidebar ul li a span {
+.sidebar ul li p button {
   text-align: left;
-  width: 35px;
-  /* Kiinteä leveys */
-  height: 20px;
-  /* Kiinteä korkeus */
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-right: 1px;
-  margin-left: 15px;
+  width: 35px; /* Adjust width as needed */
+  height: 20px; /* Adjust height as needed */
+  margin-right: 15px; /* Adjust margin as needed */
 }
 
-.sidebar ul li a:hover {
+.sidebar ul li p:hover,
+.sidebar ul li a:hover,
+.sidebar ul li text:hover  {
   color: #d6baff;
-  /* Liila väri, kun hiiri on tekstin päällä */
 }
 
 .user-info {

@@ -20,7 +20,6 @@ body {
 
 .logo-container {
     max-width: 30%; /* Adjusted max-width for the logo container */
-    margin-right: 40px;
 }
 
 .logo {
@@ -106,17 +105,17 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    width: 80%; /* Adjusted width for smaller screens */
-    max-width: 400px; /* Maximum width for the pop-up */
-    height: auto; /* Adjusted height for variable content height */
-    max-height: 60%; /* Maximum height for the pop-up */
-    padding: 20px; /* Reduced padding for smaller screens */
-    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    height: 200%;
+    max-height: 400px;
+    padding: 80px;
+    border-radius: 40px;
     z-index: 9999;
     color: #000;
     font-weight: bold;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
+  }
 
 .popup-content a {
     display: block;
@@ -130,19 +129,16 @@ body {
 }
 
 .popup-content {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the content inside the pop-up */
+    text-align: center;
 }
-
+  
 .closePop {
     position: absolute;
     top: 10px;
     right: 20px;
     cursor: pointer;
     font-size: 40px;
-  }
+}
 
 .signUp {
     text-align: center;
@@ -155,6 +151,43 @@ body {
     color: #D6BAFF;
 }
 
+.signup-info {
+    align-items: center;
+    text-align: center;
+}
+
+.signup-info form {
+    width: 100%;
+}
+
+.form-group input {
+    width: 100%;
+    font-size: 16px; /* Adjust font size as needed */
+}
+
+.form-group input {
+    font-size: 18px;
+    background-color: #E6F3FF;
+}
+
+.signupinfoBtn button[type="submit"] {
+    display: block;
+    margin: 40px auto;
+    padding: 25px 50px;
+    font-size: 20px;
+    background-color: #D6BAFF;
+    color: #fff;
+    border: 2px solid #D6BAFF;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+  
+.signup-info button[type="submit"]:hover {
+    background-color: #ff69b4;
+    border-color: #ff69b4;
+}
+
 .popupClose {
     display: none;
     position: fixed;
@@ -162,37 +195,25 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    width: 30%; /* HERE IS THE SIZE OF THE FORGOT YOUR PASSWORD POP UP */
+    width: 100%;
     max-width: 600px;
-    height: auto; /* Adjusted height for variable content height */
-    max-height: 80%; /* Maximum height for the pop-up */
-    padding: 80px; /* Reduced padding for smaller screens */
+    height: 200%;
+    max-height: 500px;
+    padding: 80px;
     border-radius: 40px;
     z-index: 9999;
     color: #000;
     font-weight: bold;
-    font-size: 20px;
-    text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.popupClose-content a {
-    display: block;
-    text-decoration: none;
-    color: #000000;
-    background-color: #E6F3FF;
-    padding: 10px 20px;
-    margin-top: 60px;
-    margin-bottom: 50px;
-    border-radius: 5px;
-}
-
 .popupClose-content {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the content inside the pop-up */
-    transition: transform 0.3s; /* Added transition for zoom effect */
+    align-items: center;
+    text-align: center;
+}
+.popupClose-content p {
+    font-size: 20px;
+    margin-top: 10%;
 }
 
 .closePop {
@@ -221,7 +242,7 @@ body {
     width: 100%;
     height: 60px;
     margin-bottom: 10px;
-    margin-top: 60px;
+    margin-top: 10%;
     padding: 10px;
     text-align: center;
     font-size: 20px;
@@ -230,13 +251,14 @@ body {
     border-radius: 5px;
     box-sizing: border-box;
     background-color: #E6F3FF;
-    color: #000;
 }
 
 .popupClose-content input[type="submit"] {
-    width: 50%;
+    align-items: center;
+    margin-top: 10%;
+    width: 100%;
     padding: 20px;
-    transition: font-size 0.3s, zoom 0.3s; /* Added zoom transition */
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 768px) {
@@ -317,6 +339,7 @@ body {
     }
 
     .popupClose-content input[type="text"] {
+        font-size: 10px;
         height: 50px;
     }
 

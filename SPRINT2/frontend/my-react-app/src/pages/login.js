@@ -26,6 +26,22 @@ function Login() {
     }
   }
 
+  // Function to show forgot password popup
+  function showForgotPasswordPopup() {
+    document.getElementById("popupClose").style.display = "block";
+  }
+
+  // Function to show sign up popup
+  function showSignUpPopup() {
+    document.getElementById("popup").style.display = "block";
+  }
+
+  // Function to close popups
+  function closePopups() {
+    document.getElementById("popupClose").style.display = "none";
+    document.getElementById("popup").style.display = "none";
+  }
+
   return (
     <Layout>
     <div className="container">
@@ -62,11 +78,11 @@ function Login() {
               value="Submit"
               disabled={loginDisabled}
             />
-            <p className="signUpClose" id="signUpCloseLink">
+            <p className="signUpClose" id="signUpCloseLink" onClick={showForgotPasswordPopup}>
               forgot your password?
             </p>
             <br />
-            <p className="signUp" id="signUpLink">
+            <p className="signUp" id="signUpLink" onClick={showSignUpPopup}>
               Don't have an account? Sign up
             </p>
           </form>
@@ -76,14 +92,14 @@ function Login() {
       {/* Popups */}
       <div id="popupClose" className="popupClose">
         <div className="popupClose-content">
-          <span className="closePop" id="closePop">
+          <span className="closePop" id="closePop" onClick={closePopups}>
             &times;
           </span>
           <h1>Forgot your password?</h1>
           <p>
             Problems signing in? <br />
             Import your email, phone number, or username <br />
-            So we will send you a link to reset your password
+            to reset your password.
           </p>
           <input
             type="text"
@@ -96,19 +112,38 @@ function Login() {
 
       <div id="popup" className="popup">
         <div className="popup-content">
-          <span className="close" id="close">
-            &times;
-          </span>
-          <h2>Sign Up Options</h2>
-          <p>
-            <a href="signup_email.html">Option 1: Sign up with email</a>
-          </p>
-          <p>
-            <a href="signup_social.html">Option 2: Sign up with social media</a>
-          </p>
+        <span className="close" id="close" onClick={closePopups}>
+          &times;
+        </span>
+        <h2>Sign Up Options</h2>
+        <p>
+          <a href="signup_email.html">Option 1: Sign up with email</a>
+          <a href="signup_social.html">Option 2: Sign up with social media</a>
+        </p>
+        </div>
+
+          <div className="signup-info">
+            <h3>Sign Up Information:</h3>
+            <form>
+              <div className="form-group">
+                <label htmlFor="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter email" required />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required />
+              </div>
+            </form>
+          </div>
+          <div className="signupinfoBtn">
+          <button type="submit">Sign Up</button>
+          </div>
         </div>
       </div>
-    </div>
   </Layout>
   );
 }

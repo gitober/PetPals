@@ -57,44 +57,31 @@ function Settings() {
         <div className="sidebar">
           <img srcSet="/img/navbar.png" alt="logo" />
           <ul>
-            <li>
-              <a href="../home">
-                <span>
-                  <img srcSet="/img/home.png" alt="Home" />
-                </span>{" "}
-                HOME
-              </a>
-            </li>
-            <li>
-              <a href="../profile">
-                <span>
-                  <img srcSet="/img/profile.png" alt="Profile" />
-                </span>{" "}
-                PROFILE
-              </a>
-            </li>
-            <li>
-              <a onClick={() => openPopup()}>
-                <span>
-                  <img
-                    srcSet="/img/post.png"
-                    alt="POST"
-                    className="signUp"
-                    id="signUpLink"
-                  />
-                </span>{" "}
-                POST
-              </a>
-            </li>
-            <li>
-              <a href="../settings">
-                <span>
-                  <img srcSet="/img/settings.png" alt="Settings" />
-                </span>{" "}
-                SETTINGS
-              </a>
-            </li>
-          </ul>
+          <li>
+            <a href="../home">
+              {/* <img srcset="/img/home.png" alt="Home" /> */}
+              HOME
+            </a>
+          </li>
+          <li>
+            <a href="../profile">
+              {/* <img srcset="/img/profile.png" alt="Profile" /> */}
+              PROFILE
+            </a>
+          </li>
+          <li>
+            <a onClick={() => openPopup()}>
+              {/* <img srcset="/img/post.png" alt="POST" className="signUp" id="signUpLink" /> */}
+              POST
+            </a>
+          </li>
+          <li>
+            <a href="../settings">
+              {/* <img srcset="/img/settings.png" alt="Settings" /> */}
+              SETTINGS
+            </a>
+          </li>
+        </ul>
           <div className="logout">
             <a href="/login">Log Out</a>
           </div>
