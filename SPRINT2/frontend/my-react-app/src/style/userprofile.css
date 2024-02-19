@@ -89,75 +89,40 @@ body {
 .user-info {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.username {
-  display: flex;
-  align-items: center;
-}
-
-.user-icon {
-  width: 20px;
-  height: auto;
-  margin-right: 10px;
+.username h3 {
+  margin: 0; /* Remove default margin */
 }
 
 .follow-button-container {
-  flex: 1;
   display: flex;
-  justify-content: center;
-  margin-left: 2rem; /* Add margin to create space between username and follow button */
+  align-items: center; /* Center button vertically */
 }
 
 .profile-picture-container {
-  margin-top: 20px;
-  text-align: right; /* Align the content to the right */
-  margin-left: auto; /* Push the container to the right */
-}
-
-.profile-picture-container img {
-  width: 20%;
-  height: 20% ;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 5px;
-
+  width: 10px;
+  margin-right: 10px; /* Add spacing between profile picture and user details */
 }
 
 .profile-picture {
-  width: 90px; /* Adjust the size as needed */
-  height: auto;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%; /* Make the picture circular */
 }
 
-.profile-picture-container p {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  color: #706f6f;
-  font-size: 14px;
-}
-
-/* Profile Details Separator styles */
-.profile-details::after {
-  content: '';
-  display: block;
-  border-bottom: 1px solid #ccc;
-  margin: 0 auto 10px;
-  width: 100%;
-}
-
-/* Follower/Following styles */
 .follower-following {
-  display: flex;
-  margin-bottom: 10px;
   font-weight: bold;
   color: #D6BAFF;
 }
-.follower-following p {
-  margin-right: 10px; /* Adjust spacing as needed */
+
+.bio {
+  margin-top: 10px;
+}
+
+.bio p {
+  margin: 0; /* Remove default margin */
 }
 
 /* Main Content styles */
@@ -293,28 +258,17 @@ body {
     border: 1px solid #ccc;
 }
 
-/* User Pictures Container styles */
 .user-pictures-container {
-    size: 100% 100%;
-    box-sizing: border-box;
-    margin-top: 20px;
-    display:contents;
-    grid-template-columns: repeat(auto-fill, minmax(calc(33.33% - 20px), 1fr)); /* Adjust the width and gap as needed */
-    gap: 20px; /* Adjust the gap between images as needed */
-    text-align: center; /* Keep this if you want center alignment */
-    height: auto;
+  display: grid; /* Change to grid layout */
+  grid-template-columns: repeat(4, 1fr); /* Display three columns */
+  gap: 1px; /* Adjust the gap between images as needed */
+  text-align: center; /* Keep this if you want center alignment */
 }
 
-.user-pictures-container img {
-    width: 100%; /* Make sure images fill their containers */
-    height: auto; /* Set height to auto to maintain aspect ratio */
-    object-fit: cover;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.user-pictures-container p {
-    color: #706f6f;
+.user-pictures-container .picture-container {
+  width: 100%; /* Ensure containers take up full width */
+  height: 100%;
+  background-color: #e6f3ff49;
 }
 
 /* Ensure three containers in a row on larger screens */

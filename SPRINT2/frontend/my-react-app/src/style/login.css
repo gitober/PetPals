@@ -168,6 +168,8 @@ body {
 .form-group input {
     font-size: 18px;
     background-color: #E6F3FF;
+    width: 550px;
+    border-radius: 5px;
 }
 
 .signupinfoBtn button[type="submit"] {
@@ -260,6 +262,7 @@ body {
     padding: 20px;
     border-radius: 5px;
 }
+
 
 @media screen and (max-width: 768px) {
     .container,

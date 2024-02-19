@@ -106,7 +106,7 @@ function Login() {
             id="emailInput"
             placeholder="Enter your email, phone number, or username"
           />
-          <input type="submit" id="SubmitButton" value="Submit" />
+          <input type="submit" id="SubmitButton" value="Submit"/>
         </div>
       </div>
 
