@@ -5,7 +5,7 @@ body, html {
     font-family: 'Poppins', sans-serif;
     background-color: #e6f3ff;
     margin: 0;
-    display: flex;
+    /* display: flex; */
 }
 
 /* Login page styles */

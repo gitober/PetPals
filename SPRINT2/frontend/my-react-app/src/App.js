@@ -7,7 +7,6 @@ import Profile from "./pages/profile";
 import Settings from "./pages/settings";
 import UserProfile from "./pages/userprofile";
 import "./app.css";
-import "./style/login.css";
 
 function App () {
   return (
