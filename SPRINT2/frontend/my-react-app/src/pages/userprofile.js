@@ -1,9 +1,13 @@
-// UserProfile.js
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/userprofile.css";
+import "../style/searchbar.css";
+import "../style/sidebar.css";
+import "../style/popuppost.css";
+import "../style/popupcomment.css";
 import Layout from "../Layout";
 
 const UserProfile = () => {
+  const [postPopupVisible, setPostPopupVisible] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [username, setUsername] = useState("YourUsername"); // Set a default or fetch it from your data
 
@@ -52,83 +56,64 @@ const UserProfile = () => {
     populatePictures();
   }, []);
 
-  function openPopup() {
-    var popup = document.querySelector(".popup");
-    popup.style.display = "block";
+  // Function to open and close post popup
+  function openPostPopup() {
+    setPostPopupVisible(true);
   }
 
-  function closePopup() {
-    var popup = document.querySelector(".popup");
-    popup.style.display = "none";
+  function closePostPopup() {
+    setPostPopupVisible(false);
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    handleDroppedFiles(files);
+  }
+
+  function handleDroppedFiles(files) {
+    // Handle the dropped files, you can upload them or perform other actions
+    console.log(files);
+    // Update the UI or trigger any other logic
   }
 
   return (
     <Layout>
-      <div className="container">
+      <div className="user-profile-container">
         <div className="sidebar">
-          <img srcset="/img/navbar.png" alt="logo" />
+          <img srcSet="/img/navbar.png" alt="logo" />
           <ul>
             <li>
-              <a href="../home">
-                {/* <img srcset="/img/home.png" alt="Home" /> */}
-                HOME
-              </a>
+              <a href="../home">HOME</a>
             </li>
             <li>
-              <a href="../profile">
-                {/* <img srcset="/img/profile.png" alt="Profile" /> */}
-                PROFILE
-              </a>
+              <a href="../profile">PROFILE</a>
             </li>
             <li>
-              <a onClick={() => openPopup()}>
-                {/* <img srcset="/img/post.png" alt="POST" className="signUp" id="signUpLink" /> */}
-                POST
-              </a>
+              <a onClick={openPostPopup}>POST</a>
             </li>
             <li>
-              <a href="../settings">
-                {/* <img srcset="/img/settings.png" alt="Settings" /> */}
-                SETTINGS
-              </a>
+              <a href="../settings">SETTINGS</a>
             </li>
           </ul>
           <div className="logout">
             <a href="/login">Log Out</a>
           </div>
-
-          <div className="popup">
-            <span className="close" onClick={closePopup}>
-              &times;
-            </span>
-            <div className="popup-content">
-              <h2>Add a new picture</h2>
-              <div className="empty-area">
-                <div className="drag-header"></div>
-                <input
-                  type="file"
-                  id="fileInput"
-                  accept="image/*"
-                  className="file-input"
-                />
-              </div>
-            </div>
-            <h2>Drag Photos here</h2>
-            <h3 className="popuph3">or</h3>
-            <label htmlFor="fileInput" className="select-button">
-              Select from computer
-            </label>
-          </div>
         </div>
-        <div className="main-content">
-          <div className="top-bar">
+        {/* Main Content */}
+        <div className="user-profile-main-content">
+          {/* Search Bar */}
+          <div className="search-bar">
             <input type="text" placeholder="Search" />
           </div>
-          <div className="feed-container">
-            {/* Feed container content goes here */}
-          </div>
-          <div className="feed">
-            {/* Feed content goes here */}
+
+          {/* User Profile Feed */}
+          <div className="user-profile-feed">
+            {/* User Info */}
             <div className="user-info">
               <div className="username">
                 <h3>username</h3>
@@ -139,6 +124,8 @@ const UserProfile = () => {
                 className="profile-picture"
               />
             </div>
+
+            {/* Follower/Following Button */}
             <div className="follower-following">
               <button
                 id="followButton"
@@ -148,6 +135,8 @@ const UserProfile = () => {
                 {isFollowing ? "Following" : "Follow"}
               </button>
             </div>
+
+            {/* Profile Details */}
             <div className="profile-details">
               <h4>Profile Details</h4>
               <p>
@@ -158,6 +147,51 @@ const UserProfile = () => {
                 vestibulum.
               </p>
             </div>
+
+            <div
+              className="postpopup"
+              style={{ display: postPopupVisible ? "block" : "none" }}
+            >
+              <span className="closePostPopup" onClick={closePostPopup}>
+                &times;
+              </span>
+              <div className="post-popup-content1">
+                <div className="content-wrapper">
+                  <h2>Add a new picture</h2>
+                  <div className="empty-area">
+                    <div className="drag-header"></div>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/*"
+                      className="file-input"
+                      style={{ display: "none" }}
+                    />
+                    <button
+                      className="post-select-button1"
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                    >
+                      Select from computer
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="post-popup-content2"
+                onDragOver={(e) => handleDragOver(e)}
+                onDrop={(e) => handleDrop(e)}
+              >
+                <div className="content-wrapper">
+                  <h2>Drag Photos here</h2>
+                  <label htmlFor="fileInput" className="post-select-button2">
+                    Drag here
+                  </label>
+                </div>
+              </div>
+            </div>
+
             {/* JSX Structure */}
             <div
               className="user-pictures-container"

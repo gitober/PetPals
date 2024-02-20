@@ -1,229 +1,67 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Base Styles */
+.settings-page-container {
+  display: flex;
+  min-height: 100vh;
   background-color: #e6f3ff;
 }
 
-.container {
-  display: flex;
-  min-height: 100vh; /* TÄMÄ MUUTTAA SIDEBARIN MENEMÄÄN ALAS!!!!*/
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;/* Vertically distribute content */
-  background-color: #ffffff;
-  padding: 40px 20px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  width: 350px;
-  height: 100%;
-  align-items: center;
-}
-
-.sidebar img {
-  width: 80%;
-  margin-top: 30px; /* Adjust as needed */
-  padding-bottom: 10px;
-}
-
-.sidebar ul li a, .sidebar ul li p {
-  display: flex;
-  align-items: center; /* Align items vertically */
-  color: #000000;
-  text-decoration: none;
-  transition: color 0.3s;
-  font-size: 25px;
-  margin-top: 60px;
-  margin-bottom: 50px;
-}
-
-.sidebar ul li p button {
-  text-align: left;
-  width: 35px; /* Adjust width as needed */
-  height: 20px; /* Adjust height as needed */
-  margin-right: 15px; /* Adjust margin as needed */
-}
-
-.sidebar ul li p:hover,
-.sidebar ul li a:hover,
-.sidebar ul li text:hover  {
-  color: #d6baff;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-}
-
-.user-icon {
-  width: 20px;
-  /* Muuta kuvan leveys tarpeen mukaan */
-  height: auto;
-  margin-right: 10px;
-  /* Aseta tarvittava välimatka käyttäjänimen ja kuvan väliin */
-}
-
-.main-content {
+.settings-main-content {
   flex: 3;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 240px;
 }
 
-.top-bar {
-  margin-bottom: 20px;
-  text-align: center;
-  /* Center the content in the top-bar */
-}
-
-.top-bar input[type="text"] {
-  padding: 8px;
-  text-align: center;
-  width: 60%;
-  /* Adjust the width as needed */
-  border-radius: 5px;
-  /* Rounded corners */
-  border: 1px solid #ffffff;
-  /* Add border for better visibility */
-}
-
-.feed {
+.settings-feed {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 5px;
   position: relative;
-  text-align: center;
+  margin: 20px;
 }
 
-.feed-image {
-  width: 100%;
-  /* Kuvan täyttäminen vanhemman leveys */
-  height: auto;
-}
-
-.icons {
+.setting-box {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  /* Aseta haluttu välimatka ikonien ja tekstin välille */
-}
-
-.icon {
-  width: 28px;
-  /* Muuta ikonien leveys tarpeen mukaan */
+  justify-content: center;
+  background-color: #e6f3ff;
+  width: 40%;
   height: auto;
-  padding-right: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.likes {
-  text-align: left;
-  margin-left: auto;
-  padding-right: 15px;
-}
-
-.logout a {
-  color: #d6baff;
-  font-size: 25px;
-  text-decoration: none; /* Remove underline */
+.textbox,
+.biotextdiv,
+.passtextdiv {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  width: 40%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
 }
-
-.logout a:hover {
-  color: #000000;
-}
-
-.hashtag {
-  color: #d6baff;
-  font-weight: bold;
-}
-
-.logout::before {
-  content: "";
-  /* Tyhjä sisältö, tarvitaan pseudoelementin käyttöön */
-  display: block;
-  /* Tehdään pseudoelementti blokkielementiksi */
-  border-top: 1px solid #ccc;
-  /* Viivan tyyli ja väri */
-  margin: 0 auto 10px;
-  /* Aseta marginaalit viivan ympärille */
-  width: 100%;
-  /* Määritä viivan leveys */
-  padding-bottom: 4rem;
-}
-
-.sidebar ul li:first-child::before {
-  content: "";
-  /* Tyhjä sisältö, tarvitaan pseudoelementin käyttöön */
-  display: block;
-  /* Tehdään pseudoelementti blokkielementiksi */
-  border-bottom: 1px solid #ccc;
-  /* Viivan tyyli ja väri */
-  margin: 0 auto 10px;
-  /* Aseta marginaalit viivan ympärille */
-  width: 100%;
-  /* Määritä viivan leveys */
-}
-
-/* New styles for setting boxes */
 
 .setting-box h3 {
   margin: 5px;
   font-size: 17px;
   text-align: center;
-  font-family: "Poppins", sans-serif; /* Fix the font-family property */
-}
-
-.setting-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #e6f3ff;
-  width: 40%;
-  height: 30%;
-  margin-bottom: 90px;
-  border-radius: 5px;
-}
-
-.textbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-  width: 40%;
-  margin-bottom: 5px;
-  border-radius: 5px;
-}
-
-.biotextdiv {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-  width: 39%;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  padding: 5px;
+  font-family: "Poppins", sans-serif;
 }
 
 .biotext {
   padding: 10px;
-}
-
-.passtextdiv {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f5f5f5;
-  width: 40%;
-  height: 180px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-}
-
-.passtextdiv p {
-  margin: 0; /* Remove default margin for paragraphs */
 }
 
 .setting-box input[type="text"] {
@@ -232,6 +70,7 @@ body {
   margin-top: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .setting-box button {
@@ -251,8 +90,9 @@ body {
 .row {
   display: flex;
   justify-content: space-between;
-  max-width: 700px; /* Set the maximum width as needed */
-  margin: 0 auto; /* Center the row within the container */
+  align-items: center;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .line2 {
@@ -276,152 +116,26 @@ body {
   border-radius: 5px;
 }
 
-.popup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  width: 100%; /* 4 times the original */
-  max-width: 600px; /* 4 times the original */
-  height: 200%;
-  max-height: 500px;
-  padding: 80px; /* Increased padding */
-  border-radius: 40px; /* Increased border radius */
-  z-index: 9999;
-  color: #000;
-  font-weight: bold; /* Added bold font weight */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Added box shadow */
-}
-
-.popup-content {
-  text-align: center;
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
-  font-size: 40px;
-}
-
-.popup-content input[type="file"] {
-  display: block;
-  margin: 60px auto;
-  background-color: #e6f3ff;
-}
-
-.popup-content button {
-  width: 50%;
-  padding: 20px;
-  border: #fff;
-  border-radius: 5px;
-  background-color: #e6f3ff;
-  color: #000;
-  cursor: pointer;
-  font-size: 30px;
-  position: relative;
-  margin-top: 70px;
-  font-weight: bold;
-}
-
-.popup-content button:hover {
-  background-color: #d6baff;
-}
-
-.popup-content {
-  text-align: center;
-}
-
-/* .empty-area {
-  background-image: url("../img/drag.PNG");
-  background-repeat: no-repeat; 
-  background-position: center; 
-  background-size: cover; 
-  border: 2px dashed #ccc;
-  padding: 60px; 
-  margin: 40px auto; 
-  width: 60%; 
-  border-radius: 5px;
-} */
-
-.drag-area {
-  display: none; /* Hide by default */
-}
-
-.drag-header {
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-
-.file-input {
-  display: none;
-}
-
-.select-button {
-  background-color: #e6f3ff;
-  color: #000;
-  padding: 15px 30px; /* Adjusted padding */
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px; /* Adjusted margin */
-}
-
-.select-button:hover {
-  background-color: #d6baff;
-}
-
-@media screen and (max-width: 700px) {
-  .setting-box {
-    width: 80%; /* Adjust the width as needed for smaller screens */
-    height: auto;
-  }
-
+/* Additional Styles for Improved Responsiveness */
+@media screen and (max-width: 768px) {
   .row {
-    flex-direction: row; /* Stack setting boxes vertically */
-    display: flex;
-    padding: 2px;
+    flex-direction: column; /* Change to a column layout on smaller screens */
+    text-align: center; /* Center align text within the row */
   }
 
-  .textbox,
-  .biotextdiv,
-  .passtextdiv {
-    width: 80%; /* Adjust the width as needed for smaller screens */
+  .row > * {
+    width: 100%; /* Make child elements take full width */
+    margin-bottom: 15px; /* Add some spacing between elements */
   }
-
-  body {
-    font-size: 16px; /* Adjust as needed for smaller screens */
+  
+  .dogprofilepicture {
+    margin-left: auto;
+    margin-right: auto;
   }
+}
 
-  .container {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    max-width: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    margin-bottom: 20px;
-
-  }
-
-  .main-content {
-    flex: none;
-  }
-
-  .follow-button-container {
-    margin-bottom: 20px;
-  }
-
-  .top-bar input[type="text"] {
-    width: 100%;
-    margin: 10px 0; /* Adjust margins for smaller screens */
-  }
-
-  .picture-container {
-    width: 100%;
-    margin: 10px 0; /* Adjust margins for smaller screens */
+@media screen and (max-width: 767px) {
+  .settings-main-content {
+    margin-left: 0; /* Adjusted for smaller screens */
   }
 }

@@ -1,0 +1,110 @@
+/* Font Import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Style for the Post Popup */
+.postpopup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 80%;
+  max-width: 500px;
+  height: 60%;
+  max-height: 450px;
+  padding: 40px;
+  border-radius: 20px;
+  z-index: 9999;
+  color: #000;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styles for Post Popup Content Sections */
+.post-popup-content1,
+.post-popup-content2 {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40%;
+}
+
+.post-popup-content1 .content-wrapper,
+.post-popup-content2 .content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40%;
+}
+
+/* Style for the Drag-Over State */
+.post-popup-content2.drag-over {
+  border: 2px dashed magenta;
+  background-color: rgba(255, 0, 255, 0.1);
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for Drag-Over State */
+.post-popup-content2.drag-over:hover {
+  background-color: black;
+}
+
+/* Style for the "Select from Computer" Buttons */
+.post-select-button1,
+.post-select-button2 {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: lightblue;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  width: 150px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the "Select from Computer" Buttons */
+.post-select-button1:hover,
+.post-select-button2:hover {
+  background-color: pink;
+}
+
+/* Additional Style for Drag-Over State */
+.post-popup-content2.drag-over .empty-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Style for the Close Button in the Post Popup */
+.closePostPopup {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 30px;
+  color: #000;
+}
+
+/* Media Query for Smaller Screens */
+@media screen and (max-width: 600px) {
+  .postpopup {
+    width: 90%; /* Adjusted width for smaller screens */
+  }
+
+  .post-select-button1,
+  .post-select-button2 {
+    width: 100%; /* Full width for smaller screens */
+  }
+}

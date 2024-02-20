@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../style/settings.css";
+import "../style/searchbar.css";
+import "../style/sidebar.css";
+import "../style/popuppost.css";
+import "../style/popupcomment.css";
 import Layout from "../Layout";
 
 function Settings() {
+  const [postPopupVisible, setPostPopupVisible] = useState(false);
   const handleProfilePictureChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -41,80 +46,61 @@ function Settings() {
     }
   };
 
-  function openPopup() {
-    var popup = document.querySelector(".popup");
-    popup.style.display = "block";
+  // Function to open and close post popup
+  function openPostPopup() {
+    setPostPopupVisible(true);
   }
 
-  function closePopup() {
-    var popup = document.querySelector(".popup");
-    popup.style.display = "none";
+  function closePostPopup() {
+    setPostPopupVisible(false);
   }
 
+
+  function handleDragOver(e) {
+    e.preventDefault();
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    handleDroppedFiles(files);
+  }
+
+  function handleDroppedFiles(files) {
+    // Handle the dropped files, you can upload them or perform other actions
+    console.log(files);
+    // Update the UI or trigger any other logic
+
+  }
   return (
     <Layout>
-      <div className="container">
+      <div className="settings-page-container">
         <div className="sidebar">
           <img srcSet="/img/navbar.png" alt="logo" />
           <ul>
-          <li>
-            <a href="../home">
-              {/* <img srcset="/img/home.png" alt="Home" /> */}
-              HOME
-            </a>
-          </li>
-          <li>
-            <a href="../profile">
-              {/* <img srcset="/img/profile.png" alt="Profile" /> */}
-              PROFILE
-            </a>
-          </li>
-          <li>
-            <a onClick={() => openPopup()}>
-              {/* <img srcset="/img/post.png" alt="POST" className="signUp" id="signUpLink" /> */}
-              POST
-            </a>
-          </li>
-          <li>
-            <a href="../settings">
-              {/* <img srcset="/img/settings.png" alt="Settings" /> */}
-              SETTINGS
-            </a>
-          </li>
-        </ul>
+            <li>
+              <a href="../home">HOME</a>
+            </li>
+            <li>
+              <a href="../profile">PROFILE</a>
+            </li>
+            <li>
+              <a onClick={openPostPopup}>POST</a>
+            </li>
+            <li>
+              <a href="../settings">SETTINGS</a>
+            </li>
+          </ul>
           <div className="logout">
             <a href="/login">Log Out</a>
           </div>
-
-          <div className="popup">
-            <span className="close" onClick={() => closePopup()}>
-              &times;
-            </span>
-            <div className="popup-content">
-              <h2>Add a new picture</h2>
-              <div className="empty-area">
-                <div className="drag-header"></div>
-                <input
-                  type="file"
-                  id="fileInput"
-                  accept="image/*"
-                  className="file-input"
-                />
-              </div>
-            </div>
-            <h2>Drag Photos here</h2>
-            <h3 className="popuph3">or</h3>
-            <label htmlFor="fileInput" className="select-button">
-              Select from computer
-            </label>
-          </div>
         </div>
 
-        <div className="main-content">
-          <div className="top-bar">
+        <div className="settings-main-content">
+          <div className="search-bar">
             <input type="text" placeholder="Search" />
           </div>
-          <div className="feed">
+          <div className="settings-feed">
             <h2 className="line2"></h2>
             <div className="row">
               <input
@@ -166,12 +152,17 @@ function Settings() {
               <div className="setting-box">
                 <h3>change password</h3>
               </div>
+            </div>
 
-              <div className="popup">
-                <span className="close" onClick={() => closePopup()}>
-                  &times;
-                </span>
-                <div className="popup-content">
+            <div
+              className="postpopup"
+              style={{ display: postPopupVisible ? "block" : "none" }}
+            >
+              <span className="closePostPopup" onClick={closePostPopup}>
+                &times;
+              </span>
+              <div className="post-popup-content1">
+                <div className="content-wrapper">
                   <h2>Add a new picture</h2>
                   <div className="empty-area">
                     <div className="drag-header"></div>
@@ -180,12 +171,29 @@ function Settings() {
                       id="fileInput"
                       accept="image/*"
                       className="file-input"
+                      style={{ display: "none" }}
                     />
+                    <button
+                      className="post-select-button1"
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                    >
+                      Select from computer
+                    </button>
                   </div>
+                </div>
+              </div>
+
+              <div
+                className="post-popup-content2"
+                onDragOver={(e) => handleDragOver(e)}
+                onDrop={(e) => handleDrop(e)}
+              >
+                <div className="content-wrapper">
                   <h2>Drag Photos here</h2>
-                  <h3 className="popuph3">or</h3>
-                  <label htmlFor="fileInput" className="select-button">
-                    Select from computer
+                  <label htmlFor="fileInput" className="post-select-button2">
+                    Drag here
                   </label>
                 </div>
               </div>

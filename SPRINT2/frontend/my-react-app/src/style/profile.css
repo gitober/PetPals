@@ -1,105 +1,23 @@
 /* Global styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #e6f3ff;
-}
-
 /* Container styles */
-.container {
-  display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: flex-start; /* Align the content to the top */
-}
-
-/* Follow button styles */
-.follow-button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px; /* Adjusted for spacing */
-}
-
-.follow-button {
-  display: inline-block;
-  padding: 10px 20px;
+.profile-page-container {
   background-color: #e6f3ff;
-  color: #706f6f;
-  font-size: 14px;
-  font-weight: bold;
-  border: 1px solid #e6f3ff;
-  border-radius: 5px;
-  font-family: 'Poppins';
-}
-
-.follow-button:hover {
-  background-color: #e6f3ff;
-}
-
-/* Sidebar styles */
-.sidebar {
-  flex: 1;
-  background-color: #ffffff;
-  padding: 20px;
-  text-align: center;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  max-width: 200px;
-  margin-bottom: 20px; /* Adjusted for spacing */
-}
-
-.sidebar img {
-  width: 80%; /* Adjusted the width for responsiveness */
-  max-width: 100%; /* Ensures the image does not exceed its original size */
-  height: auto;
-  margin-bottom: 10px; /* Adjusted margin to make it closer to the text */
-}
-
-.sidebar ul li {
-  list-style: none; /* Remove default list style */
-}
-
-.sidebar ul li a {
   display: flex;
-  align-items: center;
-  text-align: left; /* Adjusted text alignment */
-  text-decoration: none; /* Remove underlines from links */
-  color: #000000; /* Set link color */
+  min-height: 100vh;
 }
-
-.sidebar ul li a img {
-  width: 20px; /* Adjust the width as needed */
-  height: auto;
-  margin-right: 10px; /* Adjusted the margin */
-}
-
-.sidebar ul li a:hover {
-  color: #d6baff;
-}
-
-.sidebar ul li a span {
-  display: flex;
-  align-items: center;
-}
-
-.sidebar ul li a span img {
-  width: 20px; /* Adjust the width as needed */
-  height: auto;
-  margin-right: 5px; /* Adjust the margin as needed */
-}
-
 
 /* User Info styles */
 .user-info {
   display: flex;
-  flex-direction: column; /* Adjusted for smaller screens */
-  align-items: center; /* Adjusted for smaller screens */
+  flex-direction: column;
+  align-items: center;
 }
+
 .user-info .profile-picture {
-  width: 150px; /* PROFIILIKUVA */
-  height: auto; /* Maintain aspect ratio */
+  width: 150px;
+  height: auto;
   border-radius: 5px;
 }
 
@@ -109,7 +27,7 @@ body {
 }
 
 .username-text {
-  margin-left: 0; /* Adjust margin-left to 0 */
+  margin-left: 0;
 }
 
 .user-icon {
@@ -118,13 +36,7 @@ body {
   margin-right: 10px;
 }
 
-.follow-button-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px; /* Adjusted for spacing */
-}
-
+/* User Pictures Container styles */
 .user-pictures-container {
   margin-top: 20px;
   text-align: center;
@@ -132,48 +44,67 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+  margin: 0 auto; /* Center the content horizontally */
 }
 
 .user-pictures-container .picture-container {
   box-sizing: border-box;
-  margin: 10px;
-  width: calc(33.33% - 10px);
+  margin: 10px; /* Adjusted margin for better spacing */
+  width: calc(33.33% - 20px); /* Adjusted margin and width for better spacing */
   text-align: center;
 }
 
 .user-pictures-container .picture-container img {
-  width: 50%; /* Adjust the width as needed */
+  width: 100%; /* Adjusted to full width for better responsiveness */
   height: auto;
   border: 1px solid #ccc;
   border-radius: 5px;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
 }
 
+/* Picture Container styles */
+.picture-container {
+  display: inline-block;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+  margin: 10px; /* Adjusted margin for better spacing */
+  width: calc(33.33% - 20px);
+  text-align: center;
+  max-width: 100%; /* Added max-width to prevent overflow */
+}
+
+.picture-container img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+}
+
+/* Profile Picture Container styles */
 .profile-picture-container {
   margin-top: 20px;
   text-align: right;
   margin-left: auto;
+  position: relative; /* Make the container relative for absolute positioning */
 }
 
 .profile-picture-container img {
-  width: 100%;
+  width: 20%;
   height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
   border-radius: 5px;
 }
 
 .profile-picture {
-  width: 120px; /* Adjust the width as needed */
-  height: auto; /* Maintain aspect ratio */
+  width: 120px;
+  height: auto;
   border-radius: 5px;
 }
 
 .profile-picture-container p {
   position: absolute;
   top: 100%;
-  left: 100%;
-  transform: translate(-50%, -50%);
+  left: 50%; /* Adjusted left to center text */
+  transform: translateX(-50%); /* Center text horizontally */
   margin: 0;
   color: #706f6f;
   font-size: 14px;
@@ -181,7 +112,8 @@ body {
 
 /* Profile Details styles */
 .profile-details {
-  padding: 0 20px; /* Add padding to the left and right */
+  padding: 0 20px;
+  text-align: center;
 }
 
 /* Profile Details Separator styles */
@@ -191,6 +123,50 @@ body {
   border-bottom: 1px solid #ccc;
   margin: 0 auto 10px;
   width: 100%;
+}
+
+/* Main Content styles */
+.profile-page-main-content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-left: 240px;
+}
+
+/* Feed styles */
+.profile-page-feed {
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 20px; /* Added padding for better spacing */
+}
+
+.profile-page-feed-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile-page-feed-image {
+  width: 100%;
+  height: auto;
+}
+
+/* Picture Container styles */
+.picture-container {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 5px;
+  width: calc(33.33% - 20px);
+  text-align: center;
+}
+
+.picture-container img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 /* Follower/Following styles */
@@ -206,95 +182,148 @@ body {
   margin-right: 10px;
 }
 
-/* Main Content styles */
-.main-content {
-  height: 100vh; /* Set the desired height, e.g., 100% of the viewport height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding: 20px;
+/* Responsive adjustments for smaller screens including iPhone SE */
+@media screen and (max-width: 767px) {
+  .profile-page-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .picture-container {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .profile-picture-container img {
+    width: 80px;
+    height: auto;
+  }
+
+  .profile-page-main-content {
+    overflow-y: auto;
+  }
+}
+/* Global styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Container styles */
+.profile-page-container {
+  background-color: #e6f3ff;
+  display: flex;
+  min-height: 100vh;
 }
 
-/* Top Bar styles */
-.top-bar {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.top-bar input[type="text"] {
-  padding: 8px;
-  text-align: center;
-  width: 60%;
-  border-radius: 5px;
-  border: 1px solid #ffffff;
-}
-
-/* Feed styles */
-
-.feed {
-  max-width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.feed-content {
+/* User Info styles */
+.user-info {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
-.feed-image {
-  width: 100%;
+.user-info .profile-picture {
+  width: 150px;
   height: auto;
+  border-radius: 5px;
 }
 
-/* Icons styles */
-.icons {
+.username {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 10px;
 }
 
-.icon {
-  width: 28px;
+.username-text {
+  margin-left: 0;
+}
+
+.user-icon {
+  width: 20px;
   height: auto;
-  padding-right: 10px;
+  margin-right: 10px;
 }
 
-.likes {
-  text-align: left;
-  margin-left: auto;
-  padding-right: 15px;
-}
-
-/* Logout styles */
-.logout a {
-  color: #d6baff;
-  font-size: 25px;
-  text-decoration: none;
-  align-items: center;
-}
-
-.logout a:hover {
-  color: #000000;
-}
-
-.hashtag {
-  color: #d6baff;
-  font-weight: bold;
-}
-
-/* Logout Separator styles */
-.logout::before {
-  content: '';
-  display: block;
-  border-top: 1px solid #ccc;
-  margin: 0 auto 10px;
+/* User Pictures Container styles */
+.user-pictures-container {
+  margin-top: 20px;
+  text-align: center;
+  max-width: 100%;
   width: 100%;
-  padding-bottom: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
 }
 
-/* Sidebar Separator styles */
-.sidebar ul li:first-child::before {
+.user-pictures-container .picture-container {
+  box-sizing: border-box;
+  margin: 10px; /* Adjusted margin for better spacing */
+  width: calc(33.33% - 20px); /* Adjusted margin and width for better spacing */
+  text-align: center;
+}
+
+.user-pictures-container .picture-container img {
+  width: 100%; /* Adjusted to full width for better responsiveness */
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+}
+
+/* Picture Container styles */
+.picture-container {
+  display: inline-block;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+  margin: 10px; /* Adjusted margin for better spacing */
+  width: calc(33.33% - 20px);
+  text-align: center;
+  max-width: 100%; /* Added max-width to prevent overflow */
+}
+
+.picture-container img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Ensure consistent box-sizing */
+}
+
+/* Profile Picture Container styles */
+.profile-picture-container {
+  margin-top: 20px;
+  text-align: right;
+  margin-left: auto;
+  position: relative; /* Make the container relative for absolute positioning */
+}
+
+.profile-picture-container img {
+  width: 20%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.profile-picture {
+  width: 120px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.profile-picture-container p {
+  position: absolute;
+  top: 100%;
+  left: 50%; /* Adjusted left to center text */
+  transform: translateX(-50%); /* Center text horizontally */
+  margin: 0;
+  color: #706f6f;
+  font-size: 14px;
+}
+
+/* Profile Details styles */
+.profile-details {
+  padding: 0 20px;
+  text-align: center;
+}
+
+/* Profile Details Separator styles */
+.profile-details::after {
   content: '';
   display: block;
   border-bottom: 1px solid #ccc;
@@ -302,11 +331,38 @@ body {
   width: 100%;
 }
 
+/* Main Content styles */
+.profile-page-main-content {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Feed styles */
+.profile-page-feed {
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 20px; /* Added padding for better spacing */
+}
+
+.profile-page-feed-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile-page-feed-image {
+  width: 100%;
+  height: auto;
+}
+
 /* Picture Container styles */
 .picture-container {
   display: inline-block;
   box-sizing: border-box;
-  margin: 5px; /* Adjust the margin as needed */
+  margin: 5px;
   width: calc(33.33% - 20px);
   text-align: center;
 }
@@ -318,48 +374,25 @@ body {
   box-sizing: border-box;
 }
 
+/* Follower/Following styles */
+.follower-following {
+  display: flex;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #D6BAFF;
+  justify-content: center;
+}
+
+.follower-following p {
+  margin-right: 10px;
+}
+
 /* Responsive adjustments for smaller screens including iPhone SE */
 @media screen and (max-width: 767px) {
-  body {
-    font-size: 16px;
-  }
-
-  .container {
+  .profile-page-container {
     flex-direction: column;
     align-items: center;
-    padding: 10px; /* Add padding for smaller screens */
-  }
-
-  .sidebar {
-    max-width: 100%; /* Adjusted for smaller screens */
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 0;
-    margin-bottom: 20px;
-    padding: 10px; /* Add padding for smaller screens */
-    position: relative; /* Add relative positioning */
-  }
-
-  .sidebar img {
-    width: 100%; /* Adjusted the width for responsiveness */
-  }
-
-  .sidebar ul li a img {
-    width: 20px; /* Adjust the width as needed */
-    height: auto;
-    margin-right: 5px; /* Adjusted the margin */
-  }
-
-  .top-bar {
-    margin-bottom: 20px;
-    text-align: center;
-  }
-
-  .top-bar input[type="text"] {
-    padding: 8px;
-    text-align: center;
-    width: 100%; /* Adjusted for smaller screens */
-    border-radius: 5px;
-    border: 1px solid #ffffff;
+    padding: 10px;
   }
 
   .picture-container {
@@ -368,92 +401,12 @@ body {
   }
 
   .profile-picture-container img {
-    width: 80px; /* Adjust the width as needed */
-    height: auto; /* Maintain aspect ratio */
+    width: 80px;
+    height: auto;
   }
 
-  .main-content {
-    overflow-y: auto; /* Enable vertical scrolling for the main content */
+  .profile-page-main-content {
+    margin-left: 0; /* Adjusted for smaller screens */
+    overflow-y: auto;
   }
-
-  .popup {
-    max-width: 100%;
-    width: 100%;
-    max-height: 100%;
-  }
-
-  .popup-content {
-    padding: 10px;
-  }
-
-  .popup-content input[type="file"] {
-    margin: 20px auto; /* Adjusted margin for smaller screens */
-  }
-
-  .popup-content button {
-    width: 80%; /* Adjusted width for smaller screens */
-    padding: 15px;
-    font-size: 20px; /* Adjusted font size for smaller screens */
-  }
-}
-
-/* Popup styles */
-.popup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  width: 100%;
-  max-width: 600px;
-  max-height: 490px;
-  padding: 10px;
-  border-radius: 40px;
-  z-index: 9999;
-  color: #000;
-  font-weight: bold;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.popup-content {
-  text-align: center;
-}
-
-.closePop {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
-  font-size: 40px;
-}
-
-.close:hover,
-.close:focus {
-  color: #d6baff;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.popup-content input[type="file"] {
-  display: block;
-  margin: 60px auto;
-  background-color: #e6f3ff;
-}
-
-.popup-content button {
-  width: 50%;
-  padding: 20px;
-  border: #fff;
-  border-radius: 5px;
-  background-color: #E6F3FF;
-  color: #000;
-  cursor: pointer;
-  font-size: 30px;
-  position: relative;
-  font-weight: bold;
-}
-
-.popup-content button:hover {
-  background-color: #d6baff;
 }
