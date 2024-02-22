@@ -15,10 +15,12 @@ function Home() {
   
 
   function toggleLike() {
-    setLiked((prevLiked) => {
-      setLikeCount((prevCount) => (prevLiked ? prevCount - 1 : prevCount + 1));
-      return !prevLiked;
-    });
+    if (liked) {
+      setLikeCount((prevCount) => prevCount - 1); // Decrease like count if unliking
+    } else {
+      setLikeCount((prevCount) => prevCount + 1); // Increase like count if liking
+    }
+    setLiked(!liked); // Toggle like status
   }
 
   // Function to open and close post popup
