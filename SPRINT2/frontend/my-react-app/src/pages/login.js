@@ -142,10 +142,7 @@ function Login() {
             </span>
             <h2>Sign Up Options</h2>
             <p>
-              <a href="signup_email.html">Option 1: Sign up with email</a>
-              <a href="signup_social.html">
-                Option 2: Sign up with social media
-              </a>
+              <a href="signup_email.html">Sign up with Google account</a>
             </p>
           </div>
 

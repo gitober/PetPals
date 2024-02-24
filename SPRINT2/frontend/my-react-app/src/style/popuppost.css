@@ -9,24 +9,29 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  width: 80%;
-  max-width: 500px;
-  height: 60%;
-  max-height: 450px;
-  padding: 40px;
-  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  height: 300%;
+  max-height: 500px;
+  padding: 80px;
+  border-radius: 40px;
   z-index: 9999;
   color: #000;
   font-weight: bold;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+/* Styles for Post Popup Content Sections */
+.post-popup-content1 {
+  text-align: center;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 30%;
 }
 
-/* Styles for Post Popup Content Sections */
-.post-popup-content1,
+
 .post-popup-content2 {
   text-align: center;
   width: 100%;
@@ -34,10 +39,22 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40%;
+  height: 70%;
+
 }
 
+.post-popup-content1 .content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40%;
+}
 .post-popup-content1 .content-wrapper,
+.post-popup-content2 .content-wrapper h2 {
+  font-size: 30px;
+}
+
 .post-popup-content2 .content-wrapper {
   display: flex;
   flex-direction: column;
@@ -60,10 +77,21 @@
 }
 
 /* Style for the "Select from Computer" Buttons */
-.post-select-button1,
+.post-select-button1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: lightblue;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  width: 150px;
+  transition: background-color 0.3s ease;
+}
+
 .post-select-button2 {
   margin-top: 10px;
-  padding: 10px;
+  padding: 80px;
   background-color: lightblue;
   color: #fff;
   border: none;
@@ -105,6 +133,6 @@
 
   .post-select-button1,
   .post-select-button2 {
-    width: 100%; /* Full width for smaller screens */
+    width: 70%; /* Full width for smaller screens */
   }
 }
