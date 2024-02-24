@@ -2,16 +2,55 @@
 // It includes functions for user registration, login, logout, and generating access tokens.
 // The controller ensures secure user authentication and token management within the application.
 
+require("dotenv").config(); // Load environment variables
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const authController = {
-  // Register a new user
+  login: async (req, res) => {
+    try {
+      const { username, password } = req.body;
+
+      console.log("Received login request with username:", username);
+
+      // Find user by username
+      const user = await Users.findOne({
+        username: { $regex: new RegExp(username, "i") },
+      });
+
+      console.log("User found:", user);
+
+      // Check if user exists
+      if (!user) {
+        console.log("User not found");
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      // Compare input password with hashed password
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      console.log("Password match:", isMatch);
+
+      if (!isMatch) {
+        console.log("Password does not match");
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      // Generate and send an access token
+      const accessToken = authController.generateAccessToken(user._id);
+
+      res.status(200).json({ accessToken });
+    } catch (err) {
+      console.error("Error during login:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  },
+
   register: async (req, res) => {
     try {
       // Extract user details from request body
-      const { fullname, username, email, password, gender } = req.body;
+      const { username, email, password } = req.body;
 
       // Check if user is already logged in
       if (req.user) {
@@ -60,24 +99,18 @@ const authController = {
 
       // Create a new user
       const newUser = new Users({
-        fullname,
         username: newUsername,
         email,
         password: passwordHash,
-        gender,
       });
 
       // Create and set cookies for tokens
-      const access_token = authController.createAccessToken({
-        id: newUser._id,
-      });
-      const refresh_token = authController.createRefreshToken({
-        id: newUser._id,
-      });
+      const access_token = authController.generateAccessToken(newUser._id);
+      const refresh_token = authController.generateRefreshToken(newUser._id);
       res.cookie("refreshtoken", refresh_token, {
         httpOnly: true,
         path: "/api/refresh_token",
-        maxAge: 24 * 30 * 60 * 60 * 1000, // 30 days valid
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
       });
 
       // Save the new user
@@ -98,78 +131,8 @@ const authController = {
     }
   },
 
-  // Login user
-  login: async (req, res) => {
-    try {
-      // Check if user is already logged in
-      if (req.user) {
-        return res.status(200).json({
-          message: "You are already logged in.",
-          status: "success",
-        });
-      }
-
-      // Extract login credentials from request body
-      const { email, password } = req.body;
-
-      // Find user by email and populate friends and following
-      const user = await Users.findOne({ email }).populate(
-        "friends following",
-        "-password"
-      );
-
-      // Check if user exists
-      if (!user)
-        return res.status(404).json({
-          message: "User not found",
-          field: "email",
-        });
-
-      // Compare passwords
-      const isMatch = await authController.comparePassword(
-        password,
-        user.password
-      );
-      if (!isMatch)
-        return res.status(401).json({
-          message: "Incorrect password",
-          field: "password",
-        });
-
-      // Generate tokens and set cookies
-      const access_token = authController.createAccessToken({ id: user._id });
-      const refresh_token = authController.createRefreshToken({ id: user._id });
-      res.cookie("refreshtoken", refresh_token, {
-        httpOnly: true,
-        path: "/api/refresh_token",
-        maxAge: 24 * 30 * 60 * 60 * 1000, // 30 days valid
-      });
-
-      // Respond with success message and user details
-      res.json({
-        message: "Login Successful!",
-        access_token,
-        user: {
-          ...user._doc,
-          password: "",
-        },
-      });
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
-    }
-  },
-
-  // Logout user
   logout: async (req, res) => {
     try {
-      const requestData = req.body;
-
-      if (Object.keys(requestData).length === 0) {
-        console.log("Logout request received with no additional data.");
-      } else {
-        console.log("Logout request received. Additional data:", requestData);
-      }
-
       // Clear refresh token cookie
       res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
       res.json({ message: "Logged out" });
@@ -178,70 +141,25 @@ const authController = {
     }
   },
 
-  // Generate access token using refresh token
-  generateAccessToken: async (req, res) => {
-    try {
-      // Get refresh token from cookies
-      const rf_token = req.cookies.refreshtoken;
-
-      // Check if refresh token exists
-      if (!rf_token) return res.status(400).json({ message: "Please login" });
-
-      // Verify refresh token and generate new access token
-      jwt.verify(
-        rf_token,
-        process.env.REFRESHTOKENSECRET,
-        async (err, result) => {
-          if (err) return res.status(400).json({ message: "Please login" });
-
-          // Find user by ID, exclude password, and populate friends and following
-          const user = await Users.findById(result.id)
-            .select("-password")
-            .populate("friends following");
-
-          // Check if user exists
-          if (!user)
-            return res.status(400).json({ message: "User does not exist" });
-
-          // Generate new access token
-          const access_token = authController.createAccessToken({
-            id: result.id,
-          });
-
-          // Respond with new access token and user details
-          res.json({
-            access_token,
-            user,
-          });
-        }
-      );
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
-    }
+  generateAccessToken: (userId) => {
+    return jwt.sign({ userId }, process.env.ACCESSTOKENSECRET, {
+      expiresIn: "1h",
+    });
   },
 
-  // Function to hash a password
+  generateRefreshToken: (userId) => {
+    const refreshToken = jwt.sign({ userId }, process.env.REFRESHTOKENSECRET, {
+      expiresIn: "30d",
+    });
+    return refreshToken;
+  },
+
   hashPassword: async (password) => {
     return await bcrypt.hash(password, 13);
   },
 
-  // Function to compare a password with a hashed password
   comparePassword: async (inputPassword, hashedPassword) => {
     return await bcrypt.compare(inputPassword, hashedPassword);
-  },
-
-  // Function to create access token
-  createAccessToken: (payload) => {
-    return jwt.sign(payload, process.env.ACCESSTOKENSECRET, {
-      expiresIn: "1d",
-    });
-  },
-
-  // Function to create refresh token
-  createRefreshToken: (payload) => {
-    return jwt.sign(payload, process.env.REFRESHTOKENSECRET, {
-      expiresIn: "30d",
-    });
   },
 };
 
