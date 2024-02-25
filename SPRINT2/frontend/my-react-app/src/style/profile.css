@@ -391,8 +391,6 @@
 @media screen and (max-width: 767px) {
   .profile-page-container {
     flex-direction: column;
-    align-items: center;
-    padding: 10px;
   }
 
   .picture-container {
@@ -408,5 +406,14 @@
   .profile-page-main-content {
     margin-left: 0; /* Adjusted for smaller screens */
     overflow-y: auto;
+  }
+
+  /* Add styles to make pictures go under each other */
+  .profile-feed-pictures-container {
+    grid-template-columns: 1fr; /* Make feed pictures align under each other */
+  }
+
+  .profile-feed-picture-container {
+    width: 100%;
   }
 }

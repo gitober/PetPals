@@ -102,12 +102,10 @@
 /* Responsive styles for smaller screens */
 @media screen and (max-width: 767px) {
   .sidebar {
-    width: 70%;
-    max-width: 70%;
+    width: 100%;
+    max-width: 100%;
     height: 100%;
     padding: 20px;
-    margin-left: auto;
-    margin-right: auto;
     position: static;
     top: 0; /* Align the sidebar to the top of the viewport */
   }
@@ -167,7 +165,7 @@
   .home-page-container,
   .profile-page-container,
   .settings-page-container,
-  .user-profile-container {
+  .userprofile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -179,11 +177,9 @@
   .home-main-content,
   .profile-main-content,
   .settings-main-content,
-  .user-profile-main-content {
+  .userprofile-main-content {
     width: 100%;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
     padding-top: 20px;
   }
 }

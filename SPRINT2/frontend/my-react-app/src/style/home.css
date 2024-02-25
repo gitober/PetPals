@@ -109,26 +109,20 @@
 
 /* Responsive styles for smaller screens */
 @media screen and (max-width: 767px) {
+  .home-page-container {
+    justify-content: center;
+  }
+
+  .home-main-content {
+    margin-left: 0; /* Adjusted for smaller screens */
+  }
+
   .home-feed {
-    margin: 10px; 
+    margin: 10px;
   }
 
   .home-feed-image img {
     width: 50%;
-  }
-
-  .user-info {
-    text-align: center;
-  }
-}
-/* Responsive styles for very small screens (phones) */
-@media screen and (max-width: 479px) {
-  .home-feed {
-    margin: 5px; 
-  }
-
-  .home-feed-image img {
-    width: 100%; 
   }
 
   .user-info {

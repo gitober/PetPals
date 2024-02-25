@@ -236,12 +236,17 @@
 
 /* Media Queries */
 @media screen and (max-width: 767px) {
+  .userprofile-container {
+    justify-content: center;
+  }
+
   .userprofile-main-content {
     margin-left: 0; /* Adjusted for smaller screens */
   }
 
   .userprofile-info {
-    align-items: center; /* Center items horizontally on smaller screens */
+    align-items: center; /* Align items to the center */
+    flex-direction: column;
   }
 
   .userprofile-username {
@@ -264,4 +269,13 @@
   .userprofile-feed-pictures-container {
     grid-template-columns: 1fr; /* Make feed pictures align under each other */
   }
+
+  .userprofile-follower-following {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #d6baff;
+  justify-content: center;
+}
 }
