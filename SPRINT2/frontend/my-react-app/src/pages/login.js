@@ -1,52 +1,120 @@
 import React, { useState, useEffect } from "react";
+import Layout from "../Layout";
 import "../style/login.css";
 import "../style/popupforgotpassword.css";
 import "../style/popupsignup.css";
-import Layout from "../Layout";
 
 function Login() {
-  // State variables for inputs
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  // State variable for login button disabled status
   const [loginDisabled, setLoginDisabled] = useState(true);
-
-  const [signupPopupVisible, setsignupPopupVisible] = useState(false);
+  const [signupPopupVisible, setSignupPopupVisible] = useState(false);
+  const [signupUsername, setSignupUsername] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
   const [forgotPasswordPopupVisible, setForgotPasswordPopupVisible] =
     useState(false);
 
-  // Function to check inputs and enable/disable login button
+  const handleLoginSubmit = async (event) => {
+    event.preventDefault();
+    if (username && password) {
+      console.log("Logging in with username:", username);
+
+      try {
+        console.log("Password entered for login.");
+
+        // Make an HTTP POST request to the server
+        const response = await fetch("http://localhost:5000/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Login successful. Access Token:", data.accessToken);
+          window.location.href = "../home";
+        } else {
+          console.error("Login failed");
+        }
+      } catch (error) {
+        console.error("Error during login:", error);
+      }
+    }
+  };
+
+  const handleSignupSubmit = async (event) => {
+    event.preventDefault();
+    if (signupUsername && signupEmail && signupPassword) {
+      console.log("Signup successful. Username:", signupUsername);
+
+      try {
+        // Make an HTTP POST request to the server
+        const response = await fetch("http://localhost:5000/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: signupUsername,
+            email: signupEmail,
+            password: signupPassword,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(
+            "Registration successful. Access Token:",
+            data.access_token
+          );
+
+          // Clear the form inputs after successful registration
+          setSignupUsername("");
+          setSignupEmail("");
+          setSignupPassword("");
+
+          closeSignupPopup();
+        } else {
+          console.error("Registration failed");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+      }
+    }
+  };
+
+  const handleForgotPasswordSubmit = (event) => {
+    event.preventDefault();
+    const emailInput = document.getElementById("forgot-email");
+    const userEmail = emailInput.value;
+    // Perform logic for forgot password, e.g., send reset email
+    console.log("Forgot password for email:", userEmail);
+    closeForgotPasswordPopup();
+  };
+
+  const openSignupPopup = () => {
+    setSignupPopupVisible(true);
+  };
+
+  const closeSignupPopup = () => {
+    setSignupPopupVisible(false);
+  };
+
+  const openForgotPasswordPopup = () => {
+    setForgotPasswordPopupVisible(true);
+  };
+
+  const closeForgotPasswordPopup = () => {
+    setForgotPasswordPopupVisible(false);
+  };
+
   useEffect(() => {
+    // Enable or disable the login button based on the presence of username and password
     setLoginDisabled(!(username && password));
   }, [username, password]);
-
-  // Function to handle form submission
-  function handleSubmit(event) {
-    event.preventDefault(); // Prevent form submission
-
-    // Simulate login logic
-    if (username && password) {
-      // Redirect to home page
-      window.location.href = "../home";
-    }
-  }
-
-  function openForgotPasswordPopup() {
-    setForgotPasswordPopupVisible(true);
-  }
-
-  function closeForgotPasswordPopup() {
-    setForgotPasswordPopupVisible(false);
-  }
-
-  function openSignupPopup() {
-    setsignupPopupVisible(true);
-  }
-
-  function closeSignupPopup() {
-    setsignupPopupVisible(false);
-  }
 
   return (
     <Layout>
@@ -58,7 +126,7 @@ function Login() {
         </div>
         <div className="login-container">
           <div className="login-form">
-            <form onSubmit={handleSubmit} id="loginForm">
+            <form onSubmit={handleLoginSubmit} id="loginForm">
               <h1 className="h1">Log in</h1>
               <input
                 type="text"
@@ -101,38 +169,6 @@ function Login() {
         </div>
 
         <div
-          className="forgot-password-popup"
-          style={{ display: forgotPasswordPopupVisible ? "block" : "none" }}
-        >
-          <div className="forgot-password-popup-content">
-            <span className="close" onClick={closeForgotPasswordPopup}>
-              &times;
-            </span>
-            <h1>Forgot your password?</h1>
-            {/* Add text here */}
-            <p>Problems signing in?</p>
-            <p>
-              Import your email, phone number, or username to reset your
-              password
-            </p>
-            <div className="forgot-popup-content">
-              <input
-                type="text"
-                id="emailInput"
-                placeholder="Enter your email, phone number, or username"
-                className="popup-input"
-              />
-              <input
-                type="submit"
-                id="SubmitButton"
-                value="Submit"
-                className="popup-submit"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div
           className="signup-popup"
           style={{ display: signupPopupVisible ? "block" : "none" }}
         >
@@ -148,7 +184,7 @@ function Login() {
 
           <div className="signup-info">
             <h3>Sign Up Information:</h3>
-            <form>
+            <form onSubmit={handleSignupSubmit}>
               <div className="form-group">
                 <label htmlFor="username">Username:</label>
                 <input
@@ -156,6 +192,8 @@ function Login() {
                   id="signup-username"
                   name="username"
                   placeholder="Enter username"
+                  value={signupUsername}
+                  onChange={(e) => setSignupUsername(e.target.value)}
                   required
                 />
               </div>
@@ -166,6 +204,8 @@ function Login() {
                   id="signup-email"
                   name="email"
                   placeholder="Enter email"
+                  value={signupEmail}
+                  onChange={(e) => setSignupEmail(e.target.value)}
                   required
                 />
               </div>
@@ -176,13 +216,47 @@ function Login() {
                   id="signup-password"
                   name="password"
                   placeholder="Enter password"
+                  value={signupPassword}
+                  onChange={(e) => setSignupPassword(e.target.value)}
                   required
                 />
               </div>
+              <div className="signupinfoBtn">
+                <button type="submit" onClick={handleSignupSubmit}>
+                  Sign Up
+                </button>
+              </div>
             </form>
           </div>
-          <div className="signupinfoBtn">
-            <button type="submit">Sign Up</button>
+        </div>
+
+        <div
+          className="forgot-password-popup"
+          style={{
+            display: forgotPasswordPopupVisible ? "block" : "none",
+          }}
+        >
+          <div className="forgot-password-popup-content">
+            <span className="close" onClick={closeForgotPasswordPopup}>
+              &times;
+            </span>
+            <h1>Forgot your password?</h1>
+            <p>Problems signing in?</p>
+            <p>Import your email</p>
+            <div className="forgot-popup-content">
+              <input
+                type="text"
+                id="forgot-email"
+                placeholder="Enter your email"
+                className="popup-input"
+              />
+              <input
+                type="submit"
+                value="Submit"
+                className="popup-submit"
+                onClick={handleForgotPasswordSubmit}
+              />
+            </div>
           </div>
         </div>
       </div>

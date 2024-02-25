@@ -21,14 +21,16 @@ app.use(cors());
 app.use(cookieParser());
 
 // Middleware to log incoming requests
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   console.log(`Received ${req.method} request to ${req.originalUrl}`);
-  if (
-    ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS", "PATCH"].includes(
-      req.method
-    )
-  ) {
-    console.log("Data received:", req.body);
+  if (["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS", "PATCH"].includes(req.method)) {
+    // Replace the password field with asterisks in the console logs
+    const sanitizedBody = { ...req.body };
+    if (sanitizedBody.password) {
+      sanitizedBody.password = '*'.repeat(sanitizedBody.password.length);
+    }
+
+    console.log("Data received:", sanitizedBody);
   }
   next();
 });
@@ -48,6 +50,7 @@ app.use((err, req, res, next) => {
     .json({ error: "Internal Server Error", message: err.message });
 });
 
+// Your existing routers
 app.use("/api", authRouter);
 app.use("/api", postRouter);
 app.use("/api", userRouter);
