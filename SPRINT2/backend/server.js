@@ -65,17 +65,3 @@ connectDB();
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-// CONNECTING FRONTEND TO BACKEND - LATERS
-//const http = require("http").createServer(app);
-//const io = require("socket.io")(http);
-
-// CONNECTING FRONTEND TO BACKEND - LATERS
-// io.on("connection", (socket) => {
-//   socketServer(socket);
-// });
-
-// CONNECTING FRONTEND TO BACKEND - LATERS
-// http.listen(port, () => {
-//   console.log(`app is running on ${port}`);
-// });
