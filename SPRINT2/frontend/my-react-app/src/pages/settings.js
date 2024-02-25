@@ -101,6 +101,7 @@ function Settings() {
             <input type="text" placeholder="Search" />
           </div>
           <div className="settings-feed">
+            <h1>Settings</h1>
             <h2 className="line2"></h2>
             <div className="row">
               <input
@@ -117,84 +118,73 @@ function Settings() {
                   alt="Profile Picture"
                 />
               </label>
-              <div className="textbox" onClick={editUsername}>
+              <div className="textbox">
                 new username here
               </div>
             </div>
             <div className="row">
               <div className="setting-box">
-                <h3 className="profiletext">change profile picture</h3>
+                <h3 className="profiletext" >change profile picture</h3>
               </div>
               <div className="setting-box">
-                <h3>change username</h3>
+                <h3  onClick={editUsername}>change username</h3>
               </div>
             </div>
             <div className="row">
-              <div className="biotextdiv" onClick={editbiotext}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              <div className="biotextdiv">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
               </div>
-              <div className="passtextdiv" onClick={changePassword}>
+              <div className="passtextdiv">
                 <p className="passtext">
-                  old password
-                  <br />
-                  <br />
                   new password
-                  <br />
                 </p>
               </div>
             </div>
             <div className="row">
               <div className="setting-box">
-                <h3>edit bio</h3>
+                <h3  onClick={editbiotext}>edit bio</h3>
               </div>
               <div className="setting-box">
-                <h3>change password</h3>
+                <h3 onClick={changePassword}>change password</h3>
               </div>
             </div>
 
             <div
-              className="postpopup"
-              style={{ display: postPopupVisible ? "block" : "none" }}
-            >
-              <span className="closePostPopup" onClick={closePostPopup}>
-                &times;
-              </span>
-              <div className="post-popup-content1">
-                <div className="content-wrapper">
-                  <h2>Add a new picture</h2>
-                  <div className="empty-area">
-                    <div className="drag-header"></div>
-                    <input
-                      type="file"
-                      id="fileInput"
-                      accept="image/*"
-                      className="file-input"
-                      style={{ display: "none" }}
-                    />
-                    <button
-                      className="post-select-button1"
-                      onClick={() =>
-                        document.getElementById("fileInput").click()
-                      }
-                    >
-                      Select from computer
-                    </button>
-                  </div>
+            className="postpopup"
+            style={{ display: postPopupVisible ? "block" : "none" }}
+          >
+            <span className="closePostPopup" onClick={closePostPopup}>
+              &times;
+            </span>
+            {/* Post popup content 1 */}
+            <div className="post-popup-content1">
+              <div className="content-wrapper">
+                <h2>Add a new picture</h2>
+                <div className="empty-area">
+                  <div className="drag-header"></div>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/*"
+                    className="file-input"
+                    style={{ display: "none" }}
+                  />
+                  <button className="post-select-button1"
+                    onClick={() => document.getElementById("fileInput").click()}>
+                    Drag here</button>
                 </div>
               </div>
-
-              <div
-                className="post-popup-content2"
+              </div>
+                        
+              <div className="post-popup-content2"
                 onDragOver={(e) => handleDragOver(e)}
                 onDrop={(e) => handleDrop(e)}
-              >
-                <div className="content-wrapper">
-                  <h2>Drag Photos here</h2>
-                  <label htmlFor="fileInput" className="post-select-button2">
-                    Drag here
-                  </label>
+>
+              <div className="content-wrapper">
+                <h2>Or</h2>
+                <label htmlFor="fileInput" className="post-select-button2">
+                Select from computer
+                </label>
                 </div>
               </div>
             </div>

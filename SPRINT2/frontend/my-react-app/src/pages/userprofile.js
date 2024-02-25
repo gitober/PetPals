@@ -167,27 +167,22 @@ const UserProfile = () => {
                       className="file-input"
                       style={{ display: "none" }}
                     />
-                    <button
-                      className="post-select-button1"
-                      onClick={() =>
-                        document.getElementById("fileInput").click()
-                      }
-                    >
-                      Select from computer
-                    </button>
-                  </div>
+                    <button className="post-select-button1"
+                    onClick={() => document.getElementById("fileInput").click()}>
+                    Drag here</button>
                 </div>
               </div>
-              <div
-                className="post-popup-content2"
+              </div>
+                        
+              <div className="post-popup-content2"
                 onDragOver={(e) => handleDragOver(e)}
                 onDrop={(e) => handleDrop(e)}
-              >
-                <div className="content-wrapper">
-                  <h2>Drag Photos here</h2>
-                  <label htmlFor="fileInput" className="post-select-button2">
-                    Drag here
-                  </label>
+>
+              <div className="content-wrapper">
+                <h2>Or</h2>
+                <label htmlFor="fileInput" className="post-select-button2">
+                Select from computer
+                </label>
                 </div>
               </div>
             </div>
