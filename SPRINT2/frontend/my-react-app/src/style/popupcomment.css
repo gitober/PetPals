@@ -24,7 +24,7 @@
   border: 1px solid #d6baff;
   width: 80%;
   text-align: center;
-  padding: 130px 50px;
+  padding: 100px 30px;
   border-radius: 5px;
 }
 .close {
@@ -42,7 +42,9 @@
 .popUpCommentHeader {
   text-align: center;
   font-size: 20px;
+  margin-top: 150px;
 }
+
 .popUpTextField {
   text-align: center;
 }

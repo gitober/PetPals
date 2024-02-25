@@ -78,9 +78,8 @@
 
 /* Style for the "Select from Computer" Buttons */
 .post-select-button1 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
+  margin-top: 20px;
+  padding: 30px;
   background-color: lightblue;
   color: #fff;
   border: none;
@@ -90,8 +89,8 @@
 }
 
 .post-select-button2 {
-  margin-top: 10px;
-  padding: 80px;
+  margin-top: 30px;
+  padding: 20px;
   background-color: lightblue;
   color: #fff;
   border: none;

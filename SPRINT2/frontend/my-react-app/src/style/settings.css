@@ -21,7 +21,12 @@
   padding: 20px;
   border-radius: 5px;
   position: relative;
-  margin: 20px;
+  margin: 10px;
+}
+
+.settings-feed h1 {
+  text-align: center;
+  align-items: center;
 }
 
 .setting-box {
@@ -32,9 +37,9 @@
   background-color: #e6f3ff;
   width: 40%;
   height: auto;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 30px;
+  padding: 20px 20px;
   box-sizing: border-box;
 }
 
@@ -47,40 +52,33 @@
   justify-content: center;
   background-color: #f5f5f5;
   width: 40%;
-  margin-bottom: 20px;
-  border-radius: 5px;
+  margin-bottom: 5px;
+  border-radius: 30px;
   padding: 10px;
   box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
 }
 
+
 .setting-box h3 {
-  margin: 5px;
-  font-size: 17px;
+  margin: 1px;
+  font-size: 15px;
   text-align: center;
   font-family: "Poppins", sans-serif;
 }
 
 .biotext {
   padding: 10px;
+  border-radius: 30px;
 }
 
 .setting-box input[type="text"] {
   width: 100%;
   padding: 8px;
-  margin-top: 10px;
-  border-radius: 5px;
+  border-radius: 30px;
   border: 1px solid #ccc;
   box-sizing: border-box;
-}
-
-.setting-box button {
-  padding: 10px 20px;
-  margin-top: 10px;
-  background-color: #4caf50;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .setting-box button:hover {
@@ -91,12 +89,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 700px;
-  margin: 0 auto;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 20px;
 }
 
-.line2 {
-  margin-bottom: 20px;
+.textbox {
+  margin-bottom: 5px;
+  padding: 40px;
+  border-radius: 30px;
 }
 
 .line2::after {
@@ -105,15 +106,14 @@
   border-top: 1px solid #ccc;
   margin-top: 20px;
   width: 100%;
-  padding-bottom: 4rem;
+  padding-bottom: 1rem;
 }
 
 .dogprofilepicture {
-  margin-left: 80px;
-  margin-bottom: 10px;
-  height: 118px;
-  width: 118px;
-  border-radius: 5px;
+  height: 110px;
+  width: 110px;
+  border-radius: 30px;
+  margin-left: 60px;
 }
 
 /* Additional Styles for Improved Responsiveness */
