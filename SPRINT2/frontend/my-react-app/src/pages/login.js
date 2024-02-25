@@ -23,6 +23,9 @@ function Login() {
     password: "",
   });
 
+  // Test mode flag
+  const isTestMode = true;
+
   // Function to check inputs and enable/disable login button
   useEffect(() => {
     setLoginDisabled(!(username && password));
@@ -78,12 +81,20 @@ function Login() {
     }
   };
 
-  const handleLoginSubmit = async (event) => {
-    event.preventDefault();
-    if (username && password) {
-      console.log("Logging in with username:", username);
+const handleLoginSubmit = async (event) => {
+  event.preventDefault();
+  if (username && password) {
+    console.log("Logging in with username:", username);
 
-      try {
+    try {
+      if (isTestMode) {
+        // Simulate a successful response in test mode
+        console.log("Test mode: Simulating successful login");
+
+        // Redirect to home page or perform other actions as needed
+        window.location.href = "../home"; // Adjust the URL as needed
+      } else {
+        // Make actual API call
         const response = await fetch("http://localhost:5000/api/login", {
           method: "POST",
           headers: {
@@ -99,11 +110,12 @@ function Login() {
         } else {
           console.error("Login failed");
         }
-      } catch (error) {
-        console.error("Error during login:", error);
       }
+    } catch (error) {
+      console.error("Error during login:", error);
     }
-  };
+  }
+};
 
 const handleSignupSubmit = async (event) => {
   event.preventDefault();
@@ -111,40 +123,60 @@ const handleSignupSubmit = async (event) => {
   try {
     console.log("Handling signup submission");
 
-    const response = await fetch("http://localhost:5000/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: signupFormData.username,
-        email: signupFormData.email,
-        password: signupFormData.password,
-      }),
-    });
+    if (isTestMode) {
+      // Simulate a successful response in test mode
+      console.log("Test mode: Simulating successful signup");
 
-    console.log("Response status:", response.status);
+      // Perform actions as needed for testing
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Registration Successful!");
-      console.log("User:", data.user.username);
-      console.log("Access Token:", data.access_token);
-
-      // Close and reset the signup form
-      setSignupPopupVisible(false);
+      // Reset the signup form
       setSignupUsername("");
       setSignupEmail("");
       setSignupPassword("");
 
-      // rest of the code...
+      // Close the signup popup after a brief delay
+      setTimeout(() => {
+        setSignupPopupVisible(false);
+      }, 500); // Adjust the delay as needed
     } else {
-      console.error("Registration failed");
+      // Make actual API call
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: signupFormData.username,
+          email: signupFormData.email,
+          password: signupFormData.password,
+        }),
+      });
+
+      console.log("Response status:", response.status);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Registration Successful!");
+        console.log("User:", data.user.username);
+        console.log("Access Token:", data.access_token);
+
+        // Reset the signup form
+        setSignupUsername("");
+        setSignupEmail("");
+        setSignupPassword("");
+
+        // Close the signup popup
+        setSignupPopupVisible(false);
+      } else {
+        console.error("Registration failed");
+      }
     }
   } catch (error) {
     console.error("Error during signup:", error);
   }
 };
+
+
   const handleForgotPasswordSubmit = (event) => {
     event.preventDefault();
     const emailInput = document.getElementById("forgot-email");
