@@ -13,7 +13,9 @@ const authenticateUser = async (req, res, next) => {
       return res.status(401).json({ message: "Invalid or missing token" });
     }
 
-    const tokenData = jwt.verify(token.split(" ")[1], process.env.ACCESSTOKENSECRET);
+    const tokenData = jwt.verify(token.split(" ")[1], process.env.ACCESSTOKENSECRET, {
+      expiresIn: "1h", 
+    });
 
     if (!tokenData || !tokenData.userId) {
       return res.status(401).json({ message: "Invalid token" });

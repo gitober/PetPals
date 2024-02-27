@@ -46,42 +46,39 @@ const userController = {
     }
   },
 
-  updateUser: async (req, res) => {
-    try {
-      const {
-        body: { website, fullname, story, phone, address, newPassword },
-        user: { _id },
-      } = req;
+ updateUser: async (req, res) => {
+  try {
+    const {
+      body: { username, email, newPassword },
+      user: { _id },
+    } = req;
 
-      if (!fullname) {
-        return res.status(400).json({ message: "Please add your full name." });
-      }
-
-      let hashedPassword = null;
-      if (newPassword) {
-        hashedPassword = await bcrypt.hash(newPassword, 10);
-      }
-
-      const updateFields = {
-        website,
-        fullname,
-        story,
-        phone,
-        address,
-      };
-
-      if (hashedPassword) {
-        updateFields.password = hashedPassword;
-      }
-
-      await Users.findByIdAndUpdate(_id, updateFields);
-
-      res.json({ message: "Profile updated successfully!" });
-    } catch (error) {
-      console.error("Error updating user profile:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+    if (!username) {
+      return res.status(400).json({ message: "Please add your username." });
     }
-  },
+
+    let hashedPassword = null;
+    if (newPassword) {
+      hashedPassword = await bcrypt.hash(newPassword, 10);
+    }
+
+    const updateFields = {
+      username,
+      email,
+    };
+
+    if (hashedPassword) {
+      updateFields.password = hashedPassword;
+    }
+
+    await Users.findByIdAndUpdate(_id, updateFields);
+
+    res.json({ message: "Profile updated successfully!" });
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+},
 
   friend: async (req, res) => {
     try {
