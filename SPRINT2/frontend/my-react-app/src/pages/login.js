@@ -23,8 +23,14 @@ function Login() {
     password: "",
   });
 
-  // Test mode flag
-  const isTestMode = true;
+  // Placeholder for determining if backend is running
+  const backendIsRunning = false;
+
+  // Test mode flag for login
+  const isTestModeLogin = !backendIsRunning;
+
+  // Test mode flag for signup
+  const isTestModeSignup = !backendIsRunning;
 
   // Function to check inputs and enable/disable login button
   useEffect(() => {
@@ -81,41 +87,41 @@ function Login() {
     }
   };
 
-const handleLoginSubmit = async (event) => {
-  event.preventDefault();
-  if (username && password) {
-    console.log("Logging in with username:", username);
+  const handleLoginSubmit = async (event) => {
+    event.preventDefault();
+    if (username && password) {
+      console.log("Logging in with username:", username);
 
-    try {
-      if (isTestMode) {
-        // Simulate a successful response in test mode
-        console.log("Test mode: Simulating successful login");
+      try {
+        if (isTestModeLogin) {
+          // Simulate a successful response in test mode
+          console.log("Test mode: Simulating successful login");
 
-        // Redirect to home page or perform other actions as needed
-        window.location.href = "../home"; // Adjust the URL as needed
-      } else {
-        // Make actual API call
-        const response = await fetch("http://localhost:5000/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Login successful. Access Token:", data.accessToken);
-          window.location.href = "../home";
+          // Redirect to home page or perform other actions as needed
+          window.location.href = "../home"; // Adjust the URL as needed
         } else {
-          console.error("Login failed");
+          // Make actual API call
+          const response = await fetch("http://localhost:5000/api/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            console.log("Login successful. Access Token:", data.accessToken);
+            window.location.href = "../home";
+          } else {
+            console.error("Login failed");
+          }
         }
+      } catch (error) {
+        console.error("Error during login:", error);
       }
-    } catch (error) {
-      console.error("Error during login:", error);
     }
-  }
-};
+  };
 
 const handleSignupSubmit = async (event) => {
   event.preventDefault();
@@ -123,7 +129,7 @@ const handleSignupSubmit = async (event) => {
   try {
     console.log("Handling signup submission");
 
-    if (isTestMode) {
+    if (isTestModeSignup) {
       // Simulate a successful response in test mode
       console.log("Test mode: Simulating successful signup");
 
@@ -175,7 +181,6 @@ const handleSignupSubmit = async (event) => {
     console.error("Error during signup:", error);
   }
 };
-
 
   const handleForgotPasswordSubmit = (event) => {
     event.preventDefault();
