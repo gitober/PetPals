@@ -107,8 +107,9 @@ const UserProfile = () => {
                 <h2>{username}<br/><div className="userprofile-follower-following">
                 <h3>100 Followers </h3>
                 <h3> 50 Following</h3>
-              </div><br/><p>
+              </div><br/><p> 
                 Doge engenier 2023 <br/>Dog of the year
+                {/* muista lisätä div ja funktio joka hakee tiedot tietokannasta */}
               </p></h2>
               </div>
               
@@ -141,10 +142,9 @@ const UserProfile = () => {
             </div>
 
             <div
-              className="userprofile-postpopup"
+              className="postpopup"
               style={{ display: postPopupVisible ? "block" : "none" }}
             >
-              {/* Your post popup content goes here */}
             </div>
 
             <div

@@ -1,419 +1,242 @@
-/* Global styles */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-/* Container styles */
-.profile-page-container {
-  background-color: #e6f3ff;
+/* Page Container Styles */
+.userprofile-container {
   display: flex;
   min-height: 100vh;
+  background-color: #e6f3ff;
 }
 
-/* User Info styles */
-.user-info {
+/* Main Content Styles */
+.profile-page-main-content {
+  flex: 3;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.user-info .profile-picture {
-  width: 150px;
-  height: auto;
-  border-radius: 5px;
-}
-
-.username {
-  display: flex;
-  align-items: center;
-}
-
-.username-text {
-  margin-left: 0;
-}
-
-.user-icon {
-  width: 20px;
-  height: auto;
-  margin-right: 10px;
-}
-
-/* User Pictures Container styles */
-.user-pictures-container {
-  margin-top: 20px;
-  text-align: center;
-  max-width: 100%;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-  margin: 0 auto; /* Center the content horizontally */
-}
-
-.user-pictures-container .picture-container {
-  box-sizing: border-box;
-  margin: 10px; /* Adjusted margin for better spacing */
-  width: calc(33.33% - 20px); /* Adjusted margin and width for better spacing */
-  text-align: center;
-}
-
-.user-pictures-container .picture-container img {
-  width: 100%; /* Adjusted to full width for better responsiveness */
-  height: auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-}
-
-/* Picture Container styles */
-.picture-container {
-  display: inline-block;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-  margin: 10px; /* Adjusted margin for better spacing */
-  width: calc(33.33% - 20px);
-  text-align: center;
-  max-width: 100%; /* Added max-width to prevent overflow */
-}
-
-.picture-container img {
-  width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-}
-
-/* Profile Picture Container styles */
-.profile-picture-container {
-  margin-top: 20px;
-  text-align: right;
-  margin-left: auto;
-  position: relative; /* Make the container relative for absolute positioning */
-}
-
-.profile-picture-container img {
-  width: 20%;
-  height: auto;
-  border-radius: 5px;
-}
-
-.profile-picture {
-  width: 120px;
-  height: auto;
-  border-radius: 5px;
-}
-
-.profile-picture-container p {
-  position: absolute;
-  top: 100%;
-  left: 50%; /* Adjusted left to center text */
-  transform: translateX(-50%); /* Center text horizontally */
-  margin: 0;
-  color: #706f6f;
-  font-size: 14px;
-}
-
-/* Profile Details styles */
-.profile-details {
-  padding: 0 20px;
-  text-align: center;
-}
-
-/* Profile Details Separator styles */
-.profile-details::after {
-  content: '';
-  display: block;
-  border-bottom: 1px solid #ccc;
-  margin: 0 auto 10px;
-  width: 100%;
-}
-
-/* Main Content styles */
-.profile-page-main-content {
-  flex: 1;
-  padding: 20px;
-  box-sizing: border-box;
   margin-left: 240px;
 }
 
-/* Feed styles */
+/* Feed Styles */
 .profile-page-feed {
-  max-width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-  background-color: white;
-  padding: 20px; /* Added padding for better spacing */
-}
-
-.profile-page-feed-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.profile-page-feed-image {
-  width: 100%;
-  height: auto;
-}
-
-/* Picture Container styles */
-.picture-container {
-  display: inline-block;
-  box-sizing: border-box;
-  margin: 5px;
-  width: calc(33.33% - 20px);
-  text-align: center;
-}
-
-.picture-container img {
-  width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-/* Follower/Following styles */
-.follower-following {
-  display: flex;
-  margin-bottom: 10px;
-  font-weight: bold;
-  color: #D6BAFF;
-  justify-content: center;
-}
-
-.follower-following p {
-  margin-right: 10px;
-}
-
-/* Responsive adjustments for smaller screens including iPhone SE */
-@media screen and (max-width: 767px) {
-  .profile-page-container {
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
-  }
-
-  .picture-container {
-    width: 100%;
-    margin: 10px 0;
-  }
-
-  .profile-picture-container img {
-    width: 80px;
-    height: auto;
-  }
-
-  .profile-page-main-content {
-    overflow-y: auto;
-  }
-}
-/* Global styles */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-/* Container styles */
-.profile-page-container {
-  background-color: #e6f3ff;
-  display: flex;
-  min-height: 100vh;
-}
-
-/* User Info styles */
-.user-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.user-info .profile-picture {
-  width: 150px;
-  height: auto;
-  border-radius: 5px;
-}
-
-.username {
-  display: flex;
-  align-items: center;
-}
-
-.username-text {
-  margin-left: 0;
-}
-
-.user-icon {
-  width: 20px;
-  height: auto;
-  margin-right: 10px;
-}
-
-/* User Pictures Container styles */
-.user-pictures-container {
-  margin-top: 20px;
-  text-align: center;
-  max-width: 100%;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-}
-
-.user-pictures-container .picture-container {
-  box-sizing: border-box;
-  margin: 10px; /* Adjusted margin for better spacing */
-  width: calc(33.33% - 20px); /* Adjusted margin and width for better spacing */
-  text-align: center;
-}
-
-.user-pictures-container .picture-container img {
-  width: 100%; /* Adjusted to full width for better responsiveness */
-  height: auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-}
-
-/* Picture Container styles */
-.picture-container {
-  display: inline-block;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-  margin: 10px; /* Adjusted margin for better spacing */
-  width: calc(33.33% - 20px);
-  text-align: center;
-  max-width: 100%; /* Added max-width to prevent overflow */
-}
-
-.picture-container img {
-  width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
-  box-sizing: border-box; /* Ensure consistent box-sizing */
-}
-
-/* Profile Picture Container styles */
-.profile-picture-container {
-  margin-top: 20px;
-  text-align: right;
-  margin-left: auto;
-  position: relative; /* Make the container relative for absolute positioning */
-}
-
-.profile-picture-container img {
-  width: 20%;
-  height: auto;
-  border-radius: 5px;
-}
-
-.profile-picture {
-  width: 120px;
-  height: auto;
-  border-radius: 5px;
-}
-
-.profile-picture-container p {
-  position: absolute;
-  top: 100%;
-  left: 50%; /* Adjusted left to center text */
-  transform: translateX(-50%); /* Center text horizontally */
-  margin: 0;
-  color: #706f6f;
-  font-size: 14px;
-}
-
-/* Profile Details styles */
-.profile-details {
-  padding: 0 20px;
-  text-align: center;
-}
-
-/* Profile Details Separator styles */
-.profile-details::after {
-  content: '';
-  display: block;
-  border-bottom: 1px solid #ccc;
-  margin: 0 auto 10px;
-  width: 100%;
-}
-
-/* Main Content styles */
-.profile-page-main-content {
-  flex: 1;
+  background-color: #ffffff;
   padding: 20px;
-  box-sizing: border-box;
+  border-radius: 5px;
+  position: relative;
+  margin: 20px;
+  max-width: 100%; /* Set a maximum width */
 }
 
-/* Feed styles */
-.profile-page-feed {
-  max-width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-  background-color: white;
-  padding: 20px; /* Added padding for better spacing */
-}
-
-.profile-page-feed-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.profile-page-feed-image {
-  width: 100%;
-  height: auto;
-}
-
-/* Picture Container styles */
-.picture-container {
-  display: inline-block;
-  box-sizing: border-box;
-  margin: 5px;
-  width: calc(33.33% - 20px);
+/* Feed Container Styles */
+.profilepage-feed-pictures-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; /* Add some space between user pictures */
   text-align: center;
+  max-width: 100%; /* Set a maximum width for the container */
 }
 
-.picture-container img {
+.profilepage-feed-picture-container {
+  position: relative;
   width: 100%;
-  height: auto;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+  padding-bottom: 100%; /* Maintain a square aspect ratio (1:1) */
+  background-color: #e6f3ff49;
+  overflow: hidden;
+  border-radius: 10px; /* Adjust the border-radius as needed */
 }
 
-/* Follower/Following styles */
-.follower-following {
+.profilepage-feed-picture-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px; /* Adjust the border-radius as needed */
+  border: 1px solid #ccc;
+}
+
+
+.profilepage-follower-following {
   display: flex;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #D6BAFF;
-  justify-content: center;
+  color: #d6baff;
+  justify-content: flex-start;
 }
 
-.follower-following p {
-  margin-right: 10px;
+.profilepage-follower-following p {
+  margin: 0;
+  margin-right: 20px;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
-/* Responsive adjustments for smaller screens including iPhone SE */
+.profilepage-info {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Align items to the start (top) */
+}
+
+.profilepage-username {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+}
+.profilepage-username h2 {
+  font-size: 33px;
+}
+
+.profilepage-username h2 h3 {
+  margin: 0; /* Remove any margin for the h3 element */
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.profilepage-username h2 p {
+  font-size: 20px;
+}
+
+/* PROFIILIKUVA */
+.profilepage-profilepicture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align items to the right */
+  margin-top: 10px;
+  width: 20%;
+}
+
+.profilepage-profilepicture {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 10px solid #d4e6ff;
+}
+
+
+
+/* Icons Styles */
+.profilepage-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.profilepage-icon {
+  width: 28px;
+  height: auto;
+  padding-right: 10px;
+}
+
+.profilepage-likes {
+  text-align: left;
+  margin-left: auto;
+  padding-right: 15px;
+}
+
+/* Picture Container Styles */
+.profilepage-picture-container {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.profilepage-picture-background {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.profilepage-picture-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/*  Pictures Container Styles */
+.profilepage-pictures-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px; /* Add some space between user pictures */
+  text-align: center;
+}
+
+.profilepage-pictures-container .profilepage-picture-container {
+  width: 100%;
+  height: 100%;
+  background-color: #e6f3ff49;
+  margin: 5px; /* Add margin around each picture container */
+}
+
+/* Media Queries */
+@media screen and (min-width: 768px) {
+  .profilepage-container {
+    flex-direction: row;
+  }
+
+  .profilepage-main-content {
+    flex: 3;
+  }
+
+  .profilepage-picture-container {
+    width: calc(33.33% - 20px);
+  }
+}
+
+/* Media Queries */
 @media screen and (max-width: 767px) {
-  .profile-page-container {
+  .profilepage-container {
+    justify-content: center;
+  }
+
+  .profilepage-main-content {
+    margin-left: 0; /* Adjusted for smaller screens */
+  }
+
+  .profilepage-info {
+    align-items: center; /* Align items to the center */
     flex-direction: column;
   }
 
-  .picture-container {
+  .profilepage-username {
+    margin-bottom: 10px;
+  }
+
+  .profilepage-picture-container {
+    margin-top: 10px;
+  }
+
+  .profilepage-follow-button-container {
+    margin-bottom: 20px;
+  }
+
+  .profilepage-picture-container {
     width: 100%;
     margin: 10px 0;
   }
 
-  .profile-picture-container img {
-    width: 80px;
-    height: auto;
-  }
-
-  .profile-page-main-content {
-    margin-left: 0; /* Adjusted for smaller screens */
-    overflow-y: auto;
-  }
-
-  /* Add styles to make pictures go under each other */
-  .profile-feed-pictures-container {
+  .profilepage-feed-pictures-container {
     grid-template-columns: 1fr; /* Make feed pictures align under each other */
   }
 
-  .profile-feed-picture-container {
-    width: 100%;
-  }
+  .profilepage-follower-following {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #d6baff;
+  justify-content: center;
+}
 }

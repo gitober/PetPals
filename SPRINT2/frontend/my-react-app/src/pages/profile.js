@@ -1,74 +1,77 @@
 import React, { useState, useEffect } from "react";
+import Layout from "../Layout";
 import "../style/profile.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
-import Layout from "../Layout";
 
-function Profile() {
+const Profile = () => {
   const [postPopupVisible, setPostPopupVisible] = useState(false);
+  const [username, setUsername] = useState("DogeSlayer69!");
 
-  // Simulated data (replace this with actual data from your application)
-  const userPictures = [
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/150",
+  const ProfilePictures = [
+    "/img/feed.jpg",
+    "/img/feed.jpg",
+    "/img/feed.jpg",
+    "/img/feed.jpg",
+    "/img/feed.jpg",
+    "/img/feed.jpg",
+    "/img/feed.jpg",
+    "/img/feed.jpg",
   ];
 
-  // Function to dynamically populate the picture containers
   useEffect(() => {
-    const populatePictures = () => {
-      const userPicturesContainer = document.getElementById(
-        "user-pictures-container"
-      );
-
-      // Clear existing content
-      userPicturesContainer.innerHTML = "";
-
-      // Iterate through user pictures and create container for each picture
-      userPictures.forEach((pictureUrl) => {
-        const pictureContainer = document.createElement("div");
-        pictureContainer.className = "picture-container";
-
-        const pictureElement = document.createElement("img");
-        pictureElement.src = pictureUrl;
-        pictureElement.alt = "User Picture";
-
-        pictureContainer.appendChild(pictureElement);
-        userPicturesContainer.appendChild(pictureContainer);
-      });
-    };
-
-    // Call the function to populate pictures when the component mounts
     populatePictures();
   }, []);
 
-  // Function to open and close post popup
-  function openPostPopup() {
+  const populatePictures = () => {
+    const ProfilePicturesContainer = document.getElementById(
+      "profilepage-feed-pictures-container"
+    );
+
+    if (ProfilePicturesContainer) {
+      ProfilePicturesContainer.innerHTML = "";
+
+      // Iterate through Profile pictures and create container for each picture
+      ProfilePictures.forEach((pictureUrl) => {
+        const profilepagepictureContainer = document.createElement("div");
+        profilepagepictureContainer.className =
+          "profilepage-feed-picture-container";
+
+        const profilepagepictureElement = document.createElement("img");
+        profilepagepictureElement.src = pictureUrl;
+        profilepagepictureElement.alt = "Profile Picture";
+
+        profilepagepictureContainer.appendChild(profilepagepictureElement);
+        ProfilePicturesContainer.appendChild(profilepagepictureContainer);
+      });
+    } else {
+      console.error("Profile pictures container not found");
+    }
+  };
+
+  const openPostPopup = () => {
     setPostPopupVisible(true);
-  }
+  };
 
-  function closePostPopup() {
+  const closePostPopup = () => {
     setPostPopupVisible(false);
-  }
+  };
 
-  function handleDragOver(e) {
+  const handleDragOver = (e) => {
     e.preventDefault();
-  }
+  };
 
-  function handleDrop(e) {
+  const handleDrop = (e) => {
     e.preventDefault();
     const files = e.dataTransfer.files;
     handleDroppedFiles(files);
-  }
+  };
 
-  function handleDroppedFiles(files) {
-    // Handle the dropped files, you can upload them or perform other actions
+  const handleDroppedFiles = (files) => {
     console.log(files);
-    // Update the UI or trigger any other logic
-  }
+  };
 
   return (
     <Layout>
@@ -98,86 +101,113 @@ function Profile() {
           <div className="search-bar">
             <input type="text" placeholder="Search" />
           </div>
-          <div className="profile-page-feed-container">
-            {/* Feed container content goes here */}
-          </div>
-          <div className="profile-page-feed">
-            {/* Feed content goes here */}
-            <div className="user-info">
-              <div className="username">
-                <h3>username</h3>
-              </div>
-              <img
-                src="/img/profiledog.jpg"
-                alt="Profile Picture"
-                className="profile-picture"
-              />
-            </div>
-            <div className="follower-following">
-              <p>100 Followers</p>
-              <p>50 Following</p>
-            </div>
-            <div className="profile-details">
-              <h4>Profile Details</h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-                euismod semper libero, vitae fermentum magna elementum vel. Sed
-                vestibulum lacus ut libero sagittis, id rhoncus nunc ultricies.
-                In auctor est vitae nunc efficitur, vel eleifend dolor
-                vestibulum.
-              </p>
-            </div>
-            {/* JSX Structure */}
-            <div
-              className="user-pictures-container"
-              id="user-pictures-container"
-            >
-              {/* Pictures will be dynamically added here */}
-            </div>
-          </div>
-        </div>
 
-        <div
-          className="postpopup"
-          style={{ display: postPopupVisible ? "block" : "none" }}
-        >
-          <span className="closePostPopup" onClick={closePostPopup}>
-            &times;
-          </span>
-          <div className="post-popup-content1">
-            <div className="content-wrapper">
-              <h2>Add a new picture</h2>
-              <div className="empty-area">
-                <div className="drag-header"></div>
-                <input
-                  type="file"
-                  id="fileInput"
-                  accept="image/*"
-                  className="file-input"
-                  style={{ display: "none" }}
+          <div className="profile-page-feed">
+            <div className="profilepage-info">
+              <div className="profilepage-username">
+                <h2>
+                  {username}
+                  <br />
+                  <div className="profilepage-follower-following">
+                    <h3>100 Followers<br/><h3>50 Following</h3></h3>
+                    
+                  </div>
+                  <br />
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    {/* muista lisätä div ja funktio joka hakee tiedot tietokannasta */}
+                  </p>
+                </h2>
+              </div>
+
+              <div className="profilepage-profilepicture-container">
+                <img
+                  src="/img/profiledog.jpg"
+                  alt="profilepage Picture"
+                  className="profilepage-profilepicture"
                 />
-                <button className="post-select-button1"
-                    onClick={() => document.getElementById("fileInput").click()}>
-                    Drag here</button>
+              </div>
+            </div>
+
+            <div className="profilepage-details">
+              <h4></h4>
+              <h2 className="line2"></h2>
+            </div>
+
+            <div
+              className="postpopup"
+              style={{ display: postPopupVisible ? "block" : "none" }}
+            >
+              {/* Content of post popup */}
+            </div>
+
+            <div
+              className="profilepage-feed-pictures-container"
+              id="profilepage-feed-pictures-container"
+            >
+              {ProfilePictures.map((pictureUrl, index) => (
+                <div
+                  className="profilepage-feed-picture-container"
+                  key={index}
+                >
+                  <img
+                    src={pictureUrl}
+                    alt={`Feed Picture ${index + 1}`}
+                    className="profilepage-feed-image"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div
+              className="postpopup"
+              style={{ display: postPopupVisible ? "block" : "none" }}
+            >
+              <span className="closePostPopup" onClick={closePostPopup}>
+                &times;
+              </span>
+              <div className="post-popup-content1">
+                <div className="content-wrapper">
+                  <h2>Add a new picture</h2>
+                  <div className="empty-area">
+                    <div className="drag-header"></div>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/*"
+                      className="file-input"
+                      style={{ display: "none" }}
+                    />
+                    <button
+                      className="post-select-button1"
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                    >
+                      Drag here
+                    </button>
+                  </div>
                 </div>
               </div>
-              </div>
-                        
-              <div className="post-popup-content2"
+
+              <div
+                className="post-popup-content2"
                 onDragOver={(e) => handleDragOver(e)}
                 onDrop={(e) => handleDrop(e)}
->
-              <div className="content-wrapper">
-                <h2>Or</h2>
-                <label htmlFor="fileInput" className="post-select-button2">
-                Select from computer
-                </label>
+              >
+                <div className="content-wrapper">
+                  <h2>Or</h2>
+                  <label htmlFor="fileInput" className="post-select-button2">
+                    Select from computer
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </Layout>
   );
-}
+};
 
 export default Profile;
