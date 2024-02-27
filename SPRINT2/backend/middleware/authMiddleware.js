@@ -13,16 +13,13 @@ const authenticateUser = async (req, res, next) => {
       return res.status(401).json({ message: "Invalid or missing token" });
     }
 
-    const decoded = jwt.verify(
-      token.split(" ")[1],
-      process.env.ACCESSTOKENSECRET
-    );
+    const tokenData = jwt.verify(token.split(" ")[1], process.env.ACCESSTOKENSECRET);
 
-    if (!decoded) {
+    if (!tokenData || !tokenData.userId) {
       return res.status(401).json({ message: "Invalid token" });
     }
 
-    const user = await Users.findOne({ _id: decoded.id });
+    const user = await Users.findById(tokenData.userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -31,7 +28,8 @@ const authenticateUser = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.error("Authentication error:", error);
+    console.error("Authentication error:", error.message);
+    console.error("Error stack:", error.stack);
     return res.status(401).json({ message: "Unauthorized - Invalid token" });
   }
 };
