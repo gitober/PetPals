@@ -10,7 +10,7 @@
   transform: translate(-50%, -50%);
   background-color: #fff;
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   height: 300%;
   max-height: 500px;
   padding: 80px;
@@ -22,13 +22,14 @@
 }
 /* Styles for Post Popup Content Sections */
 .post-popup-content1 {
+  margin-top: 60px;
   text-align: center;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 30%;
+  height: 40%;
 }
 
 
@@ -39,7 +40,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70%;
+  height: 40%;
 
 }
 
@@ -78,31 +79,29 @@
 
 /* Style for the "Select from Computer" Buttons */
 .post-select-button1 {
-  margin-top: 20px;
-  padding: 30px;
-  background-color: lightblue;
+  padding: 30px 50px;
+  background-color: #d6baff;
   color: #fff;
   border: none;
   border-radius: 5px;
-  width: 150px;
+  font-weight: bolder;
+  font-size: 18px;
   transition: background-color 0.3s ease;
 }
 
 .post-select-button2 {
-  margin-top: 30px;
-  padding: 20px;
-  background-color: lightblue;
+  padding: 20px 50px;
+  background-color:#d6baff;
   color: #fff;
   border: none;
   border-radius: 5px;
-  width: 150px;
   transition: background-color 0.3s ease;
 }
 
 /* Hover effect for the "Select from Computer" Buttons */
 .post-select-button1:hover,
 .post-select-button2:hover {
-  background-color: pink;
+  background-color:#e6f3ff;
 }
 
 /* Additional Style for Drag-Over State */
@@ -117,21 +116,29 @@
 /* Style for the Close Button in the Post Popup */
 .closePostPopup {
   position: absolute;
-  top: 10px;
-  right: 20px;
+  top: 30px;
+  right: 50px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 45px;
   color: #000;
+}
+
+.closePostPopup:hover {
+  color: #d6baff;
 }
 
 /* Media Query for Smaller Screens */
 @media screen and (max-width: 600px) {
   .postpopup {
-    width: 90%; /* Adjusted width for smaller screens */
+    width: 45%; /* Adjusted width for smaller screens */
+  }
+
+  .content-wrapper h2{
+    font-size: 30px;
   }
 
   .post-select-button1,
   .post-select-button2 {
-    width: 70%; /* Full width for smaller screens */
+    width: 80%; /* Full width for smaller screens */
   }
 }

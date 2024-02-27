@@ -258,7 +258,6 @@ const handleSignupSubmit = async (event) => {
               >
                 Forgot your password?
               </p>
-              <br />
               <p className="signUp" id="signUpLink" onClick={openSignupPopup}>
                 Don't have an account? Sign up
               </p>

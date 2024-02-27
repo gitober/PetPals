@@ -12,13 +12,15 @@ function Home() {
   const [likeCount, setLikeCount] = useState(0);
   const [postPopupVisible, setPostPopupVisible] = useState(false);
   const [commentPopupVisible, setCommentPopupVisible] = useState(false);
-  
+  const [likeImage, setLikeImage] = useState("../img/like.png");
 
   function toggleLike() {
     if (liked) {
       setLikeCount((prevCount) => prevCount - 1); // Decrease like count if unliking
+      setLikeImage("../img/like.png"); // Change image to outline like
     } else {
       setLikeCount((prevCount) => prevCount + 1); // Increase like count if liking
+      setLikeImage("../img/like-filled.png"); // Change image to filled like
     }
     setLiked(!liked); // Toggle like status
   }
@@ -61,31 +63,30 @@ function Home() {
     console.log(files);
     // Update the UI or trigger any other logic
   }
-  
 
   return (
     <Layout>
       <div className="home-page-container">
-          <div className="sidebar">
-            <img srcSet="/img/navbar.png" alt="logo" />
-            <ul>
-              <li>
-                <a href="../home">HOME</a>
-              </li>
-              <li>
-                <a href="../profile">PROFILE</a>
-              </li>
-              <li>
-                <a onClick={openPostPopup}>POST</a>
-              </li>
-              <li>
-                <a href="../settings">SETTINGS</a>
-              </li>
-            </ul>
-            <div className="logout">
-              <a href="/login">Log Out</a>
-            </div>
+        <div className="sidebar">
+          <img srcSet="/img/navbar.png" alt="logo" />
+          <ul>
+            <li>
+              <a href="../home">HOME</a>
+            </li>
+            <li>
+              <a href="../profile">PROFILE</a>
+            </li>
+            <li>
+              <a onClick={openPostPopup}>POST</a>
+            </li>
+            <li>
+              <a href="../settings">SETTINGS</a>
+            </li>
+          </ul>
+          <div className="logout">
+            <a href="/login">Log Out</a>
           </div>
+        </div>
         <div className="home-main-content">
           <div className="search-bar">
             <input type="text" placeholder="Search" />
@@ -104,7 +105,7 @@ function Home() {
             <div className="icons">
               <div className="like-container">
                 <img
-                  src="../img/like.png"
+                  src={likeImage}
                   alt="Like"
                   className={`like-icon ${liked ? "liked" : ""}`}
                   id="likeIcon"
@@ -149,22 +150,25 @@ function Home() {
                   className="file-input"
                   style={{ display: "none" }}
                 />
-                <button className="post-select-button1"
-                    onClick={() => document.getElementById("fileInput").click()}>
-                    Drag here</button>
-                </div>
+                <button
+                  className="post-select-button1"
+                  onClick={() => document.getElementById("fileInput").click()}
+                >
+                  Drag here
+                </button>
               </div>
-              </div>
-                        
-              <div className="post-popup-content2"
-                onDragOver={(e) => handleDragOver(e)}
-                onDrop={(e) => handleDrop(e)}
->
-              <div className="content-wrapper">
-                <h2>Or</h2>
-                <label htmlFor="fileInput" className="post-select-button2">
+            </div>
+          </div>
+          <div
+            className="post-popup-content2"
+            onDragOver={(e) => handleDragOver(e)}
+            onDrop={(e) => handleDrop(e)}
+          >
+            <div className="content-wrapper">
+              <h2>or</h2>
+              <label htmlFor="fileInput" className="post-select-button2">
                 Select from computer
-                </label>
+              </label>
             </div>
           </div>
         </div>

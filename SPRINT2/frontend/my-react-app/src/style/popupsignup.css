@@ -72,23 +72,26 @@
 
 /* Input Styling */
 .form-group input {
-    font-size: 18px;
+    font-size: 15px;
     background-color: #E6F3FF;
+    padding: 15px;
+    margin: 4px;
     width: 100%; /* Modified for responsiveness */
     max-width: 550px; /* Added max-width for larger screens */
     border-radius: 5px;
+    border: none;
 }
 
 /* Submit Button Styling */
 .signupinfoBtn button[type="submit"] {
     display: block;
-    margin: 40px auto;
-    padding: 25px 50px;
+    margin: 30px auto;
+    padding: 20px 70px;
     font-size: 20px;
     background-color: #D6BAFF;
     color: #fff;
     border: 2px solid #D6BAFF;
-    border-radius: 25px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
 }
@@ -104,7 +107,7 @@
     height: 60px;
     margin-bottom: 10px;
     margin-top: 10%;
-    padding: 10px;
+
     text-align: center;
     font-size: 20px;
     font-weight: bold;
