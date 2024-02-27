@@ -104,8 +104,14 @@ const UserProfile = () => {
           <div className="userprofile-feed">
             <div className="userprofile-info">
               <div className="userprofile-username">
-                <h3>{username}</h3>
+                <h2>{username}<br/><div className="userprofile-follower-following">
+                <h3>100 Followers </h3>
+                <h3> 50 Following</h3>
+              </div><br/><p>
+                Doge engenier 2023 <br/>Dog of the year
+              </p></h2>
               </div>
+              
               <div className="userprofile-follow-button-container">
                 <button
                   id="userprofile-followButton"
@@ -115,6 +121,7 @@ const UserProfile = () => {
                   {isFollowing ? "Following" : "Follow"}
                 </button>
               </div>
+              
               <div className="userprofile-profilepicture-container">
                 <img
                   src="/img/profiledog.jpg"
@@ -122,22 +129,14 @@ const UserProfile = () => {
                   className="userprofile-profilepicture"
                 />
               </div>
+              
             </div>
 
-              <div className="userprofile-follower-following">
-                <p>100 Followers</p>
-                <p>50 Following</p>
-              </div>
+             
 
             <div className="userprofile-details">
               <h4></h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-                euismod semper libero, vitae fermentum magna elementum vel. Sed
-                vestibulum lacus ut libero sagittis, id rhoncus nunc ultricies.
-                In auctor est vitae nunc efficitur, vel eleifend dolor
-                vestibulum.
-              </p>
+              
               <h2 className="line2"></h2>
             </div>
 
@@ -163,6 +162,44 @@ const UserProfile = () => {
                 </div>
               ))}
             </div>
+            <div
+          className="postpopup"
+          style={{ display: postPopupVisible ? "block" : "none" }}
+        >
+          <span className="closePostPopup" onClick={closePostPopup}>
+            &times;
+          </span>
+          <div className="post-popup-content1">
+            <div className="content-wrapper">
+              <h2>Add a new picture</h2>
+              <div className="empty-area">
+                <div className="drag-header"></div>
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  className="file-input"
+                  style={{ display: "none" }}
+                />
+                <button className="post-select-button1"
+                    onClick={() => document.getElementById("fileInput").click()}>
+                    Drag here</button>
+                </div>
+              </div>
+              </div>
+                        
+              <div className="post-popup-content2"
+                onDragOver={(e) => handleDragOver(e)}
+                onDrop={(e) => handleDrop(e)}
+>
+              <div className="content-wrapper">
+                <h2>Or</h2>
+                <label htmlFor="fileInput" className="post-select-button2">
+                Select from computer
+                </label>
+            </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>
