@@ -10,7 +10,7 @@ const Users = require("../models/userModel");
 const userController = {
   getAllUsers: async (req, res) => {
     try {
-      const users = await Users.find().select("fullname username avatar");
+      const users = await Users.find().select("username avatar");
       res.json({ users });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -23,7 +23,7 @@ const userController = {
         username: { $regex: req.query.username },
       })
         .limit(10)
-        .select("fullname username avatar");
+        .select("username avatar");
 
       res.json({ users });
     } catch (error) {
@@ -80,32 +80,37 @@ const userController = {
   }
 },
 
-  friend: async (req, res) => {
-    try {
-      const { params: { id }, user: { _id } } = req;
+followUser: async (req, res) => {
+  try {
+    const { params: { id }, user: { _id } } = req;
 
-      const userToFollow = await Users.findById(id);
+    const userToFollow = await Users.findById(id);
 
-      if (!userToFollow) {
-        return res.status(400).json({ message: "User to follow not found" });
-      }
-
-      const isAlreadyFollowing = userToFollow.friends.includes(_id);
-
-      if (isAlreadyFollowing) {
-        return res.status(400).json({ message: "You are already following this user" });
-      }
-
-      await Users.findByIdAndUpdate(id, { $push: { friends: _id } }, { new: true });
-      await Users.findByIdAndUpdate(_id, { $push: { following: id } }, { new: true });
-
-      res.json({ message: "Friend added" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    if (!userToFollow) {
+      return res.status(400).json({ message: "User to follow not found" });
     }
-  },
 
-  unfriend: async (req, res) => {
+    const isAlreadyFollowing = userToFollow.following.includes(_id);
+
+    if (isAlreadyFollowing) {
+      return res.status(400).json({ message: "You are already following this user" });
+    }
+
+    // Log the user being followed
+    console.log(
+      `${req.user.username} is following user with ID: ${id} (${userToFollow.username})`
+    );
+
+
+    await Users.findByIdAndUpdate(_id, { $push: { following: id } }, { new: true });
+
+    res.json({ message: "Followed" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+},
+
+  unfollowUser: async (req, res) => {
     try {
       const { params: { id }, user: { _id } } = req;
 
@@ -115,16 +120,15 @@ const userController = {
         return res.status(400).json({ message: "User to unfollow not found" });
       }
 
-      const isFollowing = userToUnfollow.friends.includes(_id);
+      const isFollowing = userToUnfollow.following.includes(_id);
 
       if (!isFollowing) {
         return res.status(400).json({ message: "You are not following this user" });
       }
 
-      await Users.findByIdAndUpdate(id, { $pull: { friends: _id } }, { new: true });
       await Users.findByIdAndUpdate(_id, { $pull: { following: id } }, { new: true });
 
-      res.json({ message: "Friend removed" });
+      res.json({ message: "Unfollowed" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
