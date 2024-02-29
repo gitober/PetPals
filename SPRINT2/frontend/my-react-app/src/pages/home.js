@@ -1,68 +1,36 @@
 import React, { useState } from "react";
 import "../style/home.css";
-import "../style/searchbar.css";
-import "../style/sidebar.css";
-import "../style/popuppost.css";
-import "../style/popupcomment.css";
+import "../style/popuppost.css"; // Updated CSS file path
 import Layout from "../Layout";
 
 function Home() {
-  // State variables for like status and count
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [postPopupVisible, setPostPopupVisible] = useState(false);
-  const [commentPopupVisible, setCommentPopupVisible] = useState(false);
-  const [likeImage, setLikeImage] = useState("../img/like.png");
+  const [feedImages, setFeedImages] = useState([]);
 
-  function toggleLike() {
-    if (liked) {
-      setLikeCount((prevCount) => prevCount - 1); // Decrease like count if unliking
-      setLikeImage("../img/like.png"); // Change image to outline like
-    } else {
-      setLikeCount((prevCount) => prevCount + 1); // Increase like count if liking
-      setLikeImage("../img/like-filled.png"); // Change image to filled like
-    }
-    setLiked(!liked); // Toggle like status
-  }
-
-  // Function to open and close post popup
-  function openPostPopup() {
+  const openPostPopup = () => {
     setPostPopupVisible(true);
-  }
+  };
 
-  function closePostPopup() {
+  const closePostPopup = () => {
     setPostPopupVisible(false);
-  }
+    setSelectedImage(null); // Clear selected image when closing the popup
+  };
 
-  // Function to open and close comment popup
-  function openCommentPopup() {
-    setCommentPopupVisible(true);
-  }
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+    }
+  };
 
-  function closeCommentPopup() {
-    setCommentPopupVisible(false);
-  }
-
-  // Function to submit comment
-  function submitComment() {
-    // Your comment submission logic goes here
-  }
-
-  function handleDragOver(e) {
-    e.preventDefault();
-  }
-
-  function handleDrop(e) {
-    e.preventDefault();
-    const files = e.dataTransfer.files;
-    handleDroppedFiles(files);
-  }
-
-  function handleDroppedFiles(files) {
-    // Handle the dropped files, you can upload them or perform other actions
-    console.log(files);
-    // Update the UI or trigger any other logic
-  }
+  const handleSubmit = () => {
+    if (selectedImage) {
+      setFeedImages([...feedImages, selectedImage]); // Add selected image to feed
+      setSelectedImage(null); // Clear selected image
+      setPostPopupVisible(false); // Close popup
+    }
+  };
 
   return (
     <Layout>
@@ -92,45 +60,11 @@ function Home() {
             <input type="text" placeholder="Search" />
           </div>
           <div className="home-feed">
-            <div className="user-info">
-              <a href="../userprofile">
-                <h3>username</h3>
-              </a>
-            </div>
-            <div className="home-feed-image">
-              <a href="/userprofile">
-                <img srcSet="/img/profiledog.jpg" alt="Feed Image" />
-              </a>
-            </div>
-            <div className="icons">
-              <div className="like-container">
-                <img
-                  src={likeImage}
-                  alt="Like"
-                  className={`like-icon ${liked ? "liked" : ""}`}
-                  id="likeIcon"
-                  onClick={toggleLike}
-                />
-              </div>
-              <img
-                srcSet="../img/comment.png"
-                alt="Comment"
-                className="icon"
-                onClick={openCommentPopup}
-              />
-
-              <div className="likes-container">
-                <p className="likes">
-                  likes <span id="likeCount">{likeCount}</span>
-                </p>
-              </div>
-            </div>
-            <p className="lorem-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+            {feedImages.map((image, index) => (
+              <img key={index} src={image} alt={`Feed Image ${index}`} />
+            ))}
           </div>
         </div>
-
         <div
           className="postpopup"
           style={{ display: postPopupVisible ? "block" : "none" }}
@@ -138,59 +72,36 @@ function Home() {
           <span className="closePostPopup" onClick={closePostPopup}>
             &times;
           </span>
-          <div className="post-popup-content1">
+          <div className="post-popup-content">
             <div className="content-wrapper">
               <h2>Add a new picture</h2>
               <div className="empty-area">
-                <div className="drag-header"></div>
+                {selectedImage && (
+                  <img
+                    src={selectedImage}
+                    alt="Selected"
+                    className="preview-image"
+                  />
+                )}
                 <input
                   type="file"
                   id="fileInput"
                   accept="image/*"
                   className="file-input"
                   style={{ display: "none" }}
+                  onChange={handleFileChange}
                 />
                 <button
-                  className="post-select-button1"
+                  className="post-select-button"
                   onClick={() => document.getElementById("fileInput").click()}
                 >
-                  Drag here
+                  Drag here or Select from computer
                 </button>
               </div>
             </div>
-          </div>
-          <div
-            className="post-popup-content2"
-            onDragOver={(e) => handleDragOver(e)}
-            onDrop={(e) => handleDrop(e)}
-          >
-            <div className="content-wrapper">
-              <h2>or</h2>
-              <label htmlFor="fileInput" className="post-select-button2">
-                Select from computer
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="comment-popup"
-          style={{ display: commentPopupVisible ? "block" : "none" }}
-        >
-          <div>
-            <span className="close" onClick={closeCommentPopup}>
-              &times;
-            </span>
-          </div>
-          <div className="popUpCommentHeader">
-            <h2>Comments</h2>
-          </div>
-          <div className="comment-popup-content"></div>
-          <div className="comment-input">
-            <input type="text" placeholder="Write your comment here..." />
-          </div>
-          <div className="submit-comment">
-            <button onClick={submitComment}>Submit</button>
+            <button className="submit-button" onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
         </div>
       </div>

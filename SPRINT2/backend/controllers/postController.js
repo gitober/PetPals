@@ -33,48 +33,46 @@ const postController = {
     }
   },
 
-  // Get posts based on user's following list
+    
   getPost: async (req, res) => {
     try {
-      // Find posts from user's following list
-      const posts = await Posts.find({
-        user: [...req.user.following, req.user._id],
-      })
-        .sort("-createdAt")
-        .populate("user likes", "username avatar fullname friends")
+      
+      const posts = await Posts.find()
+        .sort("-createdAt") 
+        .populate("user likes", "username avatar fullname friends") 
         .populate({
           path: "comments",
           populate: {
             path: "user likes",
-            select: "-password",
+            select: "-password", 
           },
         });
 
-      // Return found posts
+      
       return res.status(200).json({
         message: "Posts found",
         result: posts.length,
         posts,
       });
     } catch (err) {
-      // Handle errors
+     
       return res.status(500).json({ message: err.message });
     }
   },
 
-  // Update a post
+  
   updatePost: async (req, res) => {
     try {
       const { content, images } = req.body;
 
-      // Find and update the post
+      
       const post = await Posts.findOneAndUpdate(
         { _id: req.params.id },
         { content, images },
         { new: true }
       ).populate("user likes", "username avatar fullname");
 
-      // Return updated post
+      
       return res.status(200).json({
         message: "Post updated",
         newPost: {

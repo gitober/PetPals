@@ -23,8 +23,6 @@ router
 router.patch("/posts/:id/like", authMiddleware, postController.likePost);
 router.patch("/posts/:id/unlike", authMiddleware, postController.unlikePost);
 router.get("/user_posts/:id", authMiddleware, postController.getUserPosts);
-router.patch("/save_post/:id", authMiddleware, postController.savePost);
-router.patch("/unsave_post/:id", authMiddleware, postController.unsavePost);
-router.get("/savedpost", authMiddleware, postController.getsavedPost);
+
 
 module.exports = router;
