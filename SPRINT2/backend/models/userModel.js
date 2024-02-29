@@ -29,8 +29,18 @@ const userSchema = mongoose.Schema(
       default: "",
       maxlength: 250,
     },
-    following: [{ type: mongoose.Types.ObjectId, ref: "user" }],
-    username: String,
+    following: [
+      {
+        user: { type: mongoose.Types.ObjectId, ref: "user" },
+        username: String,
+      },
+    ],
+    followers: [
+      {
+        user: { type: mongoose.Types.ObjectId, ref: "user" },
+        username: String,
+      },
+    ],
   },
   {
     timestamps: true,
