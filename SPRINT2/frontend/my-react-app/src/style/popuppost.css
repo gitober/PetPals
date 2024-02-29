@@ -1,6 +1,3 @@
-/* Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 /* Style for the Post Popup */
 .postpopup {
   display: none;
@@ -9,136 +6,46 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
-  width: 100%;
+  width: 80%; /* Adjusted width for better responsiveness */
   max-width: 500px;
-  height: 300%;
-  max-height: 500px;
-  padding: 80px;
-  border-radius: 40px;
+  padding: 40px; /* Adjusted padding for better spacing */
+  border-radius: 20px; /* Adjusted border radius */
   z-index: 9999;
   color: #000;
   font-weight: bold;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+
 /* Styles for Post Popup Content Sections */
-.post-popup-content1 {
-  margin-top: 60px;
+.post-popup-content {
   text-align: center;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 40%;
 }
 
-
-.post-popup-content2 {
-  text-align: center;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 40%;
-
+.post-popup-content .content-wrapper {
+  margin-bottom: 20px; /* Added margin bottom for spacing */
 }
 
-.post-popup-content1 .content-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 40%;
-}
-.post-popup-content1 .content-wrapper,
-.post-popup-content2 .content-wrapper h2 {
-  font-size: 30px;
+/* Style for the Picture Preview */
+.preview-image {
+  max-width: 100%; /* Ensure the image fits within the container */
+  max-height: 200px; /* Set maximum height as needed */
+  margin-bottom: 20px; /* Added margin bottom for spacing */
 }
 
-.post-popup-content2 .content-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 40%;
-}
-
-/* Style for the Drag-Over State */
-.post-popup-content2.drag-over {
-  border: 2px dashed magenta;
-  background-color: rgba(255, 0, 255, 0.1);
-  padding: 20px;
-  transition: background-color 0.3s ease;
-}
-
-/* Hover effect for Drag-Over State */
-.post-popup-content2.drag-over:hover {
-  background-color: black;
-}
-
-/* Style for the "Select from Computer" Buttons */
-.post-select-button1 {
-  padding: 30px 50px;
+/* Style for the Submit Button */
+.submit-button {
+  padding: 15px 40px; /* Adjusted padding for better button size */
   background-color: #d6baff;
   color: #fff;
   border: none;
   border-radius: 5px;
   font-weight: bolder;
-  font-size: 18px;
+  font-size: 16px; /* Adjusted font size for better readability */
   transition: background-color 0.3s ease;
 }
 
-.post-select-button2 {
-  padding: 20px 50px;
-  background-color:#d6baff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-/* Hover effect for the "Select from Computer" Buttons */
-.post-select-button1:hover,
-.post-select-button2:hover {
-  background-color:#e6f3ff;
-}
-
-/* Additional Style for Drag-Over State */
-.post-popup-content2.drag-over .empty-area {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-/* Style for the Close Button in the Post Popup */
-.closePostPopup {
-  position: absolute;
-  top: 30px;
-  right: 50px;
-  cursor: pointer;
-  font-size: 45px;
-  color: #000;
-}
-
-.closePostPopup:hover {
-  color: #d6baff;
-}
-
-/* Media Query for Smaller Screens */
-@media screen and (max-width: 600px) {
-  .postpopup {
-    width: 45%; /* Adjusted width for smaller screens */
-  }
-
-  .content-wrapper h2{
-    font-size: 30px;
-  }
-
-  .post-select-button1,
-  .post-select-button2 {
-    width: 80%; /* Full width for smaller screens */
-  }
+/* Hover effect for the Submit Button */
+.submit-button:hover {
+  background-color: #e6f3ff;
 }
