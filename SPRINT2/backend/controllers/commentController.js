@@ -7,7 +7,7 @@ const Comments = require("../models/commentModel");
 const Posts = require("../models/postModel");
 
 const commentController = {
-  // Create a new comment for a post
+  // Create a aew comment for a post
   createComment: async (req, res) => {
     try {
       // Extract comment details from request body
