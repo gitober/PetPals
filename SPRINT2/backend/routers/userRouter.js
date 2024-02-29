@@ -11,7 +11,7 @@ router.get("/users", authMiddleware, userController.getAllUsers);
 router.get("/search", authMiddleware, userController.searchUsers);
 router.get("/user/:id", authMiddleware, userController.getUser);
 router.patch("/user", authMiddleware, userController.updateUser);
-router.patch("/user/:id/friend", authMiddleware, userController.friend);
-router.patch("/user/:id/unfriend", authMiddleware, userController.unfriend);
+router.patch("/user/:id/follow", authMiddleware, userController.followUser);
+router.patch("/user/:id/unfollow", authMiddleware, userController.unfollowUser);
 
 module.exports = router;

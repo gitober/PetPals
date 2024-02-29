@@ -4,7 +4,6 @@
 // other users through the friends, following, and saved arrays, utilizing references to other user documents 
 // via their MongoDB ObjectId.
 
-// userModel.js
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
@@ -30,9 +29,8 @@ const userSchema = mongoose.Schema(
       default: "",
       maxlength: 250,
     },
-    //friends: [{ type: mongoose.Types.ObjectId, ref: "user" }],
     following: [{ type: mongoose.Types.ObjectId, ref: "user" }],
-    //saved: [{ type: mongoose.Types.ObjectId, ref: "user" }],
+    username: String,
   },
   {
     timestamps: true,
