@@ -57,19 +57,11 @@
 
 
 .profilepage-follower-following {
-  display: flex;
+    display: flex;
   margin-bottom: 10px;
   font-weight: bold;
   color: #d6baff;
   justify-content: flex-start;
-}
-
-.profilepage-follower-following p {
-  margin: 0;
-  margin-right: 20px;
-  font-size: 20px;
-  margin-top: 10px;
-  margin-bottom: 15px;
 }
 
 .profilepage-info {
@@ -88,14 +80,21 @@
   font-size: 33px;
 }
 
-.profilepage-username h2 h3 {
+.profilepage-username h2 h3{
   margin: 0; /* Remove any margin for the h3 element */
   font-size: 20px;
-  margin-top: 20px;
+  margin-top: 40px;
+  margin-right: 25px; /* Lisätään tilaa sanojen väliin */
+
 }
 
 .profilepage-username h2 p {
   font-size: 20px;
+}
+
+.profilepage-username p {
+  font-size: 20px;
+  margin-top: 40px;
 }
 
 /* PROFIILIKUVA */
@@ -113,7 +112,7 @@
   aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: 5px;
-  border: 10px solid #d4e6ff;
+  border: 3px solid #d4e6ff;
 }
 
 
@@ -165,7 +164,7 @@
   border: 1px solid #ccc;
 }
 
-/*  Pictures Container Styles */
+/* Pictures Container Styles */
 .profilepage-pictures-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

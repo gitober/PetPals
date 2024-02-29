@@ -8,7 +8,9 @@ import "../style/popupcomment.css";
 
 const Profile = () => {
   const [postPopupVisible, setPostPopupVisible] = useState(false);
-  const [username, setUsername] = useState("DogeSlayer69!");
+  const [username, setUsername] = useState("Profile");
+  const [followers, setFollowers] = useState(0); // Alusta nykyisten seuraajien määrä
+  const [following, setFollowing] = useState(0); // Alusta seurattujen määrä
 
   const ProfilePictures = [
     "/img/feed.jpg",
@@ -109,12 +111,11 @@ const Profile = () => {
                   {username}
                   <br />
                   <div className="profilepage-follower-following">
-                    <h3>100 Followers<br/><h3>50 Following</h3></h3>
-                    
+                    <h3>{followers} Followers </h3>
+                    <h3>{following} Following</h3>
                   </div>
-                  <br />
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                    Welcome to my page
                     {/* muista lisätä div ja funktio joka hakee tiedot tietokannasta */}
                   </p>
                 </h2>
@@ -146,10 +147,7 @@ const Profile = () => {
               id="profilepage-feed-pictures-container"
             >
               {ProfilePictures.map((pictureUrl, index) => (
-                <div
-                  className="profilepage-feed-picture-container"
-                  key={index}
-                >
+                <div className="profilepage-feed-picture-container" key={index}>
                   <img
                     src={pictureUrl}
                     alt={`Feed Picture ${index + 1}`}
