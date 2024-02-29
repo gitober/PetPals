@@ -3,7 +3,7 @@
   display: none;
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 56.5%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   width: 80%; /* Adjusted width for better responsiveness */
@@ -35,8 +35,7 @@
 /* Style for the Picture Preview */
 .preview-image {
   max-width: 100%; /* Ensure the image fits within the container */
-  max-height: 200px; /* Set maximum height as needed */
-  margin-bottom: 40px; /* Added margin bottom for spacing */
+  max-height: 280px; /* Added margin bottom for spacing */
 }
 
 /* Style for the Submit Button */
@@ -71,4 +70,22 @@
 
 .previewImg-content {
   align-items: center;
+}
+
+.postPicAndComment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 10px;
+}
+
+.postPicAndComment input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #0000002c;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }

@@ -18,7 +18,7 @@
 
 /* Feed Styles */
 .home-feed {
-  background-color: #E6F3FF;
+  background-color: #fff;
   border-radius: 5px;
   position: relative;
 }
@@ -29,7 +29,7 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  border: 10px solid #d6baff;
+  border: 5px solid #d6baff;
   border-radius: 5px;
 }
 
@@ -39,11 +39,13 @@
   object-fit: contain;
   border-radius: 5px;
   margin-top: 20px;
+  
 }
 
-.feed-item p {
-  margin-top: 10px;
+.feed-item p1 {
   text-align: center;
+  border: 2px solid #0000002c;
+  margin-bottom: 10px;
 }
 
 .feed-item a {
