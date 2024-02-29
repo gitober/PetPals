@@ -15,21 +15,21 @@ function Home() {
   const [commentPopupVisible, setCommentPopupVisible] = useState(false);
 
   const toggleLike = (imageUrl) => {
-    if (likeCounts[imageUrl]) {
-      // If already liked, remove the like
-      setLikeCounts((prevCounts) => ({
-        ...prevCounts,
-        [imageUrl]: 0,
-      }));
-    } else {
-      // If not liked, add the like
-      setLikeCounts((prevCounts) => ({
-        ...prevCounts,
-        [imageUrl]: 1,
-      }));
-    }
-    setSelectedImage(imageUrl); // Update the selectedImage state
-  };
+  if (likeCounts[imageUrl]) {
+    // If already liked, remove the like
+    setLikeCounts((prevCounts) => ({
+      ...prevCounts,
+      [imageUrl]: 0,
+    }));
+  } else {
+    // If not liked, add the like
+    setLikeCounts((prevCounts) => ({
+      ...prevCounts,
+      [imageUrl]: 1,
+    }));
+  }
+  setSelectedImage(imageUrl); // Update the selectedImage state
+};
 
   const openPostPopup = () => {
     setPostPopupVisible(true);
