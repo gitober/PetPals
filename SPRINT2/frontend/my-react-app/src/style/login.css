@@ -110,7 +110,7 @@ body, html {
 
 .signUp:hover,
 .signUpClose:hover {
-    color: #D6BAFF;
+    color: #c198ff;
 }
 
 .signup-info {
@@ -195,3 +195,4 @@ body, html {
         width: 100%;
     }
 }
+

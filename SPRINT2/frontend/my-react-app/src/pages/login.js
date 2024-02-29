@@ -7,7 +7,6 @@ import "../style/popupsignup.css";
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [googleApiLoaded, setGoogleApiLoaded] = useState(false);
   const [loginDisabled, setLoginDisabled] = useState(true);
   const [signupPopupVisible, setSignupPopupVisible] = useState(false);
   const [signupUsername, setSignupUsername] = useState("");
@@ -36,56 +35,6 @@ function Login() {
   useEffect(() => {
     setLoginDisabled(!(username && password));
   }, [username, password]);
-
-  // Function to load the Google Platform JavaScript library dynamically
-  useEffect(() => {
-    const loadGooglePlatform = async () => {
-      try {
-        const script = document.createElement("script");
-        script.src = "https://apis.google.com/js/platform.js";
-        script.onload = () => {
-          setGoogleApiLoaded(true);
-          window.gapi.load("auth2", () => {
-            window.gapi.auth2.init({
-              client_id: "YOUR_GOOGLE_CLIENT_ID_HERE",
-            });
-          });
-        };
-        script.onerror = (error) => {
-          console.error(
-            "Error loading Google Platform JavaScript library:",
-            error
-          );
-        };
-        document.body.appendChild(script);
-
-        // Clean up the script tag on unmount
-        return () => {
-          document.body.removeChild(script);
-        };
-      } catch (error) {
-        console.error(
-          "Error loading Google Platform JavaScript library:",
-          error
-        );
-      }
-    };
-
-    loadGooglePlatform();
-  }, []);
-
-  // Function to handle Google sign in
-  const handleGoogleSignIn = () => {
-    if (window.gapi && window.gapi.auth2) {
-      const auth2 = window.gapi.auth2.getAuthInstance();
-      auth2.signIn().then((googleUser) => {
-        const id_token = googleUser.getAuthResponse().id_token;
-        // Send id_token to your backend for verification and user creation/login
-      });
-    } else {
-      console.error("Google API is not loaded yet.");
-    }
-  };
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -123,64 +72,64 @@ function Login() {
     }
   };
 
-const handleSignupSubmit = async (event) => {
-  event.preventDefault();
+  const handleSignupSubmit = async (event) => {
+    event.preventDefault();
 
-  try {
-    console.log("Handling signup submission");
+    try {
+      console.log("Handling signup submission");
 
-    if (isTestModeSignup) {
-      // Simulate a successful response in test mode
-      console.log("Test mode: Simulating successful signup");
+      if (isTestModeSignup) {
+        // Simulate a successful response in test mode
+        console.log("Test mode: Simulating successful signup");
 
-      // Perform actions as needed for testing
-
-      // Reset the signup form
-      setSignupUsername("");
-      setSignupEmail("");
-      setSignupPassword("");
-
-      // Close the signup popup after a brief delay
-      setTimeout(() => {
-        setSignupPopupVisible(false);
-      }, 500); // Adjust the delay as needed
-    } else {
-      // Make actual API call
-      const response = await fetch("http://localhost:5000/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: signupFormData.username,
-          email: signupFormData.email,
-          password: signupFormData.password,
-        }),
-      });
-
-      console.log("Response status:", response.status);
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Registration Successful!");
-        console.log("User:", data.user.username);
-        console.log("Access Token:", data.access_token);
+        // Perform actions as needed for testing
 
         // Reset the signup form
         setSignupUsername("");
         setSignupEmail("");
         setSignupPassword("");
 
-        // Close the signup popup
-        setSignupPopupVisible(false);
+        // Close the signup popup after a brief delay
+        setTimeout(() => {
+          setSignupPopupVisible(false);
+        }, 500); // Adjust the delay as needed
       } else {
-        console.error("Registration failed");
+        // Make actual API call
+        const response = await fetch("http://localhost:5000/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: signupFormData.username,
+            email: signupFormData.email,
+            password: signupFormData.password,
+          }),
+        });
+
+        console.log("Response status:", response.status);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Registration Successful!");
+          console.log("User:", data.user.username);
+          console.log("Access Token:", data.access_token);
+
+          // Reset the signup form
+          setSignupUsername("");
+          setSignupEmail("");
+          setSignupPassword("");
+
+          // Close the signup popup
+          setSignupPopupVisible(false);
+        } else {
+          console.error("Registration failed");
+        }
       }
+    } catch (error) {
+      console.error("Error during signup:", error);
     }
-  } catch (error) {
-    console.error("Error during signup:", error);
-  }
-};
+  };
 
   const handleForgotPasswordSubmit = (event) => {
     event.preventDefault();
@@ -302,16 +251,10 @@ const handleSignupSubmit = async (event) => {
             <span className="close" onClick={closeSignupPopup}>
               &times;
             </span>
-            <h2>Sign Up Options</h2>
-            {googleApiLoaded && (
-              <button onClick={handleGoogleSignIn}>
-                Sign up with Google account
-              </button>
-            )}
+            <h2>Sign Up Information:</h2>
           </div>
 
           <div className="signup-info">
-            <h3>Sign Up Information:</h3>
             <form onSubmit={handleSignupSubmit}>
               <div className="form-group">
                 <label htmlFor="username">Username:</label>
