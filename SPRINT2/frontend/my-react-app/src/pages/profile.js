@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Layout from "../Layout";
 import "../style/profile.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
+import { UserContext } from "./UserContext";
+
 
 const Profile = () => {
   const [postPopupVisible, setPostPopupVisible] = useState(false);
-  const [username, setUsername] = useState("Profile");
-  const [followers, setFollowers] = useState(0); // Alusta nykyisten seuraajien määrä
-  const [following, setFollowing] = useState(0); // Alusta seurattujen määrä
+  const [followers] = useState(0); // Alusta nykyisten seuraajien määrä
+  const [following] = useState(0); // Alusta seurattujen määrä
+  const { username, profilePicture } = useContext(UserContext); // Get username and profile picture from UserContext
 
   const ProfilePictures = [
     "/img/feed.jpg",
@@ -123,7 +125,7 @@ const Profile = () => {
 
               <div className="profilepage-profilepicture-container">
                 <img
-                  src="/img/profiledog.jpg"
+                  src={profilePicture}
                   alt="profilepage Picture"
                   className="profilepage-profilepicture"
                 />

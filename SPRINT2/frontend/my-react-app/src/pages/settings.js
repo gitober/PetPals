@@ -1,30 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../style/settings.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
 import Layout from "../Layout";
+import { UserContext } from "./UserContext";
 
 function Settings() {
   const [postPopupVisible, setPostPopupVisible] = useState(false);
+  const { username, setUsername } = useContext(UserContext);
+  const [profilePicture, setProfilePicture] = useState("../img/profiledog.jpg"); // Initialize profile picture state
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedUsername = localStorage.getItem("username");
+    const savedProfilePicture = localStorage.getItem("profilePicture"); // Get saved profile picture from localStorage
+    if (savedUsername) {
+      setUsername(savedUsername);
+    }
+    if (savedProfilePicture) {
+      setProfilePicture(savedProfilePicture); // Set profile picture state from localStorage
+    }
+  }, [setUsername]);
+
   const handleProfilePictureChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = function (e) {
         const newProfilePicture = e.target.result;
-        document.querySelector(".dogprofilepicture").src = newProfilePicture;
+        setProfilePicture(newProfilePicture); // Update profile picture state
+        localStorage.setItem("profilePicture", newProfilePicture); // Save profile picture to localStorage
       };
       reader.readAsDataURL(file);
     }
   };
 
   const editUsername = () => {
-    const currentUsername = document.querySelector(".textbox").innerText;
-    const newUsername = prompt("Enter your new username:", currentUsername);
+    const newUsername = prompt("Enter your new username:", username);
     if (newUsername !== null) {
-      document.querySelector(".textbox").innerText = newUsername;
+      setUsername(newUsername);
+      localStorage.setItem("username", newUsername); // Save username to localStorage
+      navigate("/profile");
     }
   };
 
@@ -46,7 +65,6 @@ function Settings() {
     }
   };
 
-  // Function to open and close post popup
   function openPostPopup() {
     setPostPopupVisible(true);
   }
@@ -54,7 +72,6 @@ function Settings() {
   function closePostPopup() {
     setPostPopupVisible(false);
   }
-
 
   function handleDragOver(e) {
     e.preventDefault();
@@ -67,11 +84,9 @@ function Settings() {
   }
 
   function handleDroppedFiles(files) {
-    // Handle the dropped files, you can upload them or perform other actions
     console.log(files);
-    // Update the UI or trigger any other logic
-
   }
+
   return (
     <Layout>
       <div className="settings-page-container">
@@ -114,18 +129,18 @@ function Settings() {
               <label htmlFor="profilePictureInput">
                 <img
                   className="dogprofilepicture"
-                  src="../img/profiledog.jpg"
+                  src={profilePicture}
                   alt="Profile Picture"
                 />
               </label>
-              <div className="textbox">new username here</div>
+              <div className="textbox">{username}</div>
             </div>
             <div className="row">
               <div className="setting-box">
-  <label className="profiletext" htmlFor="profilePictureInput">
-    change profile picture
-  </label>
-</div>
+                <label className="profiletext" htmlFor="profilePictureInput">
+                  change profile picture
+                </label>
+              </div>
 
               <div className="setting-box">
                 <h3 onClick={editUsername}>change username</h3>
@@ -155,7 +170,6 @@ function Settings() {
               <span className="closePostPopup" onClick={closePostPopup}>
                 &times;
               </span>
-              {/* Post popup content 1 */}
               <div className="post-popup-content1">
                 <div className="content-wrapper">
                   <h2>Add a new picture</h2>
