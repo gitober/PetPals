@@ -143,14 +143,16 @@ const authController = {
   },
 
   logout: async (req, res) => {
-    try {
-      // Clear refresh token cookie
-      res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
-      res.json({ message: "Logged out" });
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
-    }
-  },
+  try {
+    console.log("Received logout request");
+
+    // Clear refresh token cookie
+    res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
+    res.json({ message: "Logged out" });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+},
 
   generateAccessToken: (userId) => {
     return jwt.sign({ userId }, process.env.ACCESSTOKENSECRET, {
