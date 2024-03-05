@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../Layout";
 import "../style/profile.css";
 import "../style/searchbar.css";
@@ -7,12 +8,15 @@ import "../style/popuppost.css";
 import "../style/popupcomment.css";
 import { UserContext } from "./UserContext";
 
-
 const Profile = () => {
   const [postPopupVisible, setPostPopupVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedText, setSelectedText] = useState("");
+  const navigate = useNavigate();
   const [followers] = useState(0); // Alusta nykyisten seuraajien määrä
   const [following] = useState(0); // Alusta seurattujen määrä
-  const { username, profilePicture } = useContext(UserContext); // Get username and profile picture from UserContext
+  const { username, profilePicture, bioText, setBioText } =
+    useContext(UserContext); // Get username, profile picture, and bio text from UserContext
 
   const ProfilePictures = [
     "/img/feed.jpg",
@@ -55,27 +59,25 @@ const Profile = () => {
     }
   };
 
-  const openPostPopup = () => {
-    setPostPopupVisible(true);
-  };
+    const openPostPopup = () => {
+      setPostPopupVisible(true);
+    };
 
-  const closePostPopup = () => {
-    setPostPopupVisible(false);
-  };
+    const handleSubmit = () => {
+      if (selectedImage) {
+        const newItem = { image: selectedImage, text: selectedText };
+        setSelectedImage(null);
+        setSelectedText("");
+        setPostPopupVisible(false);
+      }
+    };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+    const handlePostClick = () => {
+      // Ohjataan käyttäjä kotisivulle ja avataan postauspop-up
+      navigate("/home"); // Käytetään navigate-funktiota
+      setPostPopupVisible(true);
+    };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const files = e.dataTransfer.files;
-    handleDroppedFiles(files);
-  };
-
-  const handleDroppedFiles = (files) => {
-    console.log(files);
-  };
 
   return (
     <Layout>
@@ -90,7 +92,7 @@ const Profile = () => {
               <a href="../profile">PROFILE</a>
             </li>
             <li>
-              <a onClick={openPostPopup}>POST</a>
+              <a onClick={handlePostClick}>POST</a>
             </li>
             <li>
               <a href="../settings">SETTINGS</a>
@@ -117,7 +119,7 @@ const Profile = () => {
                     <h3>{following} Following</h3>
                   </div>
                   <p>
-                    Welcome to my page
+                    {bioText}
                     {/* muista lisätä div ja funktio joka hakee tiedot tietokannasta */}
                   </p>
                 </h2>
@@ -138,13 +140,6 @@ const Profile = () => {
             </div>
 
             <div
-              className="postpopup"
-              style={{ display: postPopupVisible ? "block" : "none" }}
-            >
-              {/* Content of post popup */}
-            </div>
-
-            <div
               className="profilepage-feed-pictures-container"
               id="profilepage-feed-pictures-container"
             >
@@ -159,52 +154,10 @@ const Profile = () => {
               ))}
             </div>
 
-            <div
-              className="postpopup"
-              style={{ display: postPopupVisible ? "block" : "none" }}
-            >
-              <span className="closePostPopup" onClick={closePostPopup}>
-                &times;
-              </span>
-              <div className="post-popup-content1">
-                <div className="content-wrapper">
-                  <h2>Add a new picture</h2>
-                  <div className="empty-area">
-                    <div className="drag-header"></div>
-                    <input
-                      type="file"
-                      id="fileInput"
-                      accept="image/*"
-                      className="file-input"
-                      style={{ display: "none" }}
-                    />
-                    <button
-                      className="post-select-button1"
-                      onClick={() =>
-                        document.getElementById("fileInput").click()
-                      }
-                    >
-                      Drag here
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="post-popup-content2"
-                onDragOver={(e) => handleDragOver(e)}
-                onDrop={(e) => handleDrop(e)}
-              >
-                <div className="content-wrapper">
-                  <h2>Or</h2>
-                  <label htmlFor="fileInput" className="post-select-button2">
-                    Select from computer
-                  </label>
-                </div>
-              </div>
+          
             </div>
           </div>
-        </div>
+  
       </div>
     </Layout>
   );

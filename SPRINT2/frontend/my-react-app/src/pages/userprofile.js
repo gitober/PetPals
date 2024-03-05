@@ -8,6 +8,8 @@ import "../style/popupcomment.css";
 
 const UserProfile = () => {
   const [postPopupVisible, setPostPopupVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedText, setSelectedText] = useState("");
   const [isFollowing, setIsFollowing] = useState(false);
   const [username, setUsername] = useState("User profile");
   const [followers, setFollowers] = useState(0); // Alusta nykyisten seuraajien määrä
@@ -68,21 +70,26 @@ const UserProfile = () => {
 
   const closePostPopup = () => {
     setPostPopupVisible(false);
+    setSelectedImage(null);
+    setSelectedText("");
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+    }
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const files = e.dataTransfer.files;
-    handleDroppedFiles(files);
+  const handleSubmit = () => {
+    if (selectedImage) {
+      const newItem = { image: selectedImage, text: selectedText };
+      setSelectedImage(null);
+      setSelectedText("");
+      setPostPopupVisible(false);
+    }
   };
 
-  const handleDroppedFiles = (files) => {
-    console.log(files);
-  };
 
   return (
     <Layout>
@@ -183,41 +190,46 @@ const UserProfile = () => {
               <span className="closePostPopup" onClick={closePostPopup}>
                 &times;
               </span>
-              <div className="post-popup-content1">
+              <div className="post-popup-content">
                 <div className="content-wrapper">
                   <h2>Add a new picture</h2>
                   <div className="empty-area">
-                    <div className="drag-header"></div>
+                    {selectedImage && (
+                      <div className="postPicAndComment">
+                        <img
+                          src={selectedImage}
+                          alt="Selected"
+                          className="preview-image"
+                        />
+                        <input
+                          type="text"
+                          value={selectedText}
+                          onChange={(e) => setSelectedText(e.target.value)}
+                          placeholder="Enter your text here"
+                        />
+                      </div>
+                    )}
                     <input
                       type="file"
                       id="fileInput"
                       accept="image/*"
                       className="file-input"
                       style={{ display: "none" }}
+                      onChange={handleFileChange}
                     />
                     <button
-                      className="post-select-button1"
+                      className="post-select-button"
                       onClick={() =>
                         document.getElementById("fileInput").click()
                       }
                     >
-                      Drag here
+                      Drag here or Select from computer
                     </button>
                   </div>
                 </div>
-              </div>
-
-              <div
-                className="post-popup-content2"
-                onDragOver={(e) => handleDragOver(e)}
-                onDrop={(e) => handleDrop(e)}
-              >
-                <div className="content-wrapper">
-                  <h2>Or</h2>
-                  <label htmlFor="fileInput" className="post-select-button2">
-                    Select from computer
-                  </label>
-                </div>
+                <button className="submit-button" onClick={handleSubmit}>
+                  Submit
+                </button>
               </div>
             </div>
           </div>

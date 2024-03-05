@@ -3,18 +3,27 @@ import React, { createContext, useState, useEffect } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  // Haetaan käyttäjänimi localStoragesta tai käytetään oletusarvoa
+  // Haetaan käyttäjänimi ja bio-teksti localStoragesta tai käytetään oletusarvoja
   const [username, setUsername] = useState(() => {
     return localStorage.getItem("username") || "Default Username";
   });
+  const [bioText, setBioText] = useState(() => {
+    return localStorage.getItem("bioText") || "Default Bio Text";
+  });
 
-  // Tallennetaan käyttäjänimi localStorageen aina kun se muuttuu
+  // Tallennetaan käyttäjänimi ja bio-teksti localStorageen aina kun ne muuttuvat
   useEffect(() => {
     localStorage.setItem("username", username);
   }, [username]);
 
+  useEffect(() => {
+    localStorage.setItem("bioText", bioText);
+  }, [bioText]);
+
   return (
-    <UserContext.Provider value={{ username, setUsername }}>
+    <UserContext.Provider
+      value={{ username, setUsername, bioText, setBioText }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -10,18 +10,21 @@ import { UserContext } from "./UserContext";
 
 function Settings() {
   const [postPopupVisible, setPostPopupVisible] = useState(false);
-  const { username, setUsername } = useContext(UserContext);
-  const [profilePicture, setProfilePicture] = useState("../img/profiledog.jpg"); // Initialize profile picture state
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedText, setSelectedText] = useState("");
+  const { username, setUsername, bioText, setBioText } =
+    useContext(UserContext); // Lisätty bio-tekstin tilat ja funktiot
+  const [profilePicture, setProfilePicture] = useState("../img/profiledog.jpg");
   const navigate = useNavigate();
 
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
-    const savedProfilePicture = localStorage.getItem("profilePicture"); // Get saved profile picture from localStorage
+    const savedProfilePicture = localStorage.getItem("profilePicture");
     if (savedUsername) {
       setUsername(savedUsername);
     }
     if (savedProfilePicture) {
-      setProfilePicture(savedProfilePicture); // Set profile picture state from localStorage
+      setProfilePicture(savedProfilePicture);
     }
   }, [setUsername]);
 
@@ -31,8 +34,8 @@ function Settings() {
       const reader = new FileReader();
       reader.onload = function (e) {
         const newProfilePicture = e.target.result;
-        setProfilePicture(newProfilePicture); // Update profile picture state
-        localStorage.setItem("profilePicture", newProfilePicture); // Save profile picture to localStorage
+        setProfilePicture(newProfilePicture);
+        localStorage.setItem("profilePicture", newProfilePicture);
       };
       reader.readAsDataURL(file);
     }
@@ -42,16 +45,16 @@ function Settings() {
     const newUsername = prompt("Enter your new username:", username);
     if (newUsername !== null) {
       setUsername(newUsername);
-      localStorage.setItem("username", newUsername); // Save username to localStorage
+      localStorage.setItem("username", newUsername);
       navigate("/profile");
     }
   };
 
-  const editbiotext = () => {
-    const currentBiotext = document.querySelector(".biotextdiv").innerText;
-    const newBiotext = prompt("Enter your new biotext:", currentBiotext);
-    if (newBiotext !== null) {
-      document.querySelector(".biotextdiv").innerText = newBiotext;
+  const editBioText = () => {
+    const newBioText = prompt("Enter your new bio text:", bioText);
+    if (newBioText !== null) {
+      setBioText(newBioText);
+      localStorage.setItem("bioText", newBioText); // Tallenna bio-teksti myös localStorageen
     }
   };
 
@@ -65,27 +68,31 @@ function Settings() {
     }
   };
 
-  function openPostPopup() {
+  const openPostPopup = () => {
     setPostPopupVisible(true);
-  }
+  };
 
-  function closePostPopup() {
+  const closePostPopup = () => {
     setPostPopupVisible(false);
-  }
+    setSelectedImage(null);
+    setSelectedText("");
+  };
 
-  function handleDragOver(e) {
-    e.preventDefault();
-  }
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+    }
+  };
 
-  function handleDrop(e) {
-    e.preventDefault();
-    const files = e.dataTransfer.files;
-    handleDroppedFiles(files);
-  }
-
-  function handleDroppedFiles(files) {
-    console.log(files);
-  }
+  const handleSubmit = () => {
+    if (selectedImage) {
+      const newItem = { image: selectedImage, text: selectedText };
+      setSelectedImage(null);
+      setSelectedText("");
+      setPostPopupVisible(false);
+    }
+  };
 
   return (
     <Layout>
@@ -148,7 +155,7 @@ function Settings() {
             </div>
             <div className="row">
               <div className="biotextdiv">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                {bioText} {/* Näytä bio-teksti */}
               </div>
               <div className="passtextdiv">
                 <p className="passtext">new password</p>
@@ -156,7 +163,8 @@ function Settings() {
             </div>
             <div className="row">
               <div className="setting-box">
-                <h3 onClick={editbiotext}>edit bio</h3>
+                <h3 onClick={editBioText}>edit bio</h3>{" "}
+                {/* Lisätty toiminto bio-tekstin muokkaamiseksi */}
               </div>
               <div className="setting-box">
                 <h3 onClick={changePassword}>change password</h3>
@@ -170,41 +178,46 @@ function Settings() {
               <span className="closePostPopup" onClick={closePostPopup}>
                 &times;
               </span>
-              <div className="post-popup-content1">
+              <div className="post-popup-content">
                 <div className="content-wrapper">
                   <h2>Add a new picture</h2>
                   <div className="empty-area">
-                    <div className="drag-header"></div>
+                    {selectedImage && (
+                      <div className="postPicAndComment">
+                        <img
+                          src={selectedImage}
+                          alt="Selected"
+                          className="preview-image"
+                        />
+                        <input
+                          type="text"
+                          value={selectedText}
+                          onChange={(e) => setSelectedText(e.target.value)}
+                          placeholder="Enter your text here"
+                        />
+                      </div>
+                    )}
                     <input
                       type="file"
                       id="fileInput"
                       accept="image/*"
                       className="file-input"
                       style={{ display: "none" }}
+                      onChange={handleFileChange}
                     />
                     <button
-                      className="post-select-button1"
+                      className="post-select-button"
                       onClick={() =>
                         document.getElementById("fileInput").click()
                       }
                     >
-                      Drag here
+                      Drag here or Select from computer
                     </button>
                   </div>
                 </div>
-              </div>
-
-              <div
-                className="post-popup-content2"
-                onDragOver={(e) => handleDragOver(e)}
-                onDrop={(e) => handleDrop(e)}
-              >
-                <div className="content-wrapper">
-                  <h2>Or</h2>
-                  <label htmlFor="fileInput" className="post-select-button2">
-                    Select from computer
-                  </label>
-                </div>
+                <button className="submit-button" onClick={handleSubmit}>
+                  Submit
+                </button>
               </div>
             </div>
           </div>
