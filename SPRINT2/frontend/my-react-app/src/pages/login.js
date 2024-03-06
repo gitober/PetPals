@@ -23,7 +23,7 @@ function Login() {
   });
 
   // Placeholder for determining if backend is running
-  const backendIsRunning = true;
+  const backendIsRunning = false;
 
   // Test mode flag for login
   const isTestModeLogin = !backendIsRunning;
