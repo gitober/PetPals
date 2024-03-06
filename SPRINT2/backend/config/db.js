@@ -20,10 +20,12 @@ const connectDB = async () => {
     console.log("MONGO_URI:", mongoURI);
 
     // Connect to MongoDB with useNewUrlParser and useUnifiedTopology options
-    // useUnifiedTopology has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version!
     await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      // Use the new URL parser (remove the useNewUrlParser option)
+      // useNewUrlParser has no effect since Node.js Driver version 4.0.0 and will be removed in the next major version!
+      useNewUrlParser: true,
     });
 
     // Log a success message when connected to MongoDB

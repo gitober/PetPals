@@ -116,9 +116,11 @@ const authController = {
       const access_token = authController.generateAccessToken(newUser._id);
       const refresh_token = authController.generateRefreshToken(newUser._id);
       res.cookie("refreshtoken", refresh_token, {
-        httpOnly: true,
-        path: "/api/refresh_token",
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
+      httpOnly: true,
+      path: "/api/refresh_token",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
+      secure: true, // Send only over HTTPS in a secure context
+      sameSite: "none", // Allow cross-site requests
       });
 
       // Log without sensitive information
