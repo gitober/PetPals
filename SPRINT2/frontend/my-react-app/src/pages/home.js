@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '../Layout';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
+import useSearch from '../components/searchbar/useSearch';
 import "../style/home.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
@@ -56,10 +58,14 @@ function Home() {
     console.log('selectedText updated:', e.target.value);
   };
 
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
+    // Handle search logic here, if needed
+  }, navigate);
+
   useEffect(() => {
     // Your existing useEffect code
   }, [postSelectedImages, isTestMode, selectedText, postSubmitting]);
-
 
   return (
     <Layout>
@@ -88,7 +94,8 @@ function Home() {
         </div>
         <div className="home-main-content">
           <div className="search-bar">
-            <input type="text" placeholder="Search" />
+            {/* Use handleKeyPress function to trigger search on Enter key press */}
+            <input type="text" placeholder="Search" onKeyPress={handleKeyPress} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           </div>
           <div className="home-feed">
             {feedItems.map((item, index) => (

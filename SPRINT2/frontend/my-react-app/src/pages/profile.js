@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+import useSearch from "../components/searchbar/useSearch";
 import Layout from "../Layout";
 import "../style/profile.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
-import { UserContext } from "../context/UserContext";
 
 const Profile = () => {
   const [PopupPostVisible, setPopupPostVisible] = useState(false);
@@ -72,6 +73,11 @@ const Profile = () => {
       }
     };
 
+  
+  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
+    // Handle search logic here, if needed
+  }, navigate);
+
     const handlePostClick = () => {
       // Ohjataan käyttäjä kotisivulle ja avataan postauspop-up
       navigate("/home"); // Käytetään navigate-funktiota
@@ -104,8 +110,9 @@ const Profile = () => {
         </div>
 
         <div className="profile-page-main-content">
-          <div className="search-bar">
-            <input type="text" placeholder="Search" />
+        <div className="search-bar">
+            {/* Use handleKeyPress function to trigger search on Enter key press */}
+            <input type="text" placeholder="Search" onKeyPress={handleKeyPress} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           </div>
 
           <div className="profile-page-feed">

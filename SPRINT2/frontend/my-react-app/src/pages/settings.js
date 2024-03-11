@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
+import useSearch from "../components/searchbar/useSearch";
 import "../style/settings.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
 import Layout from "../Layout";
-import { UserContext } from "../context/UserContext";
 
 function Settings() {
   const [PopupPostVisible, setPopupPostVisible] = useState(false);
@@ -94,6 +95,10 @@ function Settings() {
     }
   };
 
+  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
+    // Handle search logic here, if needed
+  }, navigate);
+
   return (
     <Layout>
       <div className="settings-page-container">
@@ -119,8 +124,9 @@ function Settings() {
         </div>
 
         <div className="settings-main-content">
-          <div className="search-bar">
-            <input type="text" placeholder="Search" />
+        <div className="search-bar">
+            {/* Use handleKeyPress function to trigger search on Enter key press */}
+            <input type="text" placeholder="Search" onKeyPress={handleKeyPress} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           </div>
           <div className="settings-feed">
             <h1>Settings</h1>

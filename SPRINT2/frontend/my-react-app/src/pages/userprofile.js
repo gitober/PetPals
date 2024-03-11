@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../Layout";
+import useSearch from "../components/searchbar/useSearch";
 import "../style/userprofile.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
@@ -24,6 +26,11 @@ const UserProfile = () => {
       setFollowers((prevFollowers) => prevFollowers + 1);
     }
   };
+
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
+    // Handle search logic here, if needed
+  }, navigate);
 
   useEffect(() => {
     toggleFollow();
@@ -116,8 +123,9 @@ const UserProfile = () => {
         </div>
 
         <div className="userprofile-main-content">
-          <div className="search-bar">
-            <input type="text" placeholder="Search" />
+        <div className="search-bar">
+            {/* Use handleKeyPress function to trigger search on Enter key press */}
+            <input type="text" placeholder="Search" onKeyPress={handleKeyPress} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
           </div>
 
           <div className="userprofile-feed">
