@@ -114,3 +114,13 @@ const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${server.address().port}`);
   server.maxHttpHeaderSize = 16 * 1024;
 });
+
+// Export `app` for use in tests
+module.exports = app;
+
+// Conditionally start the server only if this file is the entry point to the application
+if (require.main === module) {
+  const server = app.listen(PORT, () => {
+    console.log(`Server is running on port ${server.address().port}`);
+  });
+}
