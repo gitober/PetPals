@@ -1,7 +1,6 @@
 /* Font Import */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-
 /* Container Styles */
 .home-page-container {
   background-color: #e6f3ff;
@@ -11,54 +10,61 @@
 
 /* Main Content Styles */
 .home-main-content {
-  flex: 1; /* Change flex value to allow the main content to take available space */
+  flex: 1;
   padding: 20px;
-  box-sizing: border-box; /* Include this to ensure padding is included in the width */
+  box-sizing: border-box;
   margin-left: 240px;
 }
 
 /* Feed Styles */
 .home-feed {
-  background-color: #ffffff;
-  padding: 20px; /* Adjust the value accordingly */
+  background-color: #fff;
   border-radius: 5px;
   position: relative;
 }
 
 /* Feed Content Styles */
-.home-feed-content {
+.feed-item {
   display: flex;
-  align-items: flex-start;
-}
-
-/* Feed Image Styles */
-.home-feed-image img {
-  position: relative;
-  width: 80%;
-  height: 70%;
-  aspect-ratio: 14 / 7;
-  object-fit: cover;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 5px solid #d6baff;
   border-radius: 5px;
-} 
-
-/* Feed Image Alignment */
-.home-feed-image {
-  text-align: center;
 }
 
-/* User Info text */
-.user-info {
-  padding-top: 5px;
-  text-align: center;
+.feed-item img {
+  max-width: 700px;
+  max-height: 700px;
+  object-fit: contain;
+  border-radius: 5px;
+  margin-top: 20px;
+  
 }
 
+.feed-item p1 {
+  text-align: center;
+  border: 2px solid #0000002c;
+  margin-bottom: 10px;
+}
+
+.feed-item a {
+  margin: auto;
+  font-size: 15px;
+  color: #000000;
+  text-decoration: none;
+}
+
+.feed-item h3:hover {
+  color: #d6baff;
+}
 
 /* Icons Styles */
 .icons {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
+  align-items: row;
+  gap: 170px;
+  margin-bottom: 20px;
 }
 
 /* Like Container Styles */
@@ -69,16 +75,15 @@
 
 /* Like Container Height */
 .like-container {
-  height: 25px;
   margin: auto;
 }
 
 /* Likes Container Styles */
 .likes-container {
   color: #000000;
-  margin: auto;
+  margin-top: 10px;
   font-weight: 600;
-  font-size: 120%;
+  font-size: 100%;
 }
 
 /* Lorem Text Styles */
@@ -114,14 +119,14 @@
   }
 
   .home-main-content {
-    margin-left: 0; /* Adjusted for smaller screens */
+    margin-left: 0;
   }
 
   .home-feed {
     margin: 10px;
   }
 
-  .home-feed-image img {
+  .feed-item img {
     width: 50%;
   }
 

@@ -1,9 +1,3 @@
-// postController manages post-related functionalities in a social media application. It facilitates the creation,
-// retrieval, update, and deletion of posts. The controller supports features such as liking and saving posts,
-// fetching posts from a user's following list, accessing saved posts, and getting details of a single post.
-// Additionally, it handles operations related to user-specific posts and ensures secure interactions with posts,
-// considering user authentication and proper handling of associated comments.
-
 const Posts = require("../models/postModel");
 const Users = require("../models/userModel");
 const Comments = require("../models/commentModel");
@@ -15,11 +9,18 @@ const postController = {
       const { content, images } = req.body;
 
       // Check if images are provided
-      if (images.length === 0)
+      if (!images || images.length === 0) {
         return res.status(400).json({ message: "Add a picture" });
+      }
 
       // Create a new post
-      const newPost = new Posts({ content, images, user: req.user._id });
+      const newPost = new Posts({
+        content,
+        images,
+        user: req.user._id,
+      });
+
+      // Save the new post
       await newPost.save();
 
       // Return success response
@@ -29,33 +30,30 @@ const postController = {
       });
     } catch (err) {
       // Handle errors
+      console.error("Error creating post:", err.message);
       return res.status(500).json({ message: err.message });
     }
   },
 
-    
+  // Get all posts
   getPost: async (req, res) => {
     try {
-      
       const posts = await Posts.find()
-        .sort("-createdAt") 
-        .populate("user likes", "username avatar fullname friends") 
+        .sort("-createdAt")
+        .populate("user likes", "username avatar fullname friends")
         .populate({
           path: "comments",
           populate: {
             path: "user likes",
-            select: "-password", 
+            select: "-password",
           },
         });
 
-      
       return res.status(200).json({
         message: "Posts found",
-        result: posts.length,
-        posts,
+        data: { result: posts.length, posts },
       });
     } catch (err) {
-     
       return res.status(500).json({ message: err.message });
     }
   },

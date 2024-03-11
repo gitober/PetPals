@@ -1,10 +1,11 @@
+/* commentpopup.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 .comment-popup {
   display: none;
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 56.5%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   width: 100%;
@@ -18,15 +19,31 @@
   font-weight: bold;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+
+
 .comment-popup-content {
-  background-color: #fefefe;
+  background-color: #E6F3FF;
   margin: 3% auto;
   border: 1px solid #d6baff;
-  width: 80%;
-  text-align: center;
-  padding: 100px 30px;
+  width: 65%;
+  max-height: 100px; /* Limiting the maximum height to enable scrolling */
+  overflow-y: auto; /* Adding vertical scrollbar when content exceeds */
+  text-align: left;
+  padding: 20px;
   border-radius: 5px;
+  position: relative; /* Positioning the input and submit button relative to this container */
 }
+
+.comment {
+  margin-bottom: 10px; /* Added margin between comments */
+  width: 100%; /* Ensure comments span the full width */
+  font-size: 12px;
+}
+
+.comment p {
+  margin: 0; /* Reset margin to ensure each comment starts from the top */
+}
+
 .close {
   position: absolute;
   top: 10px;
@@ -34,39 +51,56 @@
   cursor: pointer;
   font-size: 40px;
 }
-.close:hover, .close:focus {
+
+.close:hover,
+.close:focus {
   color: #d6baff;
   text-decoration: none;
   cursor: pointer;
 }
+
 .popUpCommentHeader {
   text-align: center;
-  font-size: 20px;
-  margin-top: 150px;
+  font-size: 10px;
+}
+
+.popUpCommentHeader h2 {
+  margin: auto;
 }
 
 .popUpTextField {
   text-align: center;
 }
+
 .popUpSubmit {
   text-align: center;
   padding: 20px;
 }
+
 .popUpSubmit:hover {
   background-color: #000000;
 }
+
+.comment-input {
+  text-align: center; /* Align input horizontally */
+}
+
 .comment-input input[type="text"] {
-  width: 80%;
+  width: 280px;
   padding: 15px 56px;
   text-align: center;
   border-radius: 5px;
-  border: #000000 solid 1px;
+  border: 1px solid #d6baff;
+  background-color: #E6F3FF;
+  display: inline-block; /* Ensure input is block-level element */
 }
+
 .submit-comment {
   text-align: center;
 }
+
 .submit-comment button {
-  padding: 15px 30px;
+  padding: 15px 20px;
   background-color: #d6baff;
   color: #fff;
   border: none;
@@ -74,4 +108,13 @@
   text-align: center;
   margin-top: 5px;
   border-radius: 5px;
+}
+
+.preview-image-container {
+  text-align: center;
+}
+
+.PopuUpreview-image {
+  max-width: 100%;
+  max-height: 200px;
 }

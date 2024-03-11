@@ -3,7 +3,7 @@
   display: none;
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 56.5%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   width: 80%; /* Adjusted width for better responsiveness */
@@ -14,23 +14,28 @@
   color: #000;
   font-weight: bold;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: center; /* Center all text content */
 }
 
 /* Styles for Post Popup Content Sections */
 .post-popup-content {
-  text-align: center;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
 }
 
 .post-popup-content .content-wrapper {
   margin-bottom: 20px; /* Added margin bottom for spacing */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
 }
 
 /* Style for the Picture Preview */
 .preview-image {
   max-width: 100%; /* Ensure the image fits within the container */
-  max-height: 200px; /* Set maximum height as needed */
-  margin-bottom: 20px; /* Added margin bottom for spacing */
+  max-height: 250px; /* Added margin bottom for spacing */
 }
 
 /* Style for the Submit Button */
@@ -48,4 +53,39 @@
 /* Hover effect for the Submit Button */
 .submit-button:hover {
   background-color: #e6f3ff;
+}
+
+.closePostPopup {
+  position: absolute;
+  top: 30px;
+  right: 50px;
+  cursor: pointer;
+  font-size: 45px;
+  color: #000;
+}
+
+.closePostPopup:hover {
+  color: #d6baff;
+}
+
+.previewImg-content {
+  align-items: center;
+}
+
+.postPicAndComment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 10px;
+}
+
+.postPicAndComment input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #0000002c;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }

@@ -6,24 +6,26 @@ import Login from "./pages/login";
 import Profile from "./pages/profile";
 import Settings from "./pages/settings";
 import UserProfile from "./pages/userprofile";
+import { UserProvider } from "./pages/UserContext";
 import "./app.css";
 
-function App () {
+function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />} >
-          <Route index element={<Login />} />
-          <Route path="login" element={<Login />} />
-          <Route path="home" element={<Home />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="userprofile" element={<UserProfile />} />
-        </Route>
-      </Routes>
+      <UserProvider>
+        <Layout>
+          <Routes>
+            <Route index element={<Login />} />
+            <Route path="login" element={<Login />} />
+            <Route path="home" element={<Home />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="userprofile" element={<UserProfile />} />
+          </Routes>
+        </Layout>
+      </UserProvider>
     </BrowserRouter>
   );
-};
+}
 
 export default App;
-

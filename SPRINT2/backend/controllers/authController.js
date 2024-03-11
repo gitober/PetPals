@@ -116,9 +116,11 @@ const authController = {
       const access_token = authController.generateAccessToken(newUser._id);
       const refresh_token = authController.generateRefreshToken(newUser._id);
       res.cookie("refreshtoken", refresh_token, {
-        httpOnly: true,
-        path: "/api/refresh_token",
-        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
+      httpOnly: true,
+      path: "/api/refresh_token",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
+      secure: true, // Send only over HTTPS in a secure context
+      sameSite: "none", // Allow cross-site requests
       });
 
       // Log without sensitive information
@@ -143,14 +145,16 @@ const authController = {
   },
 
   logout: async (req, res) => {
-    try {
-      // Clear refresh token cookie
-      res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
-      res.json({ message: "Logged out" });
-    } catch (err) {
-      return res.status(500).json({ message: err.message });
-    }
-  },
+  try {
+    console.log("Received logout request");
+
+    // Clear refresh token cookie
+    res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
+    res.json({ message: "Logged out" });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+},
 
   generateAccessToken: (userId) => {
     return jwt.sign({ userId }, process.env.ACCESSTOKENSECRET, {
