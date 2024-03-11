@@ -6,10 +6,10 @@ import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
 import Layout from "../Layout";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../context/UserContext";
 
 function Settings() {
-  const [postPopupVisible, setPostPopupVisible] = useState(false);
+  const [PopupPostVisible, setPopupPostVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedText, setSelectedText] = useState("");
   const { username, setUsername, bioText, setBioText } =
@@ -68,12 +68,12 @@ function Settings() {
     }
   };
 
-  const openPostPopup = () => {
-    setPostPopupVisible(true);
+  const openPopupPost = () => {
+    setPopupPostVisible(true);
   };
 
-  const closePostPopup = () => {
-    setPostPopupVisible(false);
+  const closePopupPost = () => {
+    setPopupPostVisible(false);
     setSelectedImage(null);
     setSelectedText("");
   };
@@ -90,7 +90,7 @@ function Settings() {
       const newItem = { image: selectedImage, text: selectedText };
       setSelectedImage(null);
       setSelectedText("");
-      setPostPopupVisible(false);
+      setPopupPostVisible(false);
     }
   };
 
@@ -107,7 +107,7 @@ function Settings() {
               <a href="../profile">PROFILE</a>
             </li>
             <li>
-              <a onClick={openPostPopup}>POST</a>
+              <a onClick={openPopupPost}>POST</a>
             </li>
             <li>
               <a href="../settings">SETTINGS</a>
@@ -173,9 +173,9 @@ function Settings() {
 
             <div
               className="postpopup"
-              style={{ display: postPopupVisible ? "block" : "none" }}
+              style={{ display: PopupPostVisible ? "block" : "none" }}
             >
-              <span className="closePostPopup" onClick={closePostPopup}>
+              <span className="closePostPopup" onClick={closePopupPost}>
                 &times;
               </span>
               <div className="post-popup-content">

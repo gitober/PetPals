@@ -3,6 +3,7 @@ npm install multer
 npm install body-parser
 front: npm install http-proxy-middleware
 npm update eslint
+npm install node-fetch
 
 
 npm install express

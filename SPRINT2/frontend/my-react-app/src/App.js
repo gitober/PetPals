@@ -6,7 +6,7 @@ import Login from "./pages/login";
 import Profile from "./pages/profile";
 import Settings from "./pages/settings";
 import UserProfile from "./pages/userprofile";
-import { UserProvider } from "./pages/UserContext";
+import { UserProvider } from "./context/UserContext";
 import "./app.css";
 
 function App() {

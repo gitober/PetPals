@@ -1,183 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Layout from "../Layout";
+import useLogin from "../components/login/useLogin";
+import useSignup from "../components/popups/useSignup";
 import "../style/login.css";
 import "../style/popupforgotpassword.css";
 import "../style/popupsignup.css";
+import { useTestModeInstance } from '../components/testmode/useTestMode';
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginDisabled, setLoginDisabled] = useState(true);
-  const [signupPopupVisible, setSignupPopupVisible] = useState(false);
-  const [signupUsername, setSignupUsername] = useState("");
-  const [signupEmail, setSignupEmail] = useState("");
-  const [signupPassword, setSignupPassword] = useState("");
-  const [forgotPasswordPopupVisible, setForgotPasswordPopupVisible] =
-    useState(false);
+  const { simulateTestMode } = useTestModeInstance(); // eslint-disable-line no-unused-vars
 
-  // State variables for signup form
-  const [signupFormData, setSignupFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const apiUrl = "http://localhost:5000";
 
-  // Placeholder for determining if backend is running
-  const backendIsRunning = false;
+  // Manually set isTestModeLogin for testing purposes
+  const isTestModeLogin = false;
 
-  // Test mode flag for login
-  const isTestModeLogin = !backendIsRunning;
+  // Use the useLogin hook for login form
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    loginDisabled,
+    handleLoginSubmit,
+    forgotPasswordPopupVisible,
+    openForgotPasswordPopup,
+    closeForgotPasswordPopup,
+    signupPopupVisible,
+    openSignupPopup,
+    closeSignupPopup,
+  } = useLogin(apiUrl, isTestModeLogin);
 
-  // Test mode flag for signup
-  const isTestModeSignup = !backendIsRunning;
-
-  // Get the API URL from the environment variable or use the default
-  const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:5000";
-
-  // Function to check inputs and enable/disable login button
-  useEffect(() => {
-    setLoginDisabled(!(username && password));
-  }, [username, password]);
-
-  const handleSignupSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      console.log("Handling signup submission");
-
-      if (isTestModeSignup) {
-        // Simulate a successful response in test mode
-        console.log("Test mode: Simulating successful signup");
-
-        // Perform actions as needed for testing
-
-        // Reset the signup form
-        setSignupUsername("");
-        setSignupEmail("");
-        setSignupPassword("");
-
-        // Close the signup popup after a brief delay
-        setTimeout(() => {
-          setSignupPopupVisible(false);
-        }, 500); // Adjust the delay as needed
-      } else {
-        // Make actual API call with the dynamic API URL
-        const response = await fetch(`${apiUrl}/api/register`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: signupFormData.username,
-            email: signupFormData.email,
-            password: signupFormData.password,
-          }),
-        });
-
-        console.log("Response status:", response.status);
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Registration Successful!");
-          console.log("User:", data.user.username);
-          console.log("Access Token:", data.access_token);
-
-          // Reset the signup form
-          setSignupUsername("");
-          setSignupEmail("");
-          setSignupPassword("");
-
-          // Close the signup popup
-          setSignupPopupVisible(false);
-        } else {
-          console.error("Registration failed");
-        }
-      }
-    } catch (error) {
-      console.error("Error during signup:", error);
-    }
-  };
-
-  const handleLoginSubmit = async (event) => {
-    event.preventDefault();
-    if (username && password) {
-      console.log("Logging in with username:", username);
-
-      try {
-        if (isTestModeLogin) {
-          // Simulate a successful response in test mode
-          console.log("Test mode: Simulating successful login");
-
-          // Redirect to home page or perform other actions as needed
-          window.location.href = "../home"; // Adjust the URL as needed
-        } else {
-          // Make actual API call with the dynamic API URL
-          const response = await fetch(`${apiUrl}/api/login`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password }),
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log("Login successful. Access Token:", data.accessToken);
-
-            // Save the access token to localStorage
-            localStorage.setItem("accessToken", data.accessToken);
-
-            // Include the access token in subsequent requests
-            await fetch(`${apiUrl}/another/protected/endpoint`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${data.accessToken}`,
-              },
-            });
-
-            window.location.href = "../home";
-          } else {
-            console.error("Login failed");
-          }
-        }
-      } catch (error) {
-        console.error("Error during login:", error);
-      }
-    }
-  };
-
-  const handleForgotPasswordSubmit = (event) => {
-    event.preventDefault();
-    const emailInput = document.getElementById("forgot-email");
-    const userEmail = emailInput.value;
-    console.log("Forgot password for email:", userEmail);
-    closeForgotPasswordPopup();
-  };
-
-  const handleSignupInputChange = (e) => {
-    setSignupFormData({ ...signupFormData, [e.target.name]: e.target.value });
-  };
-
-  const openSignupPopup = () => {
-    setSignupPopupVisible(true);
-  };
-
-  const closeSignupPopup = () => {
-    setSignupPopupVisible(false);
-  };
-
-  const openForgotPasswordPopup = () => {
-    setForgotPasswordPopupVisible(true);
-  };
-
-  const closeForgotPasswordPopup = () => {
-    setForgotPasswordPopupVisible(false);
-  };
-
-  useEffect(() => {
-    setLoginDisabled(!(username && password));
-  }, [username, password]);
+  // Use the useSignup hook for signup form
+  const {
+    handleSignupSubmit,
+    signupFormData,
+    handleSignupInputChange,
+    handleForgotPasswordSubmit,
+  } = useSignup(apiUrl);
 
   return (
     <Layout>
@@ -192,13 +52,13 @@ function Login() {
             <form onSubmit={handleLoginSubmit} id="loginForm">
               <h1 className="h1">Log in</h1>
               <input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
+              type="text"
+              name="username"
+              id="loginUsername"  // Unique id
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
               />
               <input
                 type="password"
@@ -276,9 +136,9 @@ function Login() {
                 <label htmlFor="username">Username:</label>
                 <input
                   type="text"
-                  id="signup-username"
                   name="username"
-                  placeholder="Enter username"
+                  id="username"
+                  placeholder="Username"
                   value={signupFormData.username}
                   onChange={handleSignupInputChange}
                   required

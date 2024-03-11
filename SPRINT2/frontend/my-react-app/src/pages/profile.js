@@ -6,10 +6,10 @@ import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../context/UserContext";
 
 const Profile = () => {
-  const [postPopupVisible, setPostPopupVisible] = useState(false);
+  const [PopupPostVisible, setPopupPostVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedText, setSelectedText] = useState("");
   const navigate = useNavigate();
@@ -59,8 +59,8 @@ const Profile = () => {
     }
   };
 
-    const openPostPopup = () => {
-      setPostPopupVisible(true);
+    const openPopupPost = () => {
+      setPopupPostVisible(true);
     };
 
     const handleSubmit = () => {
@@ -68,14 +68,14 @@ const Profile = () => {
         const newItem = { image: selectedImage, text: selectedText };
         setSelectedImage(null);
         setSelectedText("");
-        setPostPopupVisible(false);
+        setPopupPostVisible(false);
       }
     };
 
     const handlePostClick = () => {
       // Ohjataan käyttäjä kotisivulle ja avataan postauspop-up
       navigate("/home"); // Käytetään navigate-funktiota
-      setPostPopupVisible(true);
+      setPopupPostVisible(true);
     };
 
 
