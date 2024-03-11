@@ -1,7 +1,3 @@
-// This code sets up Express routes for user-related operations, including searching for users, retrieving user details, 
-// updating user information, and managing friend connections. Authentication middleware (authMiddleware) secures 
-// the routes, and the router connects to functions in userController for implementing the logic.
-
 const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");

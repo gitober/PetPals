@@ -1,7 +1,3 @@
-// authController handles user authentication operations in a social media application.
-// It includes functions for user registration, login, logout, and generating access tokens.
-// The controller ensures secure user authentication and token management within the application.
-
 require("dotenv").config();
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
@@ -9,49 +5,61 @@ const jwt = require("jsonwebtoken");
 
 const authController = {
   login: async (req, res) => {
-    try {
-      const { username, password } = req.body;
+  try {
+    const { username, password } = req.body;
 
-      console.log("Received login request with username:", username);
+    console.log("Received login request with username:", username);
 
-      // Find user by username
-      const user = await Users.findOne({
-        username: { $regex: new RegExp(username, "i") },
-      });
+    // Find user by username
+    const user = await Users.findOne({ username });
 
-      console.log("User found:", user);
+    console.log("User found:", user);
 
-      // Check if user exists
-      if (!user) {
-        console.log("User not found");
-        return res.status(400).json({ message: "Invalid credentials" });
-      }
-
-      // Compare input password with hashed password
-      const isMatch = await authController.comparePassword(
-        password,
-        user.password
-      );
-
-      console.log("Password match:", isMatch);
-
-      if (!isMatch) {
-        console.log("Password does not match");
-        return res.status(400).json({ message: "Invalid credentials" });
-      }
-
-      // Generate and send an access token
-      const accessToken = authController.generateAccessToken(user._id);
-
-      // Return user details along with the access token
-      res
-        .status(200)
-        .json({ accessToken, user: { ...user._doc, password: "[Hidden]" } });
-    } catch (err) {
-      console.error("Error during login:", err);
-      return res.status(500).json({ message: "Internal server error" });
+    // Check if user exists
+    if (!user) {
+      console.log("User not found");
+      return res.status(400).json({ message: "Invalid credentials" });
     }
-  },
+
+    // Compare input password with hashed password
+    const isMatch = await authController.comparePassword(password, user.password);
+
+    console.log("Password match:", isMatch);
+
+    if (!isMatch) {
+      console.log("Password does not match");
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Generate and send an access token
+    const access_token = authController.generateAccessToken(user._id);
+    const refresh_token = authController.generateRefreshToken(user._id);
+    res.cookie("refreshtoken", refresh_token, {
+      httpOnly: true,
+      path: "/api/refresh_token",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
+      secure: true, // Send only over HTTPS in a secure context
+      sameSite: "none", // Allow cross-site requests
+    });
+
+    // Log without sensitive information
+    console.log("Login successful for username:", username, "Password: [Hidden]");
+
+    // Respond with success message and user details
+    res.json({
+      message: "Login Successful!",
+      access_token,
+      refreshToken: refresh_token,
+      user: {
+        ...user._doc,
+        password: "[Hidden]",
+      },
+    });
+  } catch (err) {
+    console.error("Error during login:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+},
 
   register: async (req, res) => {
     try {

@@ -1,8 +1,3 @@
-// notifyController handles notification functionalities within a social platform. It includes operations for 
-// creating notifications, removing specific notifications, fetching user notifications, marking notifications 
-// as read, and deleting all notifications.The controller ensures proper handling of notifications, 
-// considering user authentication and data retrieval.
-
 const Notifies = require("../models/notifyModel");
 
 const notifyController = {

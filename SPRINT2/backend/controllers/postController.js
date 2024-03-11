@@ -5,6 +5,7 @@ const Comments = require("../models/commentModel");
 const postController = {
   // Create a new post
   createPost: async (req, res) => {
+    console.log('Received POST request to /posts');
     try {
       const { content, images } = req.body;
 

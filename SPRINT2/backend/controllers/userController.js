@@ -1,9 +1,3 @@
-// userController oversees user-related operations in a social media application. It includes functionalities like
-// user registration, login, and logout. The controller manages the generation of access tokens, allowing secure
-// user authentication and session management. It also supports actions such as updating user profiles,
-// following/unfollowing other users, and retrieving user-specific information. Error handling and token
-// validation are integral parts of the controller to ensure the security and integrity of user interactions.
-
 const bcrypt = require("bcrypt");
 const Users = require("../models/userModel");
 
@@ -32,19 +26,24 @@ const userController = {
   },
 
   getUser: async (req, res) => {
-    try {
-      const user = await Users.findById(req.params.id).select("-password");
+  try {
+    const userId = req.params.id;
+    console.log('Received user ID:', userId);
 
-      if (!user) {
-        return res.status(400).json({ message: "This user doesn't exist" });
-      }
+    const user = await Users.findById(userId).select('-password');
 
-      res.json({ user });
-    } catch (error) {
-      console.error("Error retrieving user:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).json({ message: 'User not found' });
     }
-  },
+
+    console.log('User found:', user);
+    res.json({ user });
+  } catch (error) {
+    console.error('Error retrieving user:', error);
+    res.status(500).json({ user: null, message: 'Internal Server Error' });
+  }
+},
 
   updateUser: async (req, res) => {
     try {

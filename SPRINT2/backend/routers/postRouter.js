@@ -1,8 +1,3 @@
-// This script sets up an Express router for handling various post-related operations, including creation, 
-// retrieval, update, deletion, liking, unliking, saving, unsaving, and fetching saved posts. Authentication 
-// middleware (authMiddleware) is used to secure certain routes, and the router is connected to corresponding 
-// functions in the postController for implementing the logic.
-
 const express = require("express");
 const postController = require("../controllers/postController");
 const authMiddleware = require("../middleware/authMiddleware");

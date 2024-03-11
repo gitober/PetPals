@@ -1,8 +1,3 @@
-// messageController handles messaging functionalities within a social platform. It includes operations for 
-// creating messages in conversations, retrieving user conversations, fetching messages in a specific conversation, 
-// and deleting specific messages. The controller ensures proper handling of conversations and messages, 
-// with considerations for user authentication and data retrieval in the messaging feature of the application.
-
 const Messages = require("../models/messageModel");
 const Conversations = require("../models/conversationModel");
 

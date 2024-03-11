@@ -1,8 +1,3 @@
-// commentController manages comment-related operations in a social media application. It includes functions for 
-// creating comments on posts, updating comment content, liking and unliking comments, and deleting comments. 
-// The controller ensures proper association with posts, user authentication, and handles various comment-related 
-// actions within the application.
-
 const Comments = require("../models/commentModel");
 const Posts = require("../models/postModel");
 

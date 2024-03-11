@@ -1,6 +1,3 @@
-// This code connects to MongoDB using Mongoose, checking for the existence of the MongoDB URI in environment
-// variables. It logs the URI, attempts to connect with specified options, and exports the function for reuse.
-
 require("dotenv").config();
 
 const mongoose = require("mongoose");
