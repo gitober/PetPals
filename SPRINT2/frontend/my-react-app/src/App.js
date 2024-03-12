@@ -8,7 +8,7 @@ import UserProfile from "./pages/userprofile";
 import { UserProvider } from "./context/UserContext";
 
 function App() {
-  const isAuthenticated = Boolean(localStorage.getItem("token"));
+  const isAuthenticated = Boolean(localStorage.getItem("token")) || Boolean(localStorage.getItem("refresh_token"));
 
 
   return (

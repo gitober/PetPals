@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useTestModeInstance } from '../../hooks/otherhooks/useTestMode';
-import postsApi from '../../utils/apiposts'; // Import your posts API functions
+import { useTestModeInstance } from '../../components/testmode/useTestMode';
 
-const usePostFetch = () => {
+const usePostFetch = (accessToken) => {
   const [posts, setPosts] = useState([]);
   const { isTestMode, simulateTestMode } = useTestModeInstance();
 
@@ -15,8 +14,19 @@ const usePostFetch = () => {
           // Simulate test data or behavior here
         } else {
           // Make an actual API call for fetching posts
-          const fetchedPosts = await postsApi.getPosts();
-          setPosts(fetchedPosts);
+          const response = await fetch('/api/posts', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+
+          if (!response.ok) {
+            console.error(`Failed to fetch posts: ${response.statusText}`);
+            return;
+          }
+
+          const data = await response.json();
+          setPosts(data);
         }
       } catch (error) {
         console.error('Error during initial post fetch:', error.message);
@@ -24,7 +34,7 @@ const usePostFetch = () => {
     };
 
     fetchPosts();
-  }, [isTestMode, simulateTestMode]);
+  }, [accessToken, isTestMode, simulateTestMode]);
 
   useEffect(() => {
     if (isTestMode) {

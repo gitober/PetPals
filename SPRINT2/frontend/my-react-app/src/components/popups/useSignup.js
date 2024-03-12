@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
-import authApi from '../../utils/apiauth';
 
 const useSignup = (apiUrl, isTestModeSignup) => {
   const [signupFormData, setSignupFormData] = useState({
@@ -53,17 +52,25 @@ const useSignup = (apiUrl, isTestModeSignup) => {
         // Close the signup popup
         setSignupPopupVisible(false);
       } else {
-        // Use authApi.register for the actual signup logic
+        // Use fetch for the actual signup logic
         const { username, email, password } = signupFormData;
 
         try {
           // Make an actual API call for signup
-          const response = await authApi.register(username, email, password);
+          const response = await fetch(`${apiUrl}/api/register`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, email, password }),
+          });
+
+          const responseData = await response.json();
 
           // Log the entire response for debugging
-          console.log('Response:', response);
+          console.log('Response:', responseData);
 
-          if (response.message === 'Registration Successful!') {
+          if (response.ok && responseData.message === 'Registration Successful!') {
             // Successful signup
             console.log("Signup successful");
             // Perform additional actions or redirect the user
@@ -79,7 +86,7 @@ const useSignup = (apiUrl, isTestModeSignup) => {
             setSignupPopupVisible(false);
           } else {
             // Signup failed
-            console.error("Signup failed. Server responded with:", response.message);
+            console.error("Signup failed. Server responded with:", responseData.message);
             // Handle the error, show a message, etc.
           }
         } catch (error) {

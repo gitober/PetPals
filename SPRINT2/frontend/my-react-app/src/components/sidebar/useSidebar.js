@@ -1,44 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
-const useSearch = (initialValue = '', onSearch) => {
-  const { simulateTestMode } = useTestModeInstance(); // Use useTestModeInstance
+const useSidebar = () => {
+  // Import the simulateTestMode function from useTestModeInstance hook
+  const { simulateTestMode } = useTestModeInstance();
 
+  // State for managing the visibility of the post popup
+  const [popupPostVisible, setPopupPostVisible] = useState(false);
 
-  const [searchTerm, setSearchTerm] = useState(initialValue);
+  // Function to open the post popup
+  const openPopupPost = () => {
+    console.log('Opening post popup from sidebar');
+    setPopupPostVisible(true);
+  };
 
-  useEffect(() => {
-    onSearch(searchTerm);
-  }, [searchTerm, onSearch]);
-
-  // Now you can use simulateTestMode within the useEffect or wherever needed
-
+  // If in test mode, simulate additional logic
   useEffect(() => {
     if (simulateTestMode) {
-      simulateTestMode("Simulating search");
-      // Additional logic...
+      simulateTestMode('Opening post popup from sidebar');
+      // Additional logic specific to test mode...
     }
   }, [simulateTestMode]);
 
-  return [searchTerm, setSearchTerm];
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      onSearch(searchTerm);
-      if (searchTerm.toLowerCase() === "home") {
-        navigate("../home");
-      } else if (searchTerm.toLowerCase() === "profile") {
-        navigate("../profile");
-      } else if (searchTerm.toLowerCase() === "settings") {
-        navigate("../settings");
-      } else if (searchTerm.toLowerCase() === "post") {
-        navigate("../post");
-      } else if (searchTerm.toLowerCase() === "userprofile") {
-        navigate("../userprofile");
-      }
-    }
-  };
-
-  return [searchTerm, setSearchTerm, handleKeyPress];
+  // Return the state and functions needed by the Sidebar component
+  return { popupPostVisible, openPopupPost, setPopupPostVisible };
 };
 
-export default useSearch;
+export default useSidebar;

@@ -174,13 +174,16 @@ const authController = {
     }
 
     // Verify the refresh token
-    jwt.verify(refreshToken, process.env.REFRESHTOKENSECRET, (err, user) => {
+    jwt.verify(refreshToken, process.env.REFRESHTOKENSECRET, (err, decodedPayload) => {
       if (err) {
         return res.status(403).json({ message: "Invalid refresh token" });
       }
 
+      // Extract userId from decoded payload
+      const userId = decodedPayload.userId;
+
       // Generate a new access token
-      const newAccessToken = authController.generateAccessToken(user.userId);
+      const newAccessToken = authController.generateAccessToken(userId);
 
       // Respond with the new access token
       res.json({ access_token: newAccessToken });

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTestModeInstance } from '../../hooks/otherhooks/useTestMode'; // Import the test mode hook
+import { useTestModeInstance } from '../../component/testmode/useTestMode'; // Import the test mode hook
 
 const useForgotPassword = (closeForgotPasswordPopup, isTestModeForgotPassword) => {
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState();

@@ -33,7 +33,6 @@ export const login = async (username, password) => {
   }
 };
 
-
 export const register = async (username, email, password) => {
   try {
     const response = await fetch(`${apiUrl}/api/register`, {

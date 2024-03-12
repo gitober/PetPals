@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
-import postsApi from '../../utils/apiposts'; // Import your posts API functions
 
 const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
   const { isTestMode, simulateTestMode } = useTestModeInstance();
@@ -8,11 +7,6 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
   const [selectedText, setSelectedText] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
   const [submitting, setSubmitting] = useState(false);
-
-  // Define the function to update popup visibility
-  const updatePopupVisibility = (isVisible) => {
-    setPopupPostVisible(isVisible);
-  };
 
   useEffect(() => {
     console.log('PopupPostVisible changed:', popupPostVisible);
@@ -87,17 +81,28 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
         closePopupPost();
       } else {
         try {
-          // Use the createPost function from your posts API
-          const response = await postsApi.createPost(formData, token);
+          // Make an actual API call for creating a post
+          const response = await fetch('http://localhost:5000/api/posts', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
 
-          if (response.message === 'Post created successfully') {
+          if (response.ok) {
+            const responseData = await response.json();
+
+            // Log the entire response for debugging
+            console.log('Response:', responseData);
+
             // Fetch initial posts after successful submission
             fetchInitialPosts(token);
 
             // Close the post popup after successful submission
             closePopupPost();
           } else {
-            console.error('Failed to submit post:', response.message);
+            console.error('Failed to submit post:', response.statusText);
           }
         } catch (error) {
           console.error('Error during post submission:', error);
@@ -140,7 +145,6 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
     setSelectedImages,
     submitting,
     setSubmitting,
-    updatePopupVisibility, // Expose the function
   };
 };
 

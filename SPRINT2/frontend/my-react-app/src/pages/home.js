@@ -5,7 +5,6 @@ import useSearch from '../components/searchbar/useSearch';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
-import authApi from '../utils/apiauth';
 import '../style/home.css';
 import '../style/searchbar.css';
 import '../style/sidebar.css';
@@ -25,7 +24,6 @@ function Home() {
   const [accessToken, setAccessToken] = useState(null);
   const [testModeVisible, setTestModeVisible] = useState(false);
   const [refreshToken, setRefreshToken] = useState(null);
-
 
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
@@ -54,7 +52,8 @@ function Home() {
     currentImage,
   } = usePopupComment({
     commentsUrl: '/api/comments',
-    token: 'yourAuthToken',
+    access_token: accessToken, // Pass accessToken to handle authentication
+    refresh_token: refreshToken, // Pass refreshToken for token refresh
     selectedImages: postSelectedImages,
     currentImage: postSelectedImages.length > 0 ? postSelectedImages[0] : null,
     setFeedItems,
@@ -62,11 +61,10 @@ function Home() {
 
   const { likeCounts: likesData, likedImages: likedImagesData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
 
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
     // Handle search logic here, if needed
   }, navigate);
-
 
   const handleChange = (e) => {
     setSelectedText(e.target.value);
@@ -86,7 +84,11 @@ function Home() {
       }
 
       const url = `${apiUrl}/api/posts`;
-      const config = { /* Add your headers or configurations here */ };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // Pass access token in headers
+        },
+      };
 
       const response = await fetch(url, config);
 
@@ -114,7 +116,7 @@ function Home() {
     } catch (error) {
       console.error('Error during initial post fetch:', error.message);
     }
-  }, [setFeedItems, apiUrl, isTestMode, simulateTestMode]);
+  }, [setFeedItems, apiUrl, isTestMode, simulateTestMode, accessToken]);
 
   const [isComponentMounted, setIsComponentMounted] = useState(true);
 
@@ -128,29 +130,21 @@ function Home() {
   }, []);
 
   useEffect(() => {
-  fetchHomeFeedPosts();
-}, []);
+    fetchHomeFeedPosts();
+  }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchAccessToken = async () => {
       try {
         if (!isTestMode) {
-          const { accessToken, refreshToken } = await authApi.refreshToken();
+          // Perform your token retrieval logic here
+          // For example, fetch token from local storage or any other source
+          const fetchedAccessToken = 'yourAccessToken'; // Replace with your token retrieval logic
 
-          if (accessToken) {
-            setAccessToken(accessToken);
-            // Set the default Authorization header for all fetch calls
-            fetch.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
-            // Store the refresh token in your component's state
-            setRefreshToken(refreshToken);
-          } else {
-            console.error('Failed to refresh access token.');
-            // Handle the case where the refresh token is invalid or expired
-          }
+          setAccessToken(fetchedAccessToken);
         }
       } catch (error) {
-        console.error(`Error refreshing access token: ${error.message}`);
+        console.error(`Error fetching access token: ${error.message}`);
         // Handle error as needed
       }
     };
@@ -163,9 +157,8 @@ function Home() {
       simulateTestMode({ /* Add any test data or behavior needed for useLikes */ });
       setTestModeVisible(true); // Set visibility in test mode
       likeCounts && setLikeCounts(likesData);
-    } else {
     }
-  }, [apiUrl, simulateTestMode, likesTestModeVisible]);
+  }, [likesTestModeVisible]);
 
   useEffect(() => {
     setLikedImages(likedImagesData);
@@ -218,7 +211,7 @@ function Home() {
                         className="like-icon"
                         id={`likeIcon-${index}`}
                         onClick={() => {
-                        toggleLike(item.images[0]);
+                          toggleLike(item.images[0]);
                       }}
                       />
                     ) : (
