@@ -218,8 +218,7 @@ function Home() {
                         className="like-icon"
                         id={`likeIcon-${index}`}
                         onClick={() => {
-                        console.log('Clicked on image:', item.images[0]);
-                          toggleLike(item.images[0]);
+                        toggleLike(item.images[0]);
                       }}
                       />
                     ) : (

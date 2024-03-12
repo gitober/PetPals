@@ -71,7 +71,7 @@ const usePopupComment = ({ commentsUrl, token, selectedImages: initialSelectedIm
     try {
       setSubmitting(true);
 
-      console.log("Selected Images:", selectedImages);
+      console.log("Selected Images: Count =", selectedImages.length);
 
       if (isTestMode) {
         console.log("Test mode: Simulating successful comment submission");

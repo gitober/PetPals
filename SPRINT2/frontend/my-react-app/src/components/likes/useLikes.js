@@ -46,7 +46,7 @@ const useLikes = () => {
     const response = await fetch(url, config);
     updateLikeState(imageUrl, response);
 
-    console.log(`Like toggled ${response.ok ? 'successfully' : 'unsuccessfully'} for ${imageUrl}`);
+    console.log(`Like toggled ${response.ok ? 'successfully' : 'unsuccessfully'}`);
   } catch (error) {
     console.error(`Error toggling like for ${imageUrl}: ${error.message}`);
   }
@@ -54,11 +54,10 @@ const useLikes = () => {
 
   useEffect(() => {
     if (isTestMode) {
-      console.warn('In test mode. Switching to test mode.');
       simulateTestMode({ /* Add any test data or behavior needed for useLikes */ });
       setTestModeVisible(true);
     } else {
-      console.warn('Running in production mode. Consider adding a health check endpoint.');
+      console.log('Test mode is off');
       // You might want to add a production-specific logic here
     }
   }, [isTestMode, simulateTestMode]);
