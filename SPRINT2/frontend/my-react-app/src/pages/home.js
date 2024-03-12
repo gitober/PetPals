@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTestModeInstance } from '../components/testmode/useTestMode';
+import { useNavigate } from 'react-router-dom';
+import useSearch from '../components/searchbar/useSearch';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
@@ -11,6 +13,7 @@ import '../style/popuppost.css';
 import '../style/popupcomment.css';
 
 function Home() {
+  // State variables
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [feedItems, setFeedItems] = useState([]);
   const [likeCounts, setLikeCounts] = useState({});
@@ -21,6 +24,8 @@ function Home() {
   const [userData, setUserData] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [testModeVisible, setTestModeVisible] = useState(false);
+  const [refreshToken, setRefreshToken] = useState(null);
+
 
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
@@ -57,6 +62,12 @@ function Home() {
 
   const { likeCounts: likesData, likedImages: likedImagesData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
 
+ const navigate = useNavigate();
+  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
+    // Handle search logic here, if needed
+  }, navigate);
+
+
   const handleChange = (e) => {
     setSelectedText(e.target.value);
     console.log('selectedText updated:', e.target.value);
@@ -64,6 +75,10 @@ function Home() {
 
   const fetchHomeFeedPosts = useCallback(async () => {
     try {
+      if (!isComponentMounted) {
+        return; // Stop fetching if the component is not mounted
+      }
+
       if (isTestMode) {
         simulateTestMode('Fetching home feed posts in test mode');
         // Simulate test data or behavior here
@@ -76,9 +91,19 @@ function Home() {
       const response = await fetch(url, config);
 
       if (response.ok) {
-        const data = await response.json();
-        setFeedItems((prevItems) => [...prevItems, ...data.posts]);
-        console.log('Updated Feed Items:', feedItems);
+        const responseData = await response.json();
+
+        if (responseData && responseData.data && responseData.data.posts) {
+          const postsArray = responseData.data.posts;
+
+          setFeedItems((prevItems) => {
+            const updatedItems = [...prevItems, ...postsArray];
+            console.log('Updated Feed Items:', updatedItems);
+            return updatedItems;
+          });
+        } else {
+          console.error('Invalid response format. Expected data.posts to be an array. Received:', responseData);
+        }
       } else {
         console.error(
           'Failed to fetch posts:',
@@ -89,19 +114,36 @@ function Home() {
     } catch (error) {
       console.error('Error during initial post fetch:', error.message);
     }
-  }, [setFeedItems, feedItems, apiUrl, isTestMode, simulateTestMode]);
+  }, [setFeedItems, apiUrl, isTestMode, simulateTestMode]);
+
+  const [isComponentMounted, setIsComponentMounted] = useState(true);
 
   useEffect(() => {
-    fetchHomeFeedPosts();
-  }, [fetchHomeFeedPosts]);
+    setIsComponentMounted(true);
+
+    // Cleanup function to handle component unmounting
+    return () => {
+      setIsComponentMounted(false);
+    };
+  }, []);
 
   useEffect(() => {
+  fetchHomeFeedPosts();
+}, []);
+
+   useEffect(() => {
     const fetchAccessToken = async () => {
       try {
         if (!isTestMode) {
-          const newAccessToken = await authApi.refreshToken();
-          if (newAccessToken) {
-            setAccessToken(newAccessToken);
+          const { accessToken, refreshToken } = await authApi.refreshToken();
+
+          if (accessToken) {
+            setAccessToken(accessToken);
+            // Set the default Authorization header for all fetch calls
+            fetch.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+            // Store the refresh token in your component's state
+            setRefreshToken(refreshToken);
           } else {
             console.error('Failed to refresh access token.');
             // Handle the case where the refresh token is invalid or expired
@@ -114,7 +156,7 @@ function Home() {
     };
 
     fetchAccessToken();
-  }, []);
+  }, [isTestMode]);
 
   useEffect(() => {
     if (likesTestModeVisible) {
@@ -156,8 +198,9 @@ function Home() {
         </div>
         <div className="home-main-content">
           <div className="search-bar">
-            <input type="text" placeholder="Search" />
-          </div>
+            {/* Use handleKeyPress function to trigger search on Enter key press */}
+            <input type="text" placeholder="Search" onKeyPress={handleKeyPress} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            </div>
           <div className="home-feed">
             {feedItems.map((item, index) => (
               <div key={index} className="feed-item">
@@ -174,7 +217,10 @@ function Home() {
                         alt="Image Liked"
                         className="like-icon"
                         id={`likeIcon-${index}`}
-                        onClick={() => toggleLike(item.images[0])}
+                        onClick={() => {
+                        console.log('Clicked on image:', item.images[0]);
+                          toggleLike(item.images[0]);
+                      }}
                       />
                     ) : (
                       <img
@@ -182,7 +228,7 @@ function Home() {
                         alt="Image Not Liked"
                         className="like-icon"
                         id={`likeIcon-${index}`}
-                        onClick={() => toggleLike(item.images[0])}
+                        onClick={() => toggleLike(item.images[0], item.postId)}
                       />
                     )}
                   </div>

@@ -10,7 +10,6 @@ export function useTestMode() {
 
   const simulateTestMode = (message, additionalData) => {
     if (isTestMode) {
-      console.log(`Test mode: ${message}`);
       if (additionalData) {
         console.log("Additional Data:", additionalData);
       }

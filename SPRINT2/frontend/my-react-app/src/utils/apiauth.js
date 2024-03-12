@@ -88,10 +88,11 @@ export const fetchAccessToken = async () => {
     });
 
     if (!response.ok) {
-      throw new Error('Error refreshing access token');
+      throw new Error(`Error refreshing access token. Status: ${response.status}`);
     }
 
     const data = await response.json();
+    console.log('Refreshed access token:', data.access_token);
     return data.access_token;
   } catch (error) {
     console.error('Error refreshing access token:', error.message);
@@ -107,10 +108,11 @@ export const refreshToken = async () => {
     });
 
     if (!response.ok) {
-      throw new Error('Error refreshing access token');
+      throw new Error(`Error refreshing access token. Status: ${response.status}`);
     }
 
     const data = await response.json();
+    console.log('Refreshed access token:', data.access_token);
     return data.access_token;
   } catch (error) {
     console.error('Error refreshing access token:', error.message);
