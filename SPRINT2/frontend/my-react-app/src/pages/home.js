@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useTestModeInstance } from '../components/testmode/useTestMode';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
 import authApi from '../utils/apiauth';
-import "../style/home.css";
-import "../style/searchbar.css";
-import "../style/sidebar.css";
-import "../style/popuppost.css";
-import "../style/popupcomment.css";
+import '../style/home.css';
+import '../style/searchbar.css';
+import '../style/sidebar.css';
+import '../style/popuppost.css';
+import '../style/popupcomment.css';
 
 function Home() {
+  const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [feedItems, setFeedItems] = useState([]);
-  const [isTestMode, setIsTestMode] = useState(false);
+  const [likeCounts, setLikeCounts] = useState({});
+  const [likedImages, setLikedImages] = useState([]);
   const [selectedText, setSelectedText] = useState('');
   const [commentSelectedText, setCommentSelectedText] = useState('');
   const [commentSubmitting, setCommentSubmitting] = useState(false);
-  const [userData, setUserData] = useState(null); 
+  const [userData, setUserData] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const [testModeVisible, setTestModeVisible] = useState(false);
 
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   const {
     popupPostVisible,
@@ -35,8 +39,8 @@ function Home() {
 
   const {
     comments,
-    submitting: popupCommentSubmitting, // Rename the conflicting variable here
-    setSelectedText: setPopupCommentSelectedText, // Rename the conflicting function here
+    submitting: popupCommentSubmitting,
+    setSelectedText: setPopupCommentSelectedText,
     submitComment,
     openPopupComment,
     closePopupComment,
@@ -51,26 +55,57 @@ function Home() {
     setFeedItems,
   });
 
-  const { likeCounts, likedImages, toggleLike } = useLikes();
+  const { likeCounts: likesData, likedImages: likedImagesData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
 
   const handleChange = (e) => {
     setSelectedText(e.target.value);
     console.log('selectedText updated:', e.target.value);
   };
 
+  const fetchHomeFeedPosts = useCallback(async () => {
+    try {
+      if (isTestMode) {
+        simulateTestMode('Fetching home feed posts in test mode');
+        // Simulate test data or behavior here
+        return;
+      }
+
+      const url = `${apiUrl}/api/posts`;
+      const config = { /* Add your headers or configurations here */ };
+
+      const response = await fetch(url, config);
+
+      if (response.ok) {
+        const data = await response.json();
+        setFeedItems((prevItems) => [...prevItems, ...data.posts]);
+        console.log('Updated Feed Items:', feedItems);
+      } else {
+        console.error(
+          'Failed to fetch posts:',
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error('Error during initial post fetch:', error.message);
+    }
+  }, [setFeedItems, feedItems, apiUrl, isTestMode, simulateTestMode]);
+
   useEffect(() => {
-    // Your existing useEffect code
-  }, [postSelectedImages, isTestMode, selectedText, postSubmitting]);
+    fetchHomeFeedPosts();
+  }, [fetchHomeFeedPosts]);
 
   useEffect(() => {
     const fetchAccessToken = async () => {
       try {
-        const newAccessToken = await authApi.refreshToken();
-        if (newAccessToken) {
-          setAccessToken(newAccessToken);
-        } else {
-          console.error("Failed to refresh access token.");
-          // Handle the case where the refresh token is invalid or expired
+        if (!isTestMode) {
+          const newAccessToken = await authApi.refreshToken();
+          if (newAccessToken) {
+            setAccessToken(newAccessToken);
+          } else {
+            console.error('Failed to refresh access token.');
+            // Handle the case where the refresh token is invalid or expired
+          }
         }
       } catch (error) {
         console.error(`Error refreshing access token: ${error.message}`);
@@ -79,9 +114,20 @@ function Home() {
     };
 
     fetchAccessToken();
-  }, []); // Empty dependency array to ensure this effect runs only once
+  }, []);
 
+  useEffect(() => {
+    if (likesTestModeVisible) {
+      simulateTestMode({ /* Add any test data or behavior needed for useLikes */ });
+      setTestModeVisible(true); // Set visibility in test mode
+      likeCounts && setLikeCounts(likesData);
+    } else {
+    }
+  }, [apiUrl, simulateTestMode, likesTestModeVisible]);
 
+  useEffect(() => {
+    setLikedImages(likedImagesData);
+  }, [likedImagesData]);
 
   return (
     <div>
@@ -125,7 +171,7 @@ function Home() {
                     {likedImages[item.images[0]] ? (
                       <img
                         src="../img/liked.png"
-                        alt="Liked"
+                        alt="Image Liked"
                         className="like-icon"
                         id={`likeIcon-${index}`}
                         onClick={() => toggleLike(item.images[0])}
@@ -133,7 +179,7 @@ function Home() {
                     ) : (
                       <img
                         src="../img/like.png"
-                        alt="Like"
+                        alt="Image Not Liked"
                         className="like-icon"
                         id={`likeIcon-${index}`}
                         onClick={() => toggleLike(item.images[0])}
@@ -143,20 +189,20 @@ function Home() {
                   {/* Comment icon */}
                   <img
                     src="../img/comment.png"
-                    alt="Comment"
+                    alt="Image"
                     className="icon"
                     onClick={() => openPopupComment(item.images[0])}
                   />
                   <div className="likes-container">
                     {/* Display like count */}
-<p className="likes">
-  likes{" "}
-  <span id={`likeCount-${index}`}>
-    {likeCounts[item.images[0]] !== undefined
-      ? likeCounts[item.images[0]]
-      : 0}
-  </span>
-</p>
+                    <p className="likes">
+                    likes{" "}
+                    <span id={`likeCount-${index}`}>
+                    {likeCounts[item.images[0]] !== undefined
+                    ? likeCounts[item.images[0]]
+                  : 0}
+                  </span>
+                  </p>
                   </div>
                 </div>
                 <p>{item.content}</p>
