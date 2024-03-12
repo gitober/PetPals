@@ -1,27 +1,25 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
-const useSidebar = () => {
-  // Import the simulateTestMode function from useTestModeInstance hook
-  const { simulateTestMode } = useTestModeInstance();
+const useSearch = (initialValue = '', onSearch) => {
+  const { simulateTestMode } = useTestModeInstance(); // Use useTestModeInstance
 
-  // State for managing the visibility of the post popup
-  const [popupPostVisible, setPopupPostVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(initialValue);
 
-  // Function to open the post popup
-  const openPopupPost = () => {
-    console.log('Opening post popup from sidebar');
-    setPopupPostVisible(true);
+  useEffect(() => {
+    onSearch(searchTerm);
+  }, [searchTerm, onSearch]);
 
-    // If in test mode, simulate additional logic
+  // Now you can use simulateTestMode within the useEffect or wherever needed
+
+  useEffect(() => {
     if (simulateTestMode) {
-      simulateTestMode('Opening post popup from sidebar');
-      // Additional logic specific to test mode...
+      simulateTestMode("Simulating search");
+      // Additional logic...
     }
-  };
+  }, [simulateTestMode]);
 
-  // Return the state and functions needed by the Sidebar component
-  return { popupPostVisible, openPopupPost, setPopupPostVisible };
+  return [searchTerm, setSearchTerm];
 };
 
-export default useSidebar;
+export default useSearch;

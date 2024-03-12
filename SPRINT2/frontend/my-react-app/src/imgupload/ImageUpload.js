@@ -7,9 +7,9 @@ const ImageUpload = ({ onImageUpload }) => {
 
     try {
       const formData = new FormData();
-      formData.append('images', file);
+      formData.append('image', file); // Match the key with the server
 
-      const response = await fetch('/api/posts', {
+      const response = await fetch('/upload', { // Match the server endpoint
         method: 'POST',
         body: formData,
       });
@@ -21,7 +21,7 @@ const ImageUpload = ({ onImageUpload }) => {
       const result = await response.json();
 
       // Assuming your backend returns the URL of the uploaded image
-      const imageUrl = result.newPost.images[0].data;
+      const imageUrl = result.imageUrl;
       onImageUpload(imageUrl);
     } catch (error) {
       console.error('Error uploading image:', error.message);

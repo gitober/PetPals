@@ -11,8 +11,6 @@ const authRouter = require("./routers/authRouter");
 const userRouter = require("./routers/userRouter");
 const postRouter = require("./routers/postRouter");
 const commentRouter = require("./routers/commentRouter");
-const notifyRouter = require("./routers/notifyRouter");
-const messageRouter = require("./routers/messageRouter");
 const notFoundMiddleware = require("./middleware/notFound");
 const errorHandlerMiddleware = require("./middleware/errorHandler");
 const Post = require("./models/postModel");
@@ -21,7 +19,6 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
 
 // Configure CORS
 const corsOptions = {
@@ -51,8 +48,6 @@ app.use("/api", authRouter);
 app.use("/api", postRouter);
 app.use("/api", userRouter);
 app.use("/api", commentRouter);
-app.use("/api", notifyRouter);
-app.use("/api", messageRouter);
 
 // Implement the /api/posts route with multer middleware for image uploads
 app.post("/api/posts", multer({ dest: 'uploads/' }).array("images", 5), async (req, res) => {

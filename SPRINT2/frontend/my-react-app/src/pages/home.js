@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Layout from '../Layout';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
-import useSearch from '../components/searchbar/useSearch';
+import authApi from '../utils/apiauth';
 import "../style/home.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
@@ -14,9 +12,11 @@ import "../style/popupcomment.css";
 function Home() {
   const [feedItems, setFeedItems] = useState([]);
   const [isTestMode, setIsTestMode] = useState(false);
-  const [selectedText, setSelectedText] = useState(''); // Rename to postSelectedText
-  const [commentSelectedText, setCommentSelectedText] = useState(''); // Rename to commentSelectedText
+  const [selectedText, setSelectedText] = useState('');
+  const [commentSelectedText, setCommentSelectedText] = useState('');
   const [commentSubmitting, setCommentSubmitting] = useState(false);
+  const [userData, setUserData] = useState(null); 
+  const [accessToken, setAccessToken] = useState(null);
 
   const apiUrl = "http://localhost:5000";
 
@@ -58,17 +58,33 @@ function Home() {
     console.log('selectedText updated:', e.target.value);
   };
 
-  const navigate = useNavigate();
-  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
-    // Handle search logic here, if needed
-  }, navigate);
-
   useEffect(() => {
     // Your existing useEffect code
   }, [postSelectedImages, isTestMode, selectedText, postSubmitting]);
 
+  useEffect(() => {
+    const fetchAccessToken = async () => {
+      try {
+        const newAccessToken = await authApi.refreshToken();
+        if (newAccessToken) {
+          setAccessToken(newAccessToken);
+        } else {
+          console.error("Failed to refresh access token.");
+          // Handle the case where the refresh token is invalid or expired
+        }
+      } catch (error) {
+        console.error(`Error refreshing access token: ${error.message}`);
+        // Handle error as needed
+      }
+    };
+
+    fetchAccessToken();
+  }, []); // Empty dependency array to ensure this effect runs only once
+
+
+
   return (
-    <Layout>
+    <div>
       <div className="home-page-container">
         <div className="sidebar">
           <img srcSet="/img/navbar.png" alt="logo" />
@@ -88,14 +104,13 @@ function Home() {
             </li>
           </ul>
           <div className="logout">
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a onClick={() => window.location.href = "/login"}>Log Out</a>
-        </div>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a onClick={() => window.location.href = "/login"}>Log Out</a>
+          </div>
         </div>
         <div className="home-main-content">
           <div className="search-bar">
-            {/* Use handleKeyPress function to trigger search on Enter key press */}
-            <input type="text" placeholder="Search" onKeyPress={handleKeyPress} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <input type="text" placeholder="Search" />
           </div>
           <div className="home-feed">
             {feedItems.map((item, index) => (
@@ -134,12 +149,14 @@ function Home() {
                   />
                   <div className="likes-container">
                     {/* Display like count */}
-                    <p className="likes">
-                      likes{" "}
-                      <span id={`likeCount-${index}`}>
-                        {likeCounts[item.images[0]] || 0}
-                      </span>
-                    </p>
+<p className="likes">
+  likes{" "}
+  <span id={`likeCount-${index}`}>
+    {likeCounts[item.images[0]] !== undefined
+      ? likeCounts[item.images[0]]
+      : 0}
+  </span>
+</p>
                   </div>
                 </div>
                 <p>{item.content}</p>
@@ -167,10 +184,10 @@ function Home() {
                     className="preview-image"
                   />
                   <input
-                  type="text"
-                  value={selectedText}
-                  onChange={handleChange}
-                  placeholder="Enter your text here"
+                    type="text"
+                    value={selectedText}
+                    onChange={handleChange}
+                    placeholder="Enter your text here"
                   />
                 </div>
               )}
@@ -181,7 +198,7 @@ function Home() {
                 className="file-input"
                 style={{ display: "none" }}
                 onChange={handleFileChange}
-                onClick={(e) => (e.target.value = null)} // This line allows selecting the same file again
+                onClick={(e) => (e.target.value = null)}
               />
               <button
                 className="post-select-button"
@@ -200,7 +217,7 @@ function Home() {
           </button>
         </div>
       </div>
-  <div
+      <div
         className="comment-popup"
         style={{ display: popupCommentVisible ? "block" : "none" }}
       >
@@ -220,16 +237,16 @@ function Home() {
         <div className="comment-popup-content">
           {/* Comments will be displayed here */}
           {feedItems
-          .filter((item) => item.images && item.images.includes(currentImage))
-          .map((item, index) => (
-          <div key={index} className="comment">
-          {item.comments &&
-          item.comments.map((comment, idx) => (
-            <div key={idx}>{comment.content}</div>
-          ))}
-      </div>
-      ))}
-      </div>
+            .filter((item) => item.images && item.images.includes(currentImage))
+            .map((item, index) => (
+              <div key={index} className="comment">
+                {item.comments &&
+                  item.comments.map((comment, idx) => (
+                    <div key={idx}>{comment.content}</div>
+                  ))}
+              </div>
+            ))}
+        </div>
         <div className="comment-input">
           <input
             type="text"
@@ -239,13 +256,13 @@ function Home() {
           />
         </div>
         <div className="submit-comment">
-          <button onClick={submitComment} disabled={commentSubmitting}>
-            {commentSubmitting ? "Submitting..." : "Submit"}
+          <button onClick={submitComment} disabled={popupCommentSubmitting}>
+            {popupCommentSubmitting ? "Submitting..." : "Submit"}
           </button>
         </div>
       </div>
-  </Layout>
-);
+    </div>
+  );
 }
 
 export default Home;

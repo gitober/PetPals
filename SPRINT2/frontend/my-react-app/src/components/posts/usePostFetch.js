@@ -2,29 +2,29 @@ import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../../hooks/otherhooks/useTestMode';
 import postsApi from '../../utils/apiposts'; // Import your posts API functions
 
-const usePostFetch = (token) => {
+const usePostFetch = () => {
   const [posts, setPosts] = useState([]);
   const { isTestMode, simulateTestMode } = useTestModeInstance();
 
   useEffect(() => {
     const fetchPosts = async () => {
-      console.log('Token:', token);
       try {
-        if (!token) {
-          console.error('Token is null or undefined.');
-          return;
+        if (isTestMode) {
+          // Simulate test mode behavior for fetching posts
+          simulateTestMode('Simulating fetchPosts in test mode');
+          // Simulate test data or behavior here
+        } else {
+          // Make an actual API call for fetching posts
+          const fetchedPosts = await postsApi.getPosts();
+          setPosts(fetchedPosts);
         }
-
-        // Use the getPosts function from your posts API
-        const fetchedPosts = await postsApi.getPosts(token);
-        setPosts(fetchedPosts);
       } catch (error) {
         console.error('Error during initial post fetch:', error.message);
       }
     };
 
     fetchPosts();
-  }, [token, simulateTestMode]);
+  }, [isTestMode, simulateTestMode]);
 
   useEffect(() => {
     if (isTestMode) {

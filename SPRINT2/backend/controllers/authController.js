@@ -5,61 +5,61 @@ const jwt = require("jsonwebtoken");
 
 const authController = {
   login: async (req, res) => {
-  try {
-    const { username, password } = req.body;
+    try {
+      const { username, password } = req.body;
 
-    console.log("Received login request with username:", username);
+      console.log("Received login request with username:", username);
 
-    // Find user by username
-    const user = await Users.findOne({ username });
+      // Find user by username
+      const user = await Users.findOne({ username });
 
-    console.log("User found:", user);
+      console.log("User found:", user);
 
-    // Check if user exists
-    if (!user) {
-      console.log("User not found");
-      return res.status(400).json({ message: "Invalid credentials" });
+      // Check if user exists
+      if (!user) {
+        console.log("User not found");
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      // Compare input password with hashed password
+      const isMatch = await authController.comparePassword(password, user.password);
+
+      console.log("Password match:", isMatch);
+
+      if (!isMatch) {
+        console.log("Password does not match");
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      // Generate and send an access token
+      const access_token = authController.generateAccessToken(user._id);
+      const refresh_token = authController.generateRefreshToken(user._id);
+      res.cookie("refreshtoken", refresh_token, {
+  httpOnly: true,
+  path: "/api/refresh_token",
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
+  secure: process.env.NODE_ENV === 'production', // Set to true in production
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // Set to 'None' in production
+});
+
+      // Log without sensitive information
+      console.log("Login successful for username:", username, "Password: [Hidden]");
+
+      // Respond with success message and user details
+      res.json({
+        message: "Login Successful!",
+        access_token,
+        refreshToken: refresh_token,
+        user: {
+          ...user._doc,
+          password: "[Hidden]",
+        },
+      });
+    } catch (err) {
+      console.error("Error during login:", err);
+      return res.status(500).json({ message: "Internal server error" });
     }
-
-    // Compare input password with hashed password
-    const isMatch = await authController.comparePassword(password, user.password);
-
-    console.log("Password match:", isMatch);
-
-    if (!isMatch) {
-      console.log("Password does not match");
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    // Generate and send an access token
-    const access_token = authController.generateAccessToken(user._id);
-    const refresh_token = authController.generateRefreshToken(user._id);
-    res.cookie("refreshtoken", refresh_token, {
-      httpOnly: true,
-      path: "/api/refresh_token",
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
-      secure: true, // Send only over HTTPS in a secure context
-      sameSite: "none", // Allow cross-site requests
-    });
-
-    // Log without sensitive information
-    console.log("Login successful for username:", username, "Password: [Hidden]");
-
-    // Respond with success message and user details
-    res.json({
-      message: "Login Successful!",
-      access_token,
-      refreshToken: refresh_token,
-      user: {
-        ...user._doc,
-        password: "[Hidden]",
-      },
-    });
-  } catch (err) {
-    console.error("Error during login:", err);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-},
+  },
 
   register: async (req, res) => {
     try {
@@ -124,11 +124,11 @@ const authController = {
       const access_token = authController.generateAccessToken(newUser._id);
       const refresh_token = authController.generateRefreshToken(newUser._id);
       res.cookie("refreshtoken", refresh_token, {
-      httpOnly: true,
-      path: "/api/refresh_token",
-      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
-      secure: true, // Send only over HTTPS in a secure context
-      sameSite: "none", // Allow cross-site requests
+        httpOnly: true,
+        path: "/api/refresh_token",
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days valid
+        secure: true, // Send only over HTTPS in a secure context
+        sameSite: "none", // Allow cross-site requests
       });
 
       // Log without sensitive information
@@ -153,14 +153,41 @@ const authController = {
   },
 
   logout: async (req, res) => {
-  try {
-    console.log("Received logout request");
+    try {
+      console.log("Received logout request");
 
-    // Clear refresh token cookie
-    res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
-    res.json({ message: "Logged out" });
+      // Clear refresh token cookie
+      res.clearCookie("refreshtoken", { path: "/api/refresh_token" });
+      res.json({ message: "Logged out" });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+  refreshToken: async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshtoken;
+
+    // Check if there is a refresh token
+    if (!refreshToken) {
+      return res.status(401).json({ message: "No refresh token provided" });
+    }
+
+    // Verify the refresh token
+    jwt.verify(refreshToken, process.env.REFRESHTOKENSECRET, (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid refresh token" });
+      }
+
+      // Generate a new access token
+      const newAccessToken = authController.generateAccessToken(user.userId);
+
+      // Respond with the new access token
+      res.json({ access_token: newAccessToken });
+    });
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    console.error("Error during token refresh:", err);
+    return res.status(500).json({ message: "Internal server error" });
   }
 },
 

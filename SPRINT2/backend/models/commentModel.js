@@ -1,7 +1,3 @@
-// Mongoose schema for comments with fields like user, content, tag, reply, postUserId, and postId. 
-// It establishes relationships with other models. The schema includes timestamps and is exported as 
-// the "comment" model for MongoDB operations.
-
 const mongoose = require("mongoose");
 
 const commentSchema = mongoose.Schema(

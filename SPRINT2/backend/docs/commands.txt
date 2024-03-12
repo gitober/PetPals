@@ -1,10 +1,8 @@
 NEW: 
 npm install multer
 npm install body-parser
-front: npm install http-proxy-middleware
-npm update eslint
-npm install cloudinary
-npm install react-dropzone
+npm install express
+
 
 
 npm install express

@@ -2,12 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import useSearch from "../components/searchbar/useSearch";
-import Layout from "../Layout";
 import "../style/profile.css";
 import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
+
 
 const Profile = () => {
   const [PopupPostVisible, setPopupPostVisible] = useState(false);
@@ -86,7 +86,6 @@ const Profile = () => {
 
 
   return (
-    <Layout>
       <div className="profile-page-container">
         <div className="sidebar">
           <img srcSet="/img/navbar.png" alt="logo" />
@@ -166,7 +165,6 @@ const Profile = () => {
           </div>
   
       </div>
-    </Layout>
   );
 };
 

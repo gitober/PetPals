@@ -7,7 +7,7 @@ import "../style/searchbar.css";
 import "../style/sidebar.css";
 import "../style/popuppost.css";
 import "../style/popupcomment.css";
-import Layout from "../Layout";
+
 
 function Settings() {
   const [PopupPostVisible, setPopupPostVisible] = useState(false);
@@ -100,7 +100,6 @@ function Settings() {
   }, navigate);
 
   return (
-    <Layout>
       <div className="settings-page-container">
         <div className="sidebar">
           <img srcSet="/img/navbar.png" alt="logo" />
@@ -229,7 +228,6 @@ function Settings() {
           </div>
         </div>
       </div>
-    </Layout>
   );
 }
 

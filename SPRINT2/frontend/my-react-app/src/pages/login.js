@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../Layout";
 import useLogin from "../components/login/useLogin";
 import useSignup from "../components/popups/useSignup";
 import "../style/login.css";
@@ -40,7 +39,6 @@ function Login() {
   } = useSignup(apiUrl);
 
   return (
-    <Layout>
       <div className="login-page-container">
         <div className="logo-container">
           <div className="logo">
@@ -175,7 +173,6 @@ function Login() {
           </div>
         </div>
       </div>
-    </Layout>
   );
 }
 

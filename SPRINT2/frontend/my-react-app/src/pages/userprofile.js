@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../Layout";
 import useSearch from "../components/searchbar/useSearch";
 import "../style/userprofile.css";
 import "../style/searchbar.css";
@@ -99,7 +98,6 @@ const UserProfile = () => {
 
 
   return (
-    <Layout>
       <div className="userprofile-container">
         <div className="sidebar">
           <img srcSet="/img/navbar.png" alt="logo" />
@@ -243,7 +241,6 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-    </Layout>
   );
 };
 

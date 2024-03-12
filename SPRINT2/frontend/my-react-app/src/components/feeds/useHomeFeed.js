@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { useAuth } from '../../context/AuthContext';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
 export function useHomeFeed(postsUrl) {
-  const { token } = useAuth();
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [feedItems, setFeedItems] = useState([]);
   const [likeCounts, setLikeCounts] = useState({});
@@ -13,11 +11,6 @@ export function useHomeFeed(postsUrl) {
 
   const fetchHomeFeedPosts = useCallback(async () => {
     try {
-      if (!token && !isTestMode) {
-        console.error("Token is null or undefined.");
-        return;
-      }
-
       if (isTestMode) {
         simulateTestMode("Fetching home feed posts in test mode");
         // Simulate test data or behavior here
@@ -25,7 +18,7 @@ export function useHomeFeed(postsUrl) {
       }
 
       const url = postsUrl || `${apiUrl}/api/posts`;
-      const config = { headers: { Authorization: `Bearer ${token}` } };
+      const config = { /* Add your headers or configurations here */ };
 
       const response = await fetch(url, config);
 
@@ -43,27 +36,50 @@ export function useHomeFeed(postsUrl) {
     } catch (error) {
       console.error("Error during initial post fetch:", error.message);
     }
-  }, [token, setFeedItems, feedItems, apiUrl, isTestMode, simulateTestMode, postsUrl]);
+  }, [setFeedItems, feedItems, apiUrl, isTestMode, simulateTestMode, postsUrl]);
+
+  const toggleLike = async (imageUrl) => {
+    try {
+      const url = `${apiUrl}/api/like`;
+      const config = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageUrl }),
+      };
+
+      const response = await fetch(url, config);
+
+      if (response.ok) {
+        // Update likeCounts and likedImages based on the server response
+        // You may need to modify this part based on your server response structure
+        setLikeCounts((prevLikeCounts) => {
+          const updatedLikeCounts = { ...prevLikeCounts };
+          updatedLikeCounts[imageUrl] = updatedLikeCounts[imageUrl] ? 0 : 1;
+          return updatedLikeCounts;
+        });
+
+        setLikedImages((prevLikedImages) => {
+          const updatedLikedImages = { ...prevLikedImages };
+          updatedLikedImages[imageUrl] = !prevLikedImages[imageUrl];
+          return updatedLikedImages;
+        });
+      } else {
+        console.error(
+          "Failed to toggle like:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error.message);
+    }
+  };
 
   useEffect(() => {
-    if ((token || isTestMode) && likedImages.length === 0) {
-      fetchHomeFeedPosts();
-    }
-  }, [token, likedImages, fetchHomeFeedPosts, isTestMode]);
-
-  const toggleLike = (imageUrl) => {
-    setLikeCounts((prevLikeCounts) => {
-      const updatedLikeCounts = { ...prevLikeCounts };
-      updatedLikeCounts[imageUrl] = updatedLikeCounts[imageUrl] ? 0 : 1;
-      return updatedLikeCounts;
-    });
-
-    setLikedImages((prevLikedImages) => {
-      const updatedLikedImages = { ...prevLikedImages };
-      updatedLikedImages[imageUrl] = !prevLikedImages[imageUrl];
-      return updatedLikedImages;
-    });
-  };
+    fetchHomeFeedPosts();
+  }, [fetchHomeFeedPosts]);
 
   return {
     feedItems,

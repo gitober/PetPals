@@ -87,12 +87,12 @@ const usePopupComment = ({ commentsUrl, token, selectedImages: initialSelectedIm
 
         // Create a new array of comments including the new comment for the selected image
         setComments((prevComments) =>
-  prevComments.map((item) =>
-    item.images.includes(selectedImages[0])
-      ? { ...item, comments: [...(item.comments || []), newComment] }
-      : item
-  )
-);
+          prevComments.map((item) =>
+            item.images.includes(selectedImages[0])
+              ? { ...item, comments: [...(item.comments || []), newComment] }
+              : item
+          )
+        );
 
         setSelectedText(""); // Clear the comment text
         // Comment popup will remain open in test mode

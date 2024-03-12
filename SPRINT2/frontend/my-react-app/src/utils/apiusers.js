@@ -1,9 +1,10 @@
-const apiUrl = "http://localhost:5000";
+const apiUrl = 'http://localhost:5000';
 
 export const getAllUsers = async () => {
   try {
-    const response = await api.get('/api/users');
-    return response.data.users;
+    const response = await fetch(`${apiUrl}/api/user`);
+    const data = await response.json();
+    return data.users;
   } catch (error) {
     throw new Error(`Error fetching users: ${error.message}`);
   }
@@ -11,8 +12,9 @@ export const getAllUsers = async () => {
 
 export const searchUsers = async (username) => {
   try {
-    const response = await api.get(`/api/search?username=${username}`);
-    return response.data.users;
+    const response = await fetch(`${apiUrl}/api/search?username=${username}`);
+    const data = await response.json();
+    return data.users;
   } catch (error) {
     throw new Error(`Error searching users: ${error.message}`);
   }
@@ -21,9 +23,10 @@ export const searchUsers = async (username) => {
 export const getUser = async (userId) => {
   try {
     console.log('Fetching user data for userId:', userId);
-    const response = await api.get(`/api/user/${userId}`);
+    const response = await fetch(`${apiUrl}/api/user/${userId}`);
     console.log('Response from server:', response);
-    return response.data.user;
+    const data = await response.json();
+    return data.user;
   } catch (error) {
     console.error('Error fetching user:', error);
     throw new Error(`Error fetching user: ${error.message}`);
@@ -32,8 +35,15 @@ export const getUser = async (userId) => {
 
 export const updateUser = async (userData) => {
   try {
-    const response = await api.patch('/api/user', userData);
-    return response.data;
+    const response = await fetch(`${apiUrl}/api/user`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    return data;
   } catch (error) {
     throw new Error(`Error updating user: ${error.message}`);
   }
@@ -41,8 +51,11 @@ export const updateUser = async (userData) => {
 
 export const followUser = async (userId) => {
   try {
-    const response = await api.patch(`/api/user/${userId}/follow`);
-    return response.data;
+    const response = await fetch(`${apiUrl}/api/user/${userId}/follow`, {
+      method: 'PATCH',
+    });
+    const data = await response.json();
+    return data;
   } catch (error) {
     throw new Error(`Error following user: ${error.message}`);
   }
@@ -50,14 +63,23 @@ export const followUser = async (userId) => {
 
 export const unfollowUser = async (userId) => {
   try {
-    const response = await api.patch(`/api/user/${userId}/unfollow`);
-    return response.data;
+    const response = await fetch(`${apiUrl}/api/user/${userId}/unfollow`, {
+      method: 'PATCH',
+    });
+    const data = await response.json();
+    return data;
   } catch (error) {
     throw new Error(`Error unfollowing user: ${error.message}`);
   }
 };
 
-const usersApi = { getAllUsers, searchUsers, getUser, updateUser, followUser, unfollowUser };
+const usersApi = {
+  getAllUsers,
+  searchUsers,
+  getUser,
+  updateUser,
+  followUser,
+  unfollowUser,
+};
 
 export default usersApi;
-

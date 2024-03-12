@@ -1,9 +1,3 @@
-// Mongoose schema for the structure of a user document, including fields such as username, fullname, email, 
-// password, address, gender, website, phone, avatar, story, friends, following, and saved. Each user has 
-// associated timestamps indicating the creation and last update times. The schema defines relationships with 
-// other users through the friends, following, and saved arrays, utilizing references to other user documents 
-// via their MongoDB ObjectId.
-
 const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
@@ -46,5 +40,24 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Static method to log in a user
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) {
+      return user;
+    }
+    throw Error("Incorrect password");
+  }
+  throw Error("Incorrect email");
+};
+
+// Static method to sign up a user
+userSchema.statics.signup = async function (email, password) {
+  const user = await this.create({ email, password });
+  return user;
+};
 
 module.exports = mongoose.model("user", userSchema);

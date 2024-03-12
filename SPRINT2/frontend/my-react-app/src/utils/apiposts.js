@@ -1,29 +1,43 @@
 const apiUrl = "http://localhost:5000";
 
-export const createPost = async (postData, token) => {
-  try {
-    console.log('Sending data to server:', postData);
+export const createPost = async (formData, auth_token) => {
+  console.log('Sending data to server:', formData);
+  console.log('API URL:', `${apiUrl}/api/posts`);
+  console.log('Headers:', {
+    Authorization: `Bearer ${auth_token}`,
+    'Content-Type': 'multipart/form-data',
+  });
 
-    const response = await fetch(`${apiUrl}/posts`, {
+  try {
+    const response = await fetch(`${apiUrl}/api/posts`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${auth_token}`,
       },
-      body: postData, // Use FormData directly as the body
+      body: formData,
     });
 
     console.log('Server response:', response);
 
-    return await response.json();
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message);
+    }
+
+    const data = await response.json();
+    console.log('Data from server:', data);
+    return data;
   } catch (error) {
-    console.error('Error creating post:', error);
-    throw error.message;
+    console.error('Error creating post:', error.message);
+    throw error;
   }
 };
 
+
+
 export const getPosts = async () => {
   try {
-    const response = await fetch(`${apiUrl}/posts`);
+    const response = await fetch(`${apiUrl}/api/posts`);
     return await response.json();
   } catch (error) {
     console.error('Error getting posts:', error);
@@ -33,7 +47,7 @@ export const getPosts = async () => {
 
 export const getSinglePost = async (postId) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}`);
+    const response = await fetch(`${apiUrl}/api/posts/${postId}`);
     return await response.json();
   } catch (error) {
     console.error('Error getting single post:', error);
@@ -43,7 +57,7 @@ export const getSinglePost = async (postId) => {
 
 export const updatePost = async (postId, postData, token) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}`, {
+    const response = await fetch(`${apiUrl}/api/posts/${postId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +74,7 @@ export const updatePost = async (postId, postData, token) => {
 
 export const likePost = async (postId, token) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/like`, {
+    const response = await fetch(`${apiUrl}/api/posts/${postId}/like`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -75,7 +89,7 @@ export const likePost = async (postId, token) => {
 
 export const unlikePost = async (postId, token) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/unlike`, {
+    const response = await fetch(`${apiUrl}/api/posts/${postId}/unlike`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,7 +104,7 @@ export const unlikePost = async (postId, token) => {
 
 export const savePost = async (postId, token) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/save`, {
+    const response = await fetch(`${apiUrl}/api/posts/${postId}/save`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -105,7 +119,7 @@ export const savePost = async (postId, token) => {
 
 export const unsavePost = async (postId, token) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/${postId}/unsave`, {
+    const response = await fetch(`${apiUrl}/api/posts/${postId}/unsave`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -120,7 +134,7 @@ export const unsavePost = async (postId, token) => {
 
 export const getSavedPosts = async (token) => {
   try {
-    const response = await fetch(`${apiUrl}/posts/saved`, {
+    const response = await fetch(`${apiUrl}/api/posts/saved`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -134,7 +148,7 @@ export const getSavedPosts = async (token) => {
 
 export const getUserPosts = async (userId, token) => {
   try {
-    const response = await fetch(`${apiUrl}/user_posts/${userId}`, {
+    const response = await fetch(`${apiUrl}/api/user_posts/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

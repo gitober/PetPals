@@ -18,6 +18,7 @@ export const login = async (username, password) => {
 
       // Check if accessToken is present in data
       if (data.access_token) {
+        // Update the following line to correctly access the access_token field
         return { accessToken: data.access_token, refreshToken: data.refreshToken, user: data.user };
       } else {
         console.error("Login failed. Server did not provide an access token.");
@@ -31,6 +32,7 @@ export const login = async (username, password) => {
     throw new Error(`Error during login: ${error.message}`);
   }
 };
+
 
 export const register = async (username, email, password) => {
   try {
@@ -78,24 +80,41 @@ export const logout = async () => {
   }
 };
 
-export const refreshToken = async () => {
+export const fetchAccessToken = async () => {
   try {
-    const response = await fetch(`${apiUrl}/api/refresh_token`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await fetch('http://localhost:5000/api/refresh_token', {
+      method: 'POST',
+      credentials: 'include', // Include credentials (cookies) in the request
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      return data.refreshToken || null; // Return refreshToken or null if not available
-    } else {
-      const error = await response.json();
-      throw new Error(error.message);
+    if (!response.ok) {
+      throw new Error('Error refreshing access token');
     }
+
+    const data = await response.json();
+    return data.access_token;
   } catch (error) {
-    throw new Error(`Error refreshing token: ${error.message}`);
+    console.error('Error refreshing access token:', error.message);
+    throw error;
+  }
+};
+
+export const refreshToken = async () => {
+  try {
+    const response = await fetch('http://localhost:5000/api/refresh_token', {
+      method: 'POST',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Error refreshing access token');
+    }
+
+    const data = await response.json();
+    return data.access_token;
+  } catch (error) {
+    console.error('Error refreshing access token:', error.message);
+    throw error;
   }
 };
 

@@ -49,80 +49,83 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
   };
 
   const handleSubmit = async () => {
-  console.log('Inside handleSubmit');
-  console.log('Access Token:', token);
-  console.log('Selected Images:', selectedImages);
-  console.log('Submit button clicked');
+    console.log('Inside handleSubmit');
+    console.log('Access Token:', token);
+    console.log('Selected Images:', selectedImages);
+    console.log('Submit button clicked');
 
-  if (selectedImages.length === 0) {
-    console.error('No image selected for submission.');
-    return;
-  }
-
-  try {
-    setSubmitting(true);
-
-    const formData = new FormData();
-    selectedImages.forEach((imageDataUrl, index) => {
-      formData.append(`images[${index}]`, imageDataUrl);
-    });
-    formData.append('content', selectedText);
-
-    if (isTestMode) {
-      console.log('Test mode: Simulating successful post submission');
-      console.log('Test mode: Closing post popup');
-
-      const newPost = {
-        id: Math.random().toString(),
-        images: selectedImages,
-        content: selectedText,
-        comments: [],
-      };
-
-      setSelectedImages([]);
-      console.log('New Post Data:', newPost);
-
-      setFeedItems((prevFeedItems) => [newPost, ...prevFeedItems]);
-
-      closePopupPost();
-    } else {
-      try {
-        // Use the createPost function from your posts API
-        const response = await postsApi.createPost(formData, token);
-
-        if (response.message === 'Post created successfully') {
-          fetchInitialPosts(token);
-          closePopupPost();
-        } else {
-          console.error('Failed to submit post:', response.message);
-        }
-      } catch (error) {
-        console.error('Error during post submission:', error);
-      }
+    if (selectedImages.length === 0) {
+      console.error('No image selected for submission.');
+      return;
     }
-  } finally {
-    setSubmitting(false);
-  }
-};
+
+    try {
+      setSubmitting(true);
+
+      const formData = new FormData();
+      selectedImages.forEach((imageDataUrl, index) => {
+        formData.append(`images[${index}]`, imageDataUrl);
+      });
+      formData.append('content', selectedText);
+
+      if (isTestMode) {
+        console.log('Test mode: Simulating successful post submission');
+        console.log('Test mode: Closing post popup');
+
+        const newPost = {
+          id: Math.random().toString(),
+          images: selectedImages,
+          content: selectedText,
+          comments: [],
+        };
+
+        setSelectedImages([]);
+        console.log('New Post Data:', newPost);
+
+        setFeedItems((prevFeedItems) => [newPost, ...prevFeedItems]);
+
+        closePopupPost();
+      } else {
+        try {
+          // Use the createPost function from your posts API
+          const response = await postsApi.createPost(formData, token);
+
+          if (response.message === 'Post created successfully') {
+            // Fetch initial posts after successful submission
+            fetchInitialPosts(token);
+
+            // Close the post popup after successful submission
+            closePopupPost();
+          } else {
+            console.error('Failed to submit post:', response.message);
+          }
+        } catch (error) {
+          console.error('Error during post submission:', error);
+        }
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const handleFileChange = (event) => {
-  const files = event.target.files;
-  if (files.length > 0) {
-    const newImages = Array.from(files);
+    const files = event.target.files;
+    if (files.length > 0) {
+      const newImages = Array.from(files);
 
-    Promise.all(
-      newImages.map((image) => {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.readAsDataURL(image);
-        });
-      })
-    ).then((imageDataUrls) => {
-      setSelectedImages(imageDataUrls);
-    });
-  }
-};
+      Promise.all(
+        newImages.map((image) => {
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(image);
+          });
+        })
+      ).then((imageDataUrls) => {
+        setSelectedImages(imageDataUrls);
+      });
+    }
+  };
 
   return {
     popupPostVisible,

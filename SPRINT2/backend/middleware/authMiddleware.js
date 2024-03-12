@@ -1,7 +1,3 @@
-// Middleware for validating user access tokens. It checks the presence, validity, and user existence based on
-// the access token. If valid, it attaches the user object to the request for further processing.
-// Handles errors by returning appropriate responses for invalid or missing tokens.
-
 const Users = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
