@@ -59,11 +59,11 @@ function Home() {
       const response = await fetch(url, config);
       if (response.ok) {
         const responseData = await response.json();
-        if (responseData && responseData.data && responseData.data.posts) {
-          setFeedItems(responseData.data.posts);
+        if (Array.isArray(responseData)) {
+        setFeedItems(responseData);
         } else {
-          console.error('Invalid response format. Expected data.posts to be an array. Received:', responseData);
-        }
+        console.error('Invalid response format. Expected an array of posts. Received:', responseData);
+      }
       } else {
         console.error('Failed to fetch posts:', response.status, response.statusText);
       }
@@ -97,6 +97,7 @@ function Home() {
     setSelectedText(e.target.value);
     console.log('selectedText updated:', e.target.value);
   };
+
   return (
     <div>
       <div className="home-page-container">
