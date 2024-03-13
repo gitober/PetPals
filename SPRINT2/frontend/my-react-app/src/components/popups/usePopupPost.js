@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
+
 const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [popupPostVisible, setPopupPostVisible] = useState(false);
@@ -131,6 +132,7 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
       });
     }
   };
+
 
   return {
     popupPostVisible,

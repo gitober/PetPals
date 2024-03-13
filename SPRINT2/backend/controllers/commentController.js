@@ -26,7 +26,18 @@ const createComment = async (req, res) => {
     await Posts.findOneAndUpdate({ _id: postId }, { $push: { comments: newComment._id } });
     await newComment.save();
 
-    return res.json({ newComment });
+    // Send a JSON response with relevant comment fields
+    return res.json({
+      _id: newComment._id,
+      user: newComment.user,
+      content: newComment.content,
+      reply: newComment.reply,
+      postId: newComment.postId,
+      postUserId: newComment.postUserId,
+      createdAt: newComment.createdAt,
+      updatedAt: newComment.updatedAt,
+      __v: newComment.__v,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });

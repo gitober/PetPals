@@ -4,6 +4,7 @@ import useSearch from '../components/searchbar/useSearch';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
+import popupPostFunctions from '../components/popups/usePopupPost';
 import '../style/home.css';
 import '../style/searchbar.css';
 import '../style/sidebar.css';
@@ -25,22 +26,24 @@ function Home() {
   const navigate = useNavigate();
 
   // Custom Hooks
-  const { likeCounts: likesData, likedImages: likedImagesData, toggleLike } = useLikes();
-  const [postSelectedImages, setPostSelectedImages] = useState([]);
-  const { comments, submitting: popupCommentSubmitting, setSelectedText: setPopupCommentSelectedText, submitComment, openPopupComment, closePopupComment, popupCommentVisible, setCurrentImage, currentImage } = usePopupComment({ commentsUrl: '/api/comments', access_token: accessToken, selectedImages: postSelectedImages, currentImage: postSelectedImages.length > 0 ? postSelectedImages[0] : null, setFeedItems });
-  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {}, navigate);
-  const { popupPostVisible, openPopupPost, closePopupPost, handleSubmit, handleFileChange, selectedImages: popupPostSelectedImages, submitting: postSubmitting } = usePopupPost(setFeedItems);
+const { likeCounts: likesData, likedImages: likedImagesData, toggleLike } = useLikes();
+const [postSelectedImages, setPostSelectedImages] = useState([]);
+const { comments, submitting: popupCommentSubmitting, setSelectedText: setPopupCommentSelectedText, submitComment, openPopupComment, closePopupComment, popupCommentVisible, setCurrentImage, currentImage } = usePopupComment({ commentsUrl: '/api/comments/comment', access_token: accessToken }); // Pass accessToken here
+const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {}, navigate);
+const { popupPostVisible, openPopupPost, closePopupPost, handleSubmit, handleFileChange, selectedImages: popupPostSelectedImages, submitting: postSubmitting } = usePopupPost(setFeedItems);
+
 
   // Fetch access token from localStorage and set it
   useEffect(() => {
-    const fetchedAccessToken = localStorage.getItem('accessToken');
-    if (!fetchedAccessToken) {
-      console.error('Access token is missing. Redirecting to login page.');
-      navigate('/login');
-      return;
-    }
-    setAccessToken(fetchedAccessToken);
-  }, [navigate]);
+  const fetchedAccessToken = localStorage.getItem('accessToken');
+  console.log('Fetched access token:', fetchedAccessToken); // Log the access token
+  if (!fetchedAccessToken) {
+    console.error('Access token is missing. Redirecting to login page.');
+    navigate('/login');
+    return;
+  }
+  setAccessToken(fetchedAccessToken);
+}, [navigate]);
 
   // Fetch home feed posts
   const fetchHomeFeedPosts = useCallback(async () => {
@@ -130,56 +133,56 @@ function Home() {
             </div>
           <div className="home-feed">
             {feedItems.map((item, index) => (
-              <div key={index} className="feed-item">
-                <a href="../userprofile">
-                  <h3>username</h3>
-                </a>
-                <img src={item.images[0]} alt={`User's Post ${index}`} />
-                <div className="icons">
-                  <div className="like-container">
-                    {/* Conditional rendering of like icon based on liked status */}
-                    {likedImages[item.images[0]] ? (
-                      <img
-                        src="../img/liked.png"
-                        alt="Image Liked"
-                        className="like-icon"
-                        id={`likeIcon-${index}`}
-                        onClick={() => {
-                          toggleLike(item.images[0]);
-                      }}
-                      />
-                    ) : (
-                      <img
-                        src="../img/like.png"
-                        alt="Image Not Liked"
-                        className="like-icon"
-                        id={`likeIcon-${index}`}
-                        onClick={() => toggleLike(item.images[0], item.postId)}
-                      />
-                    )}
-                  </div>
-                  {/* Comment icon */}
-                  <img
-                    src="../img/comment.png"
-                    alt="Image"
-                    className="icon"
-                    onClick={() => openPopupComment(item.images[0])}
-                  />
-                  <div className="likes-container">
-                    {/* Display like count */}
-                    <p className="likes">
-                    likes{" "}
-                    <span id={`likeCount-${index}`}>
-                    {likeCounts[item.images[0]] !== undefined
-                    ? likeCounts[item.images[0]]
-                  : 0}
-                  </span>
-                  </p>
-                  </div>
-                </div>
-                <p>{item.content}</p>
-              </div>
-            ))}
+  <div key={index} className="feed-item">
+    <a href="../userprofile">
+      <h3>username</h3>
+    </a>
+    <img src={item.images[0]} alt={`User's Post ${index}`} />
+    <div className="icons">
+      <div className="like-container">
+        {/* Like icon */}
+        {likedImages[item.images[0]] ? (
+          <img
+            src="../img/liked.png"
+            alt="Image Liked"
+            className="like-icon"
+            id={`likeIcon-${index}`}
+            onClick={() => {
+              toggleLike(item.images[0]);
+            }}
+          />
+        ) : (
+          <img
+            src="../img/like.png"
+            alt="Image Not Liked"
+            className="like-icon"
+            id={`likeIcon-${index}`}
+            onClick={() => toggleLike(item.images[0], item.postId)}
+          />
+        )}
+      </div>
+      {/* Comment icon */}
+      <img
+        src="../img/comment.png"
+        alt="Image"
+        className="icon"
+        onClick={() => openPopupComment(item.images[0])}
+      />
+      <div className="likes-container">
+        {/* Display like count */}
+        <p className="likes">
+          likes{" "}
+          <span id={`likeCount-${index}`}>
+            {likeCounts[item.images[0]] !== undefined
+              ? likeCounts[item.images[0]]
+              : 0}
+          </span>
+        </p>
+      </div>
+    </div>
+    <p>{item.content}</p>
+  </div>
+))}
           </div>
         </div>
       </div>
