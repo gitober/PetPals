@@ -82,7 +82,7 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
       } else {
         try {
           // Make an actual API call for creating a post
-          const response = await fetch('http://localhost:5000/api/posts', {
+          const response = await fetch('http://localhost:5000/api/posts/posts', {
             method: 'POST',
             headers: {
               Authorization: `Bearer ${token}`,

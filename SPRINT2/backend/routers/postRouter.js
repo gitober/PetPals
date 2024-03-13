@@ -1,23 +1,38 @@
 const express = require("express");
-const postController = require("../controllers/postController");
-const authMiddleware = require("../middleware/authMiddleware");
-
 const router = express.Router();
+const {
+  getPosts,
+  addPost,
+  updatePost,
+  deletePost,
+  likePost,
+  unlikePost,
+  getUserPosts,
+} = require("../controllers/postController");
+const requireAuth = require("../middleware/requireAuth");
 
-router
-  .route("/posts")
-  .post(authMiddleware, postController.createPost)
-  .get(postController.getPost);
+// Require authentication for all routes
+router.use(requireAuth);
 
-router
-  .route("/posts/:id")
-  .patch(authMiddleware, postController.updatePost)
-  .get(authMiddleware, postController.getSinglePost)
-  .delete(authMiddleware, postController.deletePost);
+// Get all posts
+router.get("/posts", getPosts);
 
-router.patch("/posts/:id/like", authMiddleware, postController.likePost);
-router.patch("/posts/:id/unlike", authMiddleware, postController.unlikePost);
-router.get("/user_posts/:id", authMiddleware, postController.getUserPosts);
+// Add a new post
+router.post("/posts", addPost);
 
+// Update a post by ID
+router.patch("/posts/:id", updatePost);
+
+// Delete a post by ID
+router.delete("/posts/:id", deletePost);
+
+// Like a post
+router.patch("/posts/:id/like", likePost);
+
+// Unlike a post
+router.patch("/posts/:id/unlike", unlikePost);
+
+// Get posts by a specific user
+router.get("/user_posts/:id", getUserPosts);
 
 module.exports = router;

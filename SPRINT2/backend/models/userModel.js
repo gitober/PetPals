@@ -1,63 +1,84 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
-const userSchema = mongoose.Schema(
-  {
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
     username: {
-      type: String,
-      trim: true,
-      unique: true,
-      maxlength: 30,
-      required: true,
+        type: String,
+        required: true,
+        unique: true,
     },
     email: {
-      type: String,
-      trim: true,
-      required: true,
+        type: String,
+        required: true,
+        unique: true,
     },
     password: {
-      type: String,
-      required: true,
+        type: String,
+        required: true,
     },
-    story: {
-      type: String,
-      default: "",
-      maxlength: 250,
+    bioText: {
+        type: String,
+        default: "",
     },
-    following: [
-      {
-        user: { type: mongoose.Types.ObjectId, ref: "user" },
-        username: String,
-      },
-    ],
-    followers: [
-      {
-        user: { type: mongoose.Types.ObjectId, ref: "user" },
-        username: String,
-      },
-    ],
-  },
-  {
-    timestamps: true,
-  }
-);
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+});
 
-// Static method to log in a user
-userSchema.statics.login = async function (email, password) {
-  const user = await this.findOne({ email });
-  if (user) {
-    const auth = await bcrypt.compare(password, user.password);
-    if (auth) {
-      return user;
+// static signup method
+userSchema.statics.signup = async function (username, email, password) {
+    try {
+        // Validation
+        if (!username || !email || !password) {
+            throw new Error("All fields must be filled");
+        }
+        if (!validator.isLength(username, { min: 3, max: 20 })) {
+            throw new Error("Username must be between 3 and 20 characters");
+        }
+        if (!validator.isEmail(email)) {
+            throw new Error("Email already in use or invalid format");
+        }
+        if (!validator.isStrongPassword(password)) {
+            throw new Error("Password not strong enough");
+        }
+
+        const exists = await this.findOne({ $or: [{ username }, { email }] });
+        if (exists) {
+            throw new Error("Username or email already in use");
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+
+        const user = await this.create({ username, email, password: hash });
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
     }
-    throw Error("Incorrect password");
-  }
-  throw Error("Incorrect email");
 };
 
-// Static method to sign up a user
-userSchema.statics.signup = async function (email, password) {
-  const user = await this.create({ email, password });
-  return user;
+// static login method
+userSchema.statics.login = async function (username, password) {
+    try {
+        if (!username || !password) {
+            throw new Error("All fields must be filled");
+        }
+
+        const user = await this.findOne({ username });
+        if (!user) {
+            throw new Error("Incorrect username or password");
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            throw new Error("Incorrect username or password");
+        }
+
+        return user;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);

@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for backend/models/messageModel.js</title>
+    <title>Code coverage report for backend/app.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">backend/models</a> messageModel.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">backend</a> app.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">95.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>21/22</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>21/21</span>
             </div>
         
             
@@ -83,7 +83,31 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -91,55 +115,70 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Mongoose schema for messages with fields like conversation, sender, recipient, text, and media. 
-// It establishes relationships with other models ("conversation" and "user"). The schema includes 
-// timestamps and is exported as the "message" model for MongoDB operations.
-&nbsp;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">require("dotenv").config();
+const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const customMiddleware = require("./middleware/customMiddleware");
+const postRouter = require("./routers/postRouter");
+const commentRouter = require("./routers/commentRouter");
+const userRouter = require("./routers/userRouter");
 &nbsp;
-const messageSchema = new mongoose.Schema(
-  {
-    conversation: { type: mongoose.Types.ObjectId, ref: "conversation" },
-    sender: { type: mongoose.Types.ObjectId, ref: "user" },
-    recipient: [{ type: mongoose.Types.ObjectId, ref: "user" }],
-    text: String,
-    media: Array,
-  },
-  {
-    timestamps: true,
-  }
-);
+//const cookieParser = require("cookie-parser");
+//const bodyParser = require("body-parser");
+//const multer = require("multer");
+//const path = require("path");
 &nbsp;
-module.exports = mongoose.model("message", messageSchema);
-&nbsp;</pre></td></tr></table></pre>
+const app = express();
+&nbsp;
+connectDB();
+&nbsp;
+app.use(cors());
+app.use(express.json());
+&nbsp;
+app.use(customMiddleware.requestLogger);
+&nbsp;
+app.get("/", <span class="fstat-no" title="function not covered" >(r</span>eq, res) =&gt; <span class="cstat-no" title="statement not covered" >res.send("Root of the server!"))</span>;
+&nbsp;
+app.use("/api/users", userRouter);
+app.use("/api/posts", postRouter);
+app.use("/api/comments", commentRouter);
+&nbsp;
+app.use(customMiddleware.unknownEndpoint);
+app.use(customMiddleware.errorHandler);
+&nbsp;
+module.exports = app;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-11T12:33:55.982Z
+                at 2024-03-13T10:54:37.239Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

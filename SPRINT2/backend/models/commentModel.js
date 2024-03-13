@@ -6,7 +6,6 @@ const commentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    tag: Object,
     reply: mongoose.Types.ObjectId,
     likes: [{ type: mongoose.Types.ObjectId, ref: "user" }],
     user: { type: mongoose.Types.ObjectId, ref: "user" },
@@ -18,4 +17,4 @@ const commentSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("comment", commentSchema);
+module.exports = mongoose.model("Comment", commentSchema);

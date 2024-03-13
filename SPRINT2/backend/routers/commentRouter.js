@@ -1,11 +1,17 @@
 const router = require("express").Router();
-const commentController = require("../controllers/commentController");
-const authMiddleware = require("../middleware/authMiddleware");
+const requireAuth = require("../middleware/requireAuth");
+const { createComment, updateComment, deleteComment } = require("../controllers/commentController");
 
-router.post("/comment/:id", authMiddleware, commentController.createComment);
-router.patch("/comment/:id", authMiddleware, commentController.updateComment);
-router.patch("/comment/:id/like", authMiddleware, commentController.likeComment);
-router.patch("/comment/:id/unlike", authMiddleware, commentController.unlikeComment);
-router.delete("/comment/:id", authMiddleware, commentController.deleteComment);
+// Require authentication for all routes
+router.use(requireAuth);
+
+// Route to create a new comment
+router.post("/comment/:id", createComment);
+
+// Route to update a comment
+router.patch("/comment/:id", updateComment);
+
+// Route to delete a comment
+router.delete("/comment/:id", deleteComment);
 
 module.exports = router;

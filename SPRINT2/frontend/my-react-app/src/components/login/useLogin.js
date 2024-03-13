@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTestModeInstance } from '../../components/testmode/useTestMode';
 import { UserContext } from '../../context/UserContext';
-import { login as apiLogin } from '../../utils/apiauth';
 
 const useLogin = (apiUrl, isTestModeLogin) => {
   const navigate = useNavigate();
@@ -35,21 +34,37 @@ const useLogin = (apiUrl, isTestModeLogin) => {
   }, [username, password]);
 
   const handleLoginSubmit = async (event) => {
-    event.preventDefault();
+  event.preventDefault();
 
-    try {
-      if (isTestMode && !isTestModeLogin) {
-        console.log('Test mode: Simulating successful login');
-        navigate('/home');
-        return;
-      }
+  try {
+    if (isTestMode && !isTestModeLogin) {
+      console.log('Test mode: Simulating successful login');
+      navigate('/home');
+      return;
+    }
 
-      const response = await apiLogin(username, password);
+    const loginData = {
+      username: username,
+      password: password
+    };
 
-      if (response && response.accessToken) {
-        console.log('Login successful. Access Token:', response.accessToken);
+    const loginResponse = await fetch(`${apiUrl}/api/users/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginData)
+    });
 
-        localStorage.setItem('accessToken', response.accessToken);
+    const responseData = await loginResponse.json();
+    console.log('Login response data:', responseData); // Log the response data
+
+    if (loginResponse.ok) {
+      const accessToken = responseData && responseData.token; // Check if token exists
+      if (accessToken) {
+        console.log('Login successful. Access Token:', accessToken);
+
+        localStorage.setItem('accessToken', accessToken); // Store access token in localStorage
         localStorage.setItem('username', username);
 
         setContextUsername(username);
@@ -60,11 +75,11 @@ const useLogin = (apiUrl, isTestModeLogin) => {
         navigate('/home');
 
         // Fetch user data
-        const userResponse = await fetch(`${apiUrl}/api/user`, {
+        const userResponse = await fetch(`${apiUrl}/api/users/users`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${response.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         });
 
@@ -72,16 +87,18 @@ const useLogin = (apiUrl, isTestModeLogin) => {
           const userData = await userResponse.json();
           console.log('User data:', userData);
         } else {
-          console.error('Error fetching user data. Server responded with:', userResponse.statusText);
+          throw new Error('Failed to fetch user data');
         }
       } else {
-        console.error('Login failed. Server responded with:', response && response.message ? response.message : 'Unknown error');
-        console.log('Full response:', response); // Add this line for detailed response logging
+        throw new Error('Access token not found in response data');
       }
-    } catch (error) {
-      console.error('Error during login:', error.message);
+    } else {
+      throw new Error(`Login failed. Server responded with: ${loginResponse.status}`);
     }
-  };
+  } catch (error) {
+    console.error('Error during login:', error.message);
+  }
+};
 
   return {
     username,

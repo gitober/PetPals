@@ -14,7 +14,7 @@ const usePostFetch = (accessToken) => {
           // Simulate test data or behavior here
         } else {
           // Make an actual API call for fetching posts
-          const response = await fetch('/api/posts', {
+          const response = await fetch('/api/posts/posts', {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
@@ -26,6 +26,7 @@ const usePostFetch = (accessToken) => {
           }
 
           const data = await response.json();
+          // Assuming data is an array of post objects
           setPosts(data);
         }
       } catch (error) {

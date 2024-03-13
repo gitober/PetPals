@@ -1,184 +1,191 @@
+const mongoose = require("mongoose"); // Import mongoose
 const bcrypt = require("bcrypt");
-const Users = require("../models/userModel");
+const User = require("../models/userModel");
+const jwt = require("jsonwebtoken");
 
-const userController = {
-  getAllUsers: async (req, res) => {
-    try {
-      const users = await Users.find().select("username avatar");
-      res.json({ users });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
+const createToken = (_id) => {
+  return jwt.sign({ _id }, process.env.MY_SECRET_KEY, { expiresIn: "3d" });
+};
 
-  searchUsers: async (req, res) => {
-    try {
-      const users = await Users.find({
-        username: { $regex: req.query.username },
-      })
-        .limit(10)
-        .select("username avatar");
+const signupUser = async (req, res) => {
+  const { username, email, password } = req.body;
 
-      res.json({ users });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
+  try {
+    const user = await User.signup(username, email, password);
+    const token = createToken(user._id);
+    res.status(201).json({ username, email, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-  getUser: async (req, res) => {
+const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await User.login(username, password);
+    const token = createToken(user._id);
+    res.status(200).json({ username, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("username avatar");
+    res.json({ users });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    console.log('Received user ID:', userId);
-
-    const user = await Users.findById(userId).select('-password');
-
+    const user = await User.findById(userId).select('-password');
     if (!user) {
-      console.log('User not found');
       return res.status(404).json({ message: 'User not found' });
     }
-
-    console.log('User found:', user);
     res.json({ user });
   } catch (error) {
     console.error('Error retrieving user:', error);
     res.status(500).json({ user: null, message: 'Internal Server Error' });
   }
-},
-
-  updateUser: async (req, res) => {
-    try {
-      const {
-        body: { username, email, newPassword },
-        user: { _id },
-      } = req;
-
-      if (!username) {
-        return res.status(400).json({ message: "Please add your username." });
-      }
-
-      let hashedPassword = null;
-      if (newPassword) {
-        hashedPassword = await bcrypt.hash(newPassword, 10);
-      }
-
-      const updateFields = {
-        username,
-        email,
-      };
-
-      if (hashedPassword) {
-        updateFields.password = hashedPassword;
-      }
-
-      await Users.findByIdAndUpdate(_id, updateFields);
-
-      res.json({ message: "Profile updated successfully!" });
-    } catch (error) {
-      console.error("Error updating user profile:", error);
-      res.status(500).json({ message: "Internal Server Error" });
-    }
-  },
-
-  followUser: async (req, res) => {
-    try {
-      const {
-        params: { id },
-        user: { _id, username },
-      } = req;
-
-      const userToFollow = await Users.findById(id);
-
-      if (!userToFollow) {
-        return res.status(400).json({ message: "User to follow not found" });
-      }
-
-      const isAlreadyFollowing = userToFollow.followers.some((follower) =>
-        follower.user.equals(_id)
-      );
-
-      if (isAlreadyFollowing) {
-        return res
-          .status(400)
-          .json({ message: "You are already following this user" });
-      }
-
-      // Log the user being followed
-      console.log(
-        `${username} is following user with ID: ${id} (${userToFollow.username})`
-      );
-
-      // Update the following array with both user ObjectId and username
-      await Users.findByIdAndUpdate(
-        _id,
-        {
-          $push: {
-            following: {
-              user: id,
-              username: userToFollow.username,
-            },
-          },
-        },
-        { new: true }
-      );
-
-      // Update the followers array of the user being followed
-      await Users.findByIdAndUpdate(
-        id,
-        {
-          $push: {
-            followers: {
-              user: _id,
-              username,
-            },
-          },
-        },
-        { new: true }
-      );
-
-      // Log the user who is following
-      console.log(
-        `User with ID: ${id} (${userToFollow.username}) is followed by ${username}`
-      );
-
-      res.json({ message: "Followed" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
-
-  unfollowUser: async (req, res) => {
-    try {
-      const {
-        params: { id },
-        user: { _id },
-      } = req;
-
-      const userToUnfollow = await Users.findById(id);
-
-      if (!userToUnfollow) {
-        return res.status(400).json({ message: "User to unfollow not found" });
-      }
-
-      const isFollowing = userToUnfollow.following.includes(_id);
-
-      if (!isFollowing) {
-        return res
-          .status(400)
-          .json({ message: "You are not following this user" });
-      }
-
-      await Users.findByIdAndUpdate(
-        _id,
-        { $pull: { following: id } },
-        { new: true }
-      );
-
-      res.json({ message: "Unfollowed" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  },
 };
 
-module.exports = userController;
+const updateUser = async (req, res) => {
+  try {
+    const {
+      body: { username, email, newPassword, profilePicture }, // Added profilePicture
+      user: { _id },
+    } = req;
 
+    if (!username || !email || !newPassword) {
+      return res.status(400).json({ message: "Please provide username, email, and password." });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update user document with the new data
+    const updateFields = { username, email, password: hashedPassword };
+    if (profilePicture) {
+      updateFields.profilePicture = profilePicture; // Add profilePicture if provided
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      updateFields,
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.json({ message: `Profile updated for user ${username}` });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const followUser = async (req, res) => {
+  try {
+    const {
+      params: { id },
+      user: { _id, username },
+    } = req;
+
+    const userToFollow = await User.findById(id).populate('followers');
+
+    if (!userToFollow) {
+      return res.status(400).json({ message: "User to follow not found" });
+    }
+
+    const isAlreadyFollowing = userToFollow.followers.some((follower) =>
+      follower.user.equals(_id)
+    );
+
+    if (isAlreadyFollowing) {
+      return res
+        .status(400)
+        .json({ message: "You are already following this user" });
+    }
+
+    await User.findByIdAndUpdate(
+      _id,
+      {
+        $push: {
+          following: {
+            user: id,
+            username: userToFollow.username,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    await User.findByIdAndUpdate(
+  id,
+  {
+    $push: {
+      followers: _id, // Push only the ObjectId
+    },
+  },
+  { new: true }
+);
+
+    res.json({ message: "Followed" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const unfollowUser = async (req, res) => {
+  try {
+    const {
+      params: { id },
+      user: { _id },
+    } = req;
+
+    // Find the user to unfollow and populate the followers field
+    const userToUnfollow = await User.findById(id).populate('followers');
+
+    // Check if the user to unfollow exists
+    if (!userToUnfollow) {
+      return res.status(400).json({ message: "User to unfollow not found" });
+    }
+
+    // Check if the logged-in user is following the user to unfollow
+    const isFollowing = userToUnfollow.followers && userToUnfollow.followers.some((follower) =>
+      follower.user && follower.user.equals && follower.user.equals(_id)
+    );
+
+    // If the logged-in user is not following, return an error
+    if (!isFollowing) {
+      return res.status(400).json({ message: "You are not following this user" });
+    }
+
+    // Remove the user from the logged-in user's following list
+    await User.findByIdAndUpdate(
+      _id,
+      { $pull: { following: { user: id } } },
+      { new: true }
+    );
+
+    // Remove the logged-in user from the user to unfollow's followers list
+    await User.findByIdAndUpdate(
+      id,
+      { $pull: { followers: { user: _id } } },
+      { new: true }
+    );
+
+    res.json({ message: "Unfollowed" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { signupUser, loginUser, getAllUsers, getUser, updateUser, followUser, unfollowUser };
