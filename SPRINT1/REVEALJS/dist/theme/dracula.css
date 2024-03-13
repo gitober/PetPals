@@ -19,10 +19,10 @@ section.has-light-background, section.has-light-background h1, section.has-light
  * GLOBAL STYLES
  *********************************************/
 :root {
-  --r-background-color: #282A36;
+  --r-background-color: #cae5fc;
   --r-main-font: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
   --r-main-font-size: 40px;
-  --r-main-color: #F8F8F2;
+  --r-main-color: #000000;
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
   --r-heading-font: League Gothic, Impact, sans-serif;
@@ -38,11 +38,11 @@ section.has-light-background, section.has-light-background h1, section.has-light
   --r-heading3-size: 1.55em;
   --r-heading4-size: 1em;
   --r-code-font: Fira Code, Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
-  --r-link-color: #FF79C6;
-  --r-link-color-dark: #ff2da5;
+  --r-link-color: #BD93F9;
+  --r-link-color-dark: #BD93F9;
   --r-link-color-hover: #8BE9FD;
-  --r-selection-background-color: #44475A;
-  --r-selection-color: #fff;
+  --r-selection-background-color: #e6f3ff;
+  --r-selection-color: #000000;
   --r-overlay-element-bg-color: 240, 240, 240;
   --r-overlay-element-fg-color: 0, 0, 0;
 }
@@ -139,8 +139,13 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal img,
 .reveal video,
 .reveal iframe {
-  max-width: 95%;
-  max-height: 95%;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.logopicture{
+  max-width: 85%;
+  left: 8%;
 }
 
 .reveal strong,
