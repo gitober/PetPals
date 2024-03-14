@@ -1,87 +1,77 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
-const usePopupComment = ({ commentsUrl, postId }) => {
+const usePopupComment = ({ commentsUrl, access_token, refresh_token }) => {
   const [comments, setComments] = useState([]);
-  const [access_token, setAccessToken] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [popupCommentVisible, setPopupCommentVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentImage, setCurrentImage] = useState(null);
-  const { isTestMode } = useTestModeInstance();
-  const simulateTestMode = isTestMode ? true : false; // Set simulateTestMode based on isTestMode value
-
-  useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        const fetchedAccessToken = localStorage.getItem('accessToken');
-        if (!fetchedAccessToken) {
-          console.error('Access token is missing.');
-          return;
-        }
-        setAccessToken(fetchedAccessToken);
-      } catch (error) {
-        console.error('Error fetching access token:', error);
-      }
-    };
-    fetchAccessToken();
-  }, []);
-
-  useEffect(() => {
-  const fetchPostId = async () => {
-    try {
-      // Fetch postId asynchronously
-      const postId = await fetchPostIdFromServer();
-      setPostId(postId);
-    } catch (error) {
-      console.error('Error fetching postId:', error);
-    }
-  };
-
-  fetchPostId();
-}, []);
+  const { simulateTestMode } = useTestModeInstance(); // Include the useTestModeInstance hook
 
   useEffect(() => {
     const fetchComments = async () => {
-      try {
-        if (!access_token || !commentsUrl) {
-          console.error('Access token or comments URL is missing.');
-          return;
-        }
+  try {
+    const response = await fetch(commentsUrl, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
 
-        const response = await fetch(commentsUrl, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Error fetching comments: ${response.status} ${response.statusText}`);
-        }
-
-        const contentType = response.headers.get('content-type');
-        if (!contentType) {
-          console.warn('Response does not have a content type:', response);
-          return;
-        }
-
-        if (contentType.includes('application/json')) {
-          const data = await response.json();
-          setComments(data);
-        } else if (contentType.includes('text/plain')) {
-          const text = await response.text();
-          console.warn('Response is plain text:', text);
+    if (!response.ok) {
+      if (response.status === 401) {
+        const newAccessToken = await refreshToken(refresh_token);
+        if (newAccessToken) {
+          // Retry fetching comments with the new access token
+          fetchComments();
         } else {
-          console.warn('Response is in an unsupported format:', response);
+          throw new Error('Failed to refresh access token.');
         }
-      } catch (error) {
-        console.error('Error fetching comments:', error.message);
+      } else {
+        throw new Error(`Error fetching comments: ${response.statusText}`);
       }
-    };
+    } else {
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        setComments(data);
+      } else {
+        throw new Error('Response is not in JSON format.');
+      }
+    }
+  } catch (error) {
+    // Handle the error gracefully
+    console.error('Error fetching comments:', error.message);
+  }
+};
 
     fetchComments();
-  }, [commentsUrl, access_token]);
+  }, [commentsUrl, access_token, refresh_token]);
+
+  const refreshToken = async (refreshToken) => {
+    try {
+      const response = await fetch('/api/refresh_token', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refresh_token }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to refresh access token: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.access_token;
+    } catch (error) {
+      // Handle the error gracefully
+      console.error('Error refreshing access token:', error.message);
+      return null;
+    }
+  };
 
   const submitComment = async () => {
     try {
@@ -95,13 +85,12 @@ const usePopupComment = ({ commentsUrl, postId }) => {
       const formData = new FormData();
       formData.append('image', selectedImages[0]);
       formData.append('content', selectedText);
-      formData.append('postId', postId);
 
-      if (simulateTestMode || !access_token || !commentsUrl) { // Check if in test mode or backend is unavailable
+      if (simulateTestMode) {
         console.log('Test mode: Simulating successful comment submission');
         // Simulate test mode behavior here
       } else {
-        const response = await fetch(`http://localhost:5000/api/comments/comment/${postId}`, {
+        const response = await fetch('/api/comments', {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${access_token}`,
@@ -111,12 +100,6 @@ const usePopupComment = ({ commentsUrl, postId }) => {
 
         if (!response.ok) {
           console.error(`Failed to submit comment: ${response.status}`);
-          return;
-        }
-
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-          console.warn('Response is not in JSON format:', response);
           return;
         }
 
@@ -158,7 +141,6 @@ const usePopupComment = ({ commentsUrl, postId }) => {
     selectedImages,
     openPopupComment,
     closePopupComment,
-    submitComment,
   };
 };
 

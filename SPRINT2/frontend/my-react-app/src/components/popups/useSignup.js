@@ -29,74 +29,74 @@ const useSignup = (apiUrl, isTestModeSignup) => {
   };
 
   const handleSignupSubmit = async (event) => {
-  event.preventDefault();
+    event.preventDefault();
 
-  try {
-    console.log("Handling signup submission");
+    try {
+      console.log("Handling signup submission");
 
-    simulateTestMode("Simulating signup submission"); // Simulate test mode
+      simulateTestMode("Simulating signup submission"); // Simulate test mode
 
-    if (isTestModeSignup) {
-      // Simulate a successful response in test mode
-      console.log("Test mode: Simulating successful signup");
+      if (isTestModeSignup) {
+        // Simulate a successful response in test mode
+        console.log("Test mode: Simulating successful signup");
 
-      // Perform actions as needed for testing
+        // Perform actions as needed for testing
 
-      // Reset the signup form
-      setSignupFormData({
-        username: "",
-        email: "",
-        password: "",
-      });
-
-      // Close the signup popup
-      setSignupPopupVisible(false);
-    } else {
-      // Use fetch for the actual signup logic
-      const { username, email, password } = signupFormData;
-
-      try {
-        // Make an actual API call for signup
-        const response = await fetch(`${apiUrl}/api/users/signup`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
+        // Reset the signup form
+        setSignupFormData({
+          username: "",
+          email: "",
+          password: "",
         });
 
-        const responseData = await response.json();
+        // Close the signup popup
+        setSignupPopupVisible(false);
+      } else {
+        // Use fetch for the actual signup logic
+        const { username, email, password } = signupFormData;
 
-        // Log the entire response for debugging
-        console.log('Response:', responseData);
-
-        if (response.ok) {
-          // Successful signup
-          console.log("Signup successful");
-          // Perform additional actions or redirect the user
-
-          // Reset the signup form
-          setSignupFormData({
-            username: "",
-            email: "",
-            password: "",
+        try {
+          // Make an actual API call for signup
+          const response = await fetch(`${apiUrl}/api/register`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, email, password }),
           });
 
-          // Close the signup popup
-          setSignupPopupVisible(false);
-        } else {
-          // Signup failed
-          console.error("Signup failed. Server responded with:", responseData);
-          // Handle the error, show a message, etc.
+          const responseData = await response.json();
+
+          // Log the entire response for debugging
+          console.log('Response:', responseData);
+
+          if (response.ok && responseData.message === 'Registration Successful!') {
+            // Successful signup
+            console.log("Signup successful");
+            // Perform additional actions or redirect the user
+
+            // Reset the signup form
+            setSignupFormData({
+              username: "",
+              email: "",
+              password: "",
+            });
+
+            // Close the signup popup
+            setSignupPopupVisible(false);
+          } else {
+            // Signup failed
+            console.error("Signup failed. Server responded with:", responseData.message);
+            // Handle the error, show a message, etc.
+          }
+        } catch (error) {
+          console.error("Error during API call for signup:", error);
         }
-      } catch (error) {
-        console.error("Error during API call for signup:", error);
       }
+    } catch (error) {
+      console.error("Error during signup:", error);
     }
-  } catch (error) {
-    console.error("Error during signup:", error);
-  }
-};
+  };
 
   return {
     signupFormData,

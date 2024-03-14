@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
-const usePopupPost = (getToken, setFeedItems, fetchInitialPosts) => {
+const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [popupPostVisible, setPopupPostVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
@@ -44,7 +44,6 @@ const usePopupPost = (getToken, setFeedItems, fetchInitialPosts) => {
 
   const handleSubmit = async () => {
     console.log('Inside handleSubmit');
-    const token = await getToken(); // Retrieve the token dynamically
     console.log('Access Token:', token);
     console.log('Selected Images:', selectedImages);
     console.log('Submit button clicked');
@@ -58,37 +57,56 @@ const usePopupPost = (getToken, setFeedItems, fetchInitialPosts) => {
       setSubmitting(true);
 
       const formData = new FormData();
-      selectedImages.forEach((imageFile, index) => {
-        formData.append(`images[${index}]`, imageFile);
+      selectedImages.forEach((imageDataUrl, index) => {
+        formData.append(`images[${index}]`, imageDataUrl);
       });
       formData.append('content', selectedText);
 
-      try {
-        // Make an actual API call for creating a post
-        const response = await fetch('http://localhost:5000/api/posts/posts', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        });
+      if (isTestMode) {
+        console.log('Test mode: Simulating successful post submission');
+        console.log('Test mode: Closing post popup');
 
-        if (response.ok) {
-          const responseData = await response.json();
+        const newPost = {
+          id: Math.random().toString(),
+          images: selectedImages,
+          content: selectedText,
+          comments: [],
+        };
 
-          // Log the entire response for debugging
-          console.log('Response:', responseData);
+        setSelectedImages([]);
+        console.log('New Post Data:', newPost);
 
-          // Fetch initial posts after successful submission
-          fetchInitialPosts(token);
+        setFeedItems((prevFeedItems) => [newPost, ...prevFeedItems]);
 
-          // Close the post popup after successful submission
-          closePopupPost();
-        } else {
-          console.error('Failed to submit post:', response.statusText);
+        closePopupPost();
+      } else {
+        try {
+          // Make an actual API call for creating a post
+          const response = await fetch('http://localhost:5000/api/posts', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
+
+          if (response.ok) {
+            const responseData = await response.json();
+
+            // Log the entire response for debugging
+            console.log('Response:', responseData);
+
+            // Fetch initial posts after successful submission
+            fetchInitialPosts(token);
+
+            // Close the post popup after successful submission
+            closePopupPost();
+          } else {
+            console.error('Failed to submit post:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error during post submission:', error);
         }
-      } catch (error) {
-        console.error('Error during post submission:', error);
       }
     } finally {
       setSubmitting(false);
@@ -99,7 +117,18 @@ const usePopupPost = (getToken, setFeedItems, fetchInitialPosts) => {
     const files = event.target.files;
     if (files.length > 0) {
       const newImages = Array.from(files);
-      setSelectedImages(newImages);
+
+      Promise.all(
+        newImages.map((image) => {
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(image);
+          });
+        })
+      ).then((imageDataUrls) => {
+        setSelectedImages(imageDataUrls);
+      });
     }
   };
 

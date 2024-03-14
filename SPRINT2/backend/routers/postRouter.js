@@ -8,6 +8,7 @@ const {
   likePost,
   unlikePost,
   getUserPosts,
+  getPostById,
 } = require("../controllers/postController");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -34,5 +35,8 @@ router.patch("/posts/:id/unlike", unlikePost);
 
 // Get posts by a specific user
 router.get("/user_posts/:id", getUserPosts);
+
+// Get a post by ID
+router.get("/posts/:id", getPostById);
 
 module.exports = router;

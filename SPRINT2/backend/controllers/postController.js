@@ -14,10 +14,10 @@ const getPosts = async (req, res) => {
 
 // Add a new post
 const addPost = async (req, res) => {
-  const { content, images } = req.body;
+  const { content, images, postId } = req.body;
 
   try {
-    const newPost = new Posts({ content, images, user: req.user._id });
+    const newPost = new Posts({ content, images, user: req.user._id, postId }); // Include postId when creating a new post
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
@@ -27,6 +27,21 @@ const addPost = async (req, res) => {
 };
 
 // Get a post by ID
+const getPostById = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    // Fetch post from the database using postId
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    res.json(post);
+  } catch (error) {
+    console.error('Error fetching post by id:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+// Get posts by a specific user
 const getUserPosts = async (req, res) => {
   const userId = req.params.id;
 
@@ -113,6 +128,7 @@ const unlikePost = async (req, res) => {
 module.exports = {
   getPosts,
   addPost,
+  getPostById, // Adding getPostById function
   updatePost,
   deletePost,
   likePost,

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTestModeInstance } from '../components/testmode/useTestMode';
-import usePostFetch from '../components/posts/usePostFetch';
-import usePopupComment from '../components/popups/usePopupComment';
-import usePopupPost from '../components/popups/usePopupPost';
+import { useNavigate } from 'react-router-dom';
 import useSearch from '../components/searchbar/useSearch';
-import useLikes from '../components/likes/uselikes';
-import useSidebar from '../components/sidebar/useSidebar';
+import usePopupPost from '../components/popups/usePopupPost';
+import usePopupComment from '../components/popups/usePopupComment';
+import useLikes from '../components/likes/useLikes';
 import '../style/home.css';
 import '../style/searchbar.css';
 import '../style/sidebar.css';
@@ -15,150 +13,156 @@ import '../style/popupcomment.css';
 
 function Home() {
   // State variables
-  const [feedItems, setFeedItems] = useState([]);
-  const [accessToken, setAccessToken] = useState('');
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-  const [likeImage, setLikeImage] = useState("../img/like.png");
-  const [isFollowing, setIsFollowing] = useState(false);
-  const [followers, setFollowers] = useState(0);
-  const [following, setFollowing] = useState(0);
-  const [commentCount, setCommentCount] = useState(0);
-  const [commentImage, setCommentImage] = useState("../img/comment.png");
-  const [commentVisible, setCommentVisible] = useState(false);
-  const [popupCommentSubmitting, setPopupCommentSubmitting] = useState(false);
-  const [currentImage, setCurrentImage] = useState(null);
-
-  // Use useTestModeInstance hook
-  const getToken = async () => {
-    return accessToken;
-  };
-
- // Function to toggle test mode
-  const fetchInitialPosts = async (token) => {
-    setAccessToken(token);
-  };
-
-  // Use useSidebar hook for sidebar functionality
-const { popupPostVisible: sidebarPopupPostVisible, openPopupPost: openSidebarPopupPost, setPopupPostVisible: setSidebarPopupPostVisible } = useSidebar();
-
-  // Use usePostFetch hook
-  const posts = usePostFetch();
-
-  // Use useNavigate hook
-  const navigate = useNavigate();
-
-  // Use useTestModeInstance hook
   const { isTestMode, simulateTestMode } = useTestModeInstance();
+  const [feedItems, setFeedItems] = useState([]);
+  const [likeCounts, setLikeCounts] = useState({});
+  const [likedImages, setLikedImages] = useState([]);
+  const [selectedText, setSelectedText] = useState('');
+  const [commentSelectedText, setCommentSelectedText] = useState('');
+  const [commentSubmitting, setCommentSubmitting] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [testModeVisible, setTestModeVisible] = useState(false);
+  const [refreshToken, setRefreshToken] = useState(null);
 
-  // Use useLikes hook
-  const { likeCounts, likedPosts, toggleLike, testModeVisible } = useLikes();
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-  // Use usePopupComment hook
-  const { handleFileChange } = usePopupPost();
+  const {
+    popupPostVisible,
+    openPopupPost,
+    closePopupPost,
+    handleSubmit,
+    handleFileChange,
+    selectedImages: postSelectedImages,
+    setSelectedImages: setPostSelectedImages,
+    submitting: postSubmitting,
+    setSubmitting: setPostSubmitting,
+    updatePopupVisibility,
+  } = usePopupPost(isTestMode, setFeedItems);
 
-  // Use usePopupComment hook
-  const { handleSubmit } = usePopupPost();
+  const {
+    comments,
+    submitting: popupCommentSubmitting,
+    setSelectedText: setPopupCommentSelectedText,
+    submitComment,
+    openPopupComment,
+    closePopupComment,
+    popupCommentVisible,
+    setCurrentImage,
+    currentImage,
+  } = usePopupComment({
+    commentsUrl: '/api/comments',
+    access_token: accessToken, // Pass accessToken to handle authentication
+    refresh_token: refreshToken, // Pass refreshToken for token refresh
+    selectedImages: postSelectedImages,
+    currentImage: postSelectedImages.length > 0 ? postSelectedImages[0] : null,
+    setFeedItems,
+  });
 
-  // Use usePopupComment hook
-  const { comments, submitting: commentSubmitting, popupCommentVisible, selectedText: commentSelectedText, setSelectedText: setCommentSelectedText, selectedImages: commentSelectedImages, openPopupComment, closePopupComment, submitComment } = usePopupComment({ commentsUrl: `http://localhost:5000/api/comments/comment/${postId}`, access_token: accessToken, postId: postId });
+  const { likeCounts: likesData, likedImages: likedImagesData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
 
-  // Use usePopupPost hook for post functionality
-  const { popupPostVisible, openPopupPost, closePopupPost, handleSubmit: postSubmit, handleFileChange: postHandleFileChange, handleChange: postHandleChange, selectedText: postSelectedText, setSelectedText: setPostSelectedText, selectedImages: postSelectedImages, setSelectedImages: setPostSelectedImages, submitting: postSubmitting, setSubmitting: setPostSubmitting, postSelectedImages: postSelectedImagesPost, setSelectedImage: setPostSelectedImage } = usePopupPost(getToken, setFeedItems, fetchInitialPosts);
-
-  // Use useSearch hook
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
-    // Implement your search logic here
-    console.log('Searching for:', term);
+    // Handle search logic here, if needed
   }, navigate);
 
+  const handleChange = (e) => {
+    setSelectedText(e.target.value);
+    console.log('selectedText updated:', e.target.value);
+  };
 
-  // Fetch access token from localStorage and set it
+  const fetchHomeFeedPosts = useCallback(async () => {
+    try {
+      if (!isComponentMounted) {
+        return; // Stop fetching if the component is not mounted
+      }
+
+      if (isTestMode) {
+        simulateTestMode('Fetching home feed posts in test mode');
+        // Simulate test data or behavior here
+        return;
+      }
+
+      const url = `${apiUrl}/api/posts`;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // Pass access token in headers
+        },
+      };
+
+      const response = await fetch(url, config);
+
+      if (response.ok) {
+        const responseData = await response.json();
+
+        if (responseData && responseData.data && responseData.data.posts) {
+          const postsArray = responseData.data.posts;
+
+          setFeedItems((prevItems) => {
+            const updatedItems = [...prevItems, ...postsArray];
+            console.log('Updated Feed Items:', updatedItems);
+            return updatedItems;
+          });
+        } else {
+          console.error('Invalid response format. Expected data.posts to be an array. Received:', responseData);
+        }
+      } else {
+        console.error(
+          'Failed to fetch posts:',
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error('Error during initial post fetch:', error.message);
+    }
+  }, [setFeedItems, apiUrl, isTestMode, simulateTestMode, accessToken]);
+
+  const [isComponentMounted, setIsComponentMounted] = useState(true);
+
+  useEffect(() => {
+    setIsComponentMounted(true);
+
+    // Cleanup function to handle component unmounting
+    return () => {
+      setIsComponentMounted(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    fetchHomeFeedPosts();
+  }, []);
+
   useEffect(() => {
     const fetchAccessToken = async () => {
       try {
-        const fetchedAccessToken = localStorage.getItem('accessToken');
-        console.log('Fetched access token:', fetchedAccessToken);
-        if (!fetchedAccessToken) {
-          console.error('Access token is missing. Redirecting to login page.');
-          navigate('/login');
-          return;
+        if (!isTestMode) {
+          // Perform your token retrieval logic here
+          // For example, fetch token from local storage or any other source
+          const fetchedAccessToken = 'yourAccessToken'; // Replace with your token retrieval logic
+
+          setAccessToken(fetchedAccessToken);
         }
-        setAccessToken(fetchedAccessToken);
       } catch (error) {
-        console.error('Error fetching access token:', error);
+        console.error(`Error fetching access token: ${error.message}`);
+        // Handle error as needed
       }
     };
+
     fetchAccessToken();
-  }, [navigate]);
-
-  // Fetch home feed posts
-  useEffect(() => {
-    const fetchHomeFeedPosts = async () => {
-  try {
-    const url = `http://localhost:5000/api/posts/posts`;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-    const response = await fetch(url, config);
-    if (response.ok) {
-      const responseData = await response.json();
-      if (Array.isArray(responseData)) {
-        // Assuming each post item in responseData already has a postId property
-        setFeedItems(responseData);
-      } else {
-        console.error('Invalid response format. Expected an array of posts. Received:', responseData);
-      }
-    } else {
-      console.error('Failed to fetch posts:', response.status, response.statusText);
-    }
-  } catch (error) {
-    console.error('Error during initial post fetch:', error.message);
-  }
-};
-    if (accessToken) {
-      fetchHomeFeedPosts();
-    }
-  }, [accessToken]);
-
-
-  // Function to toggle follow
-  const toggleFollow = () => {
-    setIsFollowing(!isFollowing);
-    setFollowers(prevFollowers => (isFollowing ? prevFollowers - 1 : prevFollowers + 1));
-    setFollowing(prevFollowing => (isFollowing ? prevFollowing - 1 : prevFollowing + 1));
-  };
-
-  useEffect(() => {
-    if (isTestMode) {
-      console.log('Test mode is active');
-      // Add any test mode specific logic here
-    }
   }, [isTestMode]);
 
-  // Example usage
-  const handleCommentSubmit = () => {
-    // Call submitComment function when the user submits a comment
-    submitComment();
-  };
+  useEffect(() => {
+    if (likesTestModeVisible) {
+      simulateTestMode({ /* Add any test data or behavior needed for useLikes */ });
+      setTestModeVisible(true); // Set visibility in test mode
+      likeCounts && setLikeCounts(likesData);
+    }
+  }, [likesTestModeVisible]);
 
-   // Example usage
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  // Example usage
-  const handleOpenPopup = () => {
-    openPopupPost();
-  };
-
-  // Example usage
-  const handleToggleTestMode = () => {
-    toggleTestMode();
-  };
-
+  useEffect(() => {
+    setLikedImages(likedImagesData);
+  }, [likedImagesData]);
 
   return (
     <div>
@@ -191,63 +195,57 @@ const { popupPostVisible: sidebarPopupPostVisible, openPopupPost: openSidebarPop
             <input type="text" placeholder="Search" onKeyPress={handleKeyPress} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           <div className="home-feed">
-          {feedItems && feedItems.map((item, index) => (
-            <div key={index} className="feed-item">
-            <a href="../userprofile">
-            <h3>username</h3>
-        </a>
-        {item.images && item.images[0] && (
-            <img
-                src={item.images[0]}
-                alt={`User's Post ${index}`}
-                onClick={() => handleImageClick(item.images[0])}
-            />
-        )}
-        <div className="icons">
-            <div className="like-container">
-    {/* Like icon */}
-    {likedPosts[item.images[0]] ? (
-        <img
-            src="../img/liked.png"
-            alt="Image Liked"
-            className="like-icon"
-            id={`likeIcon-${index}`}
-            onClick={() => {
-                toggleLike(item.images[0], item.postId);
-            }}
-        />
-      ) : (
-        <img
-            src="../img/like.png"
-            alt="Image Not Liked"
-            className="like-icon"
-            id={`likeIcon-${index}`}
-            onClick={() => toggleLike(item.images[0], item.postId)}
-        />
-      )}
-      </div>
-            {/* Comment icon */}
-            <img
-                src="../img/comment.png"
-                alt="Image"
-                className="icon"
-                onClick={() => openPopupComment(item.images[0], item.postId)} 
-            />
-            <div className="likes-container">
-                {/* Display like count */}
-                <p className="likes">
+            {feedItems.map((item, index) => (
+              <div key={index} className="feed-item">
+                <a href="../userprofile">
+                  <h3>username</h3>
+                </a>
+                <img src={item.images[0]} alt={`User's Post ${index}`} />
+                <div className="icons">
+                  <div className="like-container">
+                    {/* Conditional rendering of like icon based on liked status */}
+                    {likedImages[item.images[0]] ? (
+                      <img
+                        src="../img/liked.png"
+                        alt="Image Liked"
+                        className="like-icon"
+                        id={`likeIcon-${index}`}
+                        onClick={() => {
+                          toggleLike(item.images[0]);
+                      }}
+                      />
+                    ) : (
+                      <img
+                        src="../img/like.png"
+                        alt="Image Not Liked"
+                        className="like-icon"
+                        id={`likeIcon-${index}`}
+                        onClick={() => toggleLike(item.images[0], item.postId)}
+                      />
+                    )}
+                  </div>
+                  {/* Comment icon */}
+                  <img
+                    src="../img/comment.png"
+                    alt="Image"
+                    className="icon"
+                    onClick={() => openPopupComment(item.images[0])}
+                  />
+                  <div className="likes-container">
+                    {/* Display like count */}
+                    <p className="likes">
                     likes{" "}
                     <span id={`likeCount-${index}`}>
-                        {likeCounts[item.images[0]] !== undefined
-                            ? likeCounts[item.images[0]]
-                            : 0}
-                    </span>
-                </p>
-            </div>
-        </div>
-        <p>{item.content}</p>
-    </div>
-))}
+                    {likeCounts[item.images[0]] !== undefined
+                    ? likeCounts[item.images[0]]
+                  : 0}
+                  </span>
+                  </p>
+                  </div>
+                </div>
+                <p>{item.content}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -262,7 +260,7 @@ const { popupPostVisible: sidebarPopupPostVisible, openPopupPost: openSidebarPop
           <div className="content-wrapper">
             <h2>Add a new picture</h2>
             <div className="empty-area">
-              {postSelectedImages && postSelectedImages.length === 1 && (
+              {postSelectedImages.length === 1 && (
                 <div className="postPicAndComment">
                   <img
                     src={postSelectedImages[0]}
@@ -322,16 +320,16 @@ const { popupPostVisible: sidebarPopupPostVisible, openPopupPost: openSidebarPop
         </div>
         <div className="comment-popup-content">
           {/* Comments will be displayed here */}
-          {feedItems &&
-          feedItems
-    .filter((item) => item.images && item.images.includes(currentImage))
-    .map((item, index) => (
-      <div key={index} className="comment">
-        {item.comments && item.comments.map((comment, idx) => (
-            <div key={idx}>{comment.content}</div>
-          ))}
-      </div>
-    ))}
+          {feedItems
+            .filter((item) => item.images && item.images.includes(currentImage))
+            .map((item, index) => (
+              <div key={index} className="comment">
+                {item.comments &&
+                  item.comments.map((comment, idx) => (
+                    <div key={idx}>{comment.content}</div>
+                  ))}
+              </div>
+            ))}
         </div>
         <div className="comment-input">
           <input
