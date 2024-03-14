@@ -3,54 +3,24 @@ import { useTestModeInstance } from '../testmode/useTestMode';
 
 const useLikes = () => {
   const [likeCounts, setLikeCounts] = useState({});
-  const [likedImages, setLikedImages] = useState({});
+  const [likedPosts, setLikedPosts] = useState({});
   const [testModeVisible, setTestModeVisible] = useState(false);
-  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
   const { isTestMode, simulateTestMode } = useTestModeInstance();
 
-  const updateLikeState = (imageUrl, response) => {
-    setLikeCounts((prevCounts) => ({
-      ...prevCounts,
-      [imageUrl]: (prevCounts[imageUrl] || 0) + (likedImages[imageUrl] ? -1 : 1),
-    }));
+  const toggleLike = (postId) => {
+    setLikedPosts((prevLikedPosts) => {
+      const isLiked = !prevLikedPosts[postId];
+      const updatedLikedPosts = { ...prevLikedPosts, [postId]: isLiked };
 
-    setLikedImages((prevLikedImages) => ({
-      ...prevLikedImages,
-      [imageUrl]: !prevLikedImages[imageUrl],
-    }));
+      // Update like count directly
+      setLikeCounts((prevCounts) => ({
+        ...prevCounts,
+        [postId]: (prevCounts[postId] || 0) + (isLiked ? 1 : -1),
+      }));
 
-    if (!response.ok) {
-      console.error(`Failed to toggle like for ${imageUrl}: ${response.status} ${response.statusText}`);
-    }
+      return updatedLikedPosts;
+    });
   };
-
-  const toggleLike = async (imageUrl) => {
-  try {
-    if (isTestMode) {
-      console.log('Test mode: Simulating like toggle');
-      // Simulate like toggle logic for testing
-      updateLikeState(imageUrl, { ok: true }); // Simulate a successful response in test mode
-      return;
-    }
-
-    const url = `${apiUrl}/api/like`;
-    const method = likedImages[imageUrl] ? 'DELETE' : 'POST';
-    const config = {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ imageUrl }), // Correctly pass the imageUrl as an object property
-    };
-
-    const response = await fetch(url, config);
-    updateLikeState(imageUrl, response);
-
-    console.log(`Like toggled ${response.ok ? 'successfully' : 'unsuccessfully'}`);
-  } catch (error) {
-    console.error(`Error toggling like for ${imageUrl}: ${error.message}`);
-  }
-};
 
   useEffect(() => {
     if (isTestMode) {
@@ -62,7 +32,7 @@ const useLikes = () => {
     }
   }, [isTestMode, simulateTestMode]);
 
-  return { likeCounts, likedImages, toggleLike, testModeVisible };
+  return { likeCounts, likedPosts, toggleLike, testModeVisible };
 };
 
 export default useLikes;
