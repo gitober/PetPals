@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const requireAuth = require("../middleware/requireAuth");
 const {
   loginUser,
   signupUser,
@@ -11,14 +10,11 @@ const {
   unfollowUser,
 } = require("../controllers/userController");
 
-// Signup route
+// Signup route (No authentication required)
 router.post("/signup", signupUser);
 
-// Login route
+// Login route (No authentication required)
 router.post("/login", loginUser);
-
-// Apply the requireAuth middleware to the following routes
-router.use(requireAuth);
   
 // Get all users route
 router.get("/", getAllUsers);
