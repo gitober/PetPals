@@ -15,13 +15,13 @@ const requireAuth = async (req, res, next) => {
         const user = await User.findById(decodedToken._id).select("_id username email");
 
         if (!user) {
-            throw new Error("User not found");
+            return res.status(404).json({ error: "User not found" });
         }
 
         req.user = user;
         next();
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(401).json({ error: "Request is not authorized" });
     }
 };

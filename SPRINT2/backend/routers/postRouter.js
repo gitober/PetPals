@@ -9,10 +9,6 @@ const {
   unlikePost,
   deletePost,
 } = require("../controllers/postController");
-const requireAuth = require("../middleware/requireAuth");
-
-// Require authentication for all routes
-router.use(requireAuth);
 
 // Add a new post
 router.post("/", addPost);

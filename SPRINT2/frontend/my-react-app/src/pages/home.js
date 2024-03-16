@@ -5,6 +5,7 @@ import useSearch from '../components/searchbar/useSearch';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
+import usePostFetch from '../components/posts/usePostFetch';
 import '../style/home.css';
 import '../style/searchbar.css';
 import '../style/sidebar.css';
@@ -24,6 +25,8 @@ function Home() {
   const [accessToken, setAccessToken] = useState(null);
   const [testModeVisible, setTestModeVisible] = useState(false);
   const [refreshToken, setRefreshToken] = useState(null);
+  
+  const posts = usePostFetch();
 
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
@@ -72,51 +75,51 @@ function Home() {
   };
 
   const fetchHomeFeedPosts = useCallback(async () => {
-    try {
-      if (!isComponentMounted) {
-        return; // Stop fetching if the component is not mounted
-      }
-
-      if (isTestMode) {
-        simulateTestMode('Fetching home feed posts in test mode');
-        // Simulate test data or behavior here
-        return;
-      }
-
-      const url = `${apiUrl}/api/posts`;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // Pass access token in headers
-        },
-      };
-
-      const response = await fetch(url, config);
-
-      if (response.ok) {
-        const responseData = await response.json();
-
-        if (responseData && responseData.data && responseData.data.posts) {
-          const postsArray = responseData.data.posts;
-
-          setFeedItems((prevItems) => {
-            const updatedItems = [...prevItems, ...postsArray];
-            console.log('Updated Feed Items:', updatedItems);
-            return updatedItems;
-          });
-        } else {
-          console.error('Invalid response format. Expected data.posts to be an array. Received:', responseData);
-        }
-      } else {
-        console.error(
-          'Failed to fetch posts:',
-          response.status,
-          response.statusText
-        );
-      }
-    } catch (error) {
-      console.error('Error during initial post fetch:', error.message);
+  try {
+    if (!isComponentMounted) {
+      return; // Stop fetching if the component is not mounted
     }
-  }, [setFeedItems, apiUrl, isTestMode, simulateTestMode, accessToken]);
+
+    if (isTestMode) {
+      simulateTestMode('Fetching home feed posts in test mode');
+      // Simulate test data or behavior here
+      return;
+    }
+
+    const url = `${apiUrl}/api/posts`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`, // Pass access token in headers
+      },
+    };
+
+    const response = await fetch(url, config);
+
+    if (response.ok) {
+      const responseData = await response.json();
+
+      if (responseData && responseData.data && responseData.data.posts) {
+        const postsArray = responseData.data.posts;
+
+        setFeedItems((prevItems) => {
+          const updatedItems = [...prevItems, ...postsArray];
+          console.log('Updated Feed Items:', updatedItems);
+          return updatedItems;
+        });
+      } else {
+        console.error('Invalid response format. Expected data.posts to be an array. Received:', responseData);
+      }
+    } else {
+      console.error(
+        'Failed to fetch posts:',
+        response.status,
+        response.statusText
+      );
+    }
+  } catch (error) {
+    console.error('Error during initial post fetch:', error.message);
+  }
+}, [setFeedItems, apiUrl, isTestMode, simulateTestMode, accessToken]);
 
   const [isComponentMounted, setIsComponentMounted] = useState(true);
 

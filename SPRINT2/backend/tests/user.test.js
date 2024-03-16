@@ -6,8 +6,8 @@ const User = require("../models/userModel");
 
 let token;
 
-beforeAll(async () => {
-  await User.deleteMany({}); // Clear the database before running tests
+beforeEach(async () => {
+  await User.deleteMany({}); // Clear the database before each test
 });
 
 describe('User Routes', () => {
@@ -34,7 +34,6 @@ describe('User Routes', () => {
       };
 
       const response = await api.post('/api/users/signup').send(userData);
-      token = response.body.token;
 
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty('error');

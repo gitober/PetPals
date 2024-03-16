@@ -3,27 +3,31 @@ const Post = require('../models/postModel');
 
 // Create a new post
 const addPost = async (req, res) => {
-   const { content, images } = req.body;
+  const { content, images } = req.body;
 
-    try {
+  try {
+    // Assuming user ID is available in req.user._id
     const user_id = req.user._id;
     const newPost = new Post({ content, images, user_id });
     await newPost.save();
     res.status(201).json(newPost);
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-}
+};
 
-// Get all posts
 const getAllPosts = async (req, res) => {
-  const user_id = req.user._id
-
   try {
-    const posts = await Post.find({user_id}).sort({createdAt: -1})
-    res.status(200).json(posts)
+    // Check if req.user exists before accessing its properties
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    // If req.user exists, extract user_id and fetch posts
+    const user_id = req.user._id;
+    const posts = await Post.find({ user_id }).sort({ createdAt: -1 });
+    res.status(200).json(posts);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
