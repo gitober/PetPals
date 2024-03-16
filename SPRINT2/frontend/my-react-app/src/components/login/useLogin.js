@@ -75,7 +75,7 @@ const useLogin = (apiUrl, isTestModeLogin) => {
         navigate('/home');
 
         // Fetch user data
-        const userResponse = await fetch(`${apiUrl}/api/users/users`, {
+        const userResponse = await fetch(`${apiUrl}/api/users`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

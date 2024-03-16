@@ -1,82 +1,68 @@
 const mongoose = require('mongoose');
-const Posts = require('../models/postModel');
-const Comments = require('../models/commentModel');
+const Post = require('../models/postModel');
+const Comment = require('../models/commentModel');
 
-// Create a new comment for a post
-const createComment = async (req, res) => {
+// Get all comments
+const getAllComments = async (req, res) => {
+  const postId = req.params.id;
   try {
-    const { content, postId, reply, postUserId } = req.body;
+    const comments = await Comment.find({ postId });
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+}
 
-    // Check if the provided post ID is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(postId)) {
-      return res.status(400).json({ message: "Invalid Post ID" });
-    }
-
-    const post = await Posts.findById(postId);
-    if (!post) return res.status(400).json({ message: "No posts found" });
-
-    const newComment = await new Comments({
-      user: req.user._id,
-      content,
-      reply,
-      postUserId,
-      postId,
-    });
-
-    await Posts.findOneAndUpdate({ _id: postId }, { $push: { comments: newComment._id } });
+// Create a new comment
+const addComment = async (req, res) => {
+  const { content, postId } = req.body;
+  try {
+    const user_id = req.user._id;
+    const username = req.user.username;
+    const newComment = new Comment({ content, postId, user_id, username });
     await newComment.save();
-
-    // Send a JSON response with relevant comment fields
-    return res.json({
-      _id: newComment._id,
-      user: newComment.user,
-      content: newComment.content,
-      reply: newComment.reply,
-      postId: newComment.postId,
-      postUserId: newComment.postUserId,
-      createdAt: newComment.createdAt,
-      updatedAt: newComment.updatedAt,
-      __v: newComment.__v,
-    });
+    const post = await Post.findById(postId);
+    post.comments.push(newComment._id);
+    await post.save();
+    res.status(201).json(newComment);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-};
+}
 
-// Update the content of a comment
+// Update a comment
 const updateComment = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { content } = req.body;
-
-    await Comments.findOneAndUpdate({ _id: req.params.id, user: req.user._id }, { content });
-
-    return res.json({ message: "Updated successfully" });
-  } catch (error) {
+    const comment = await Comment.findByIdAndUpdate
+      (id,    { ...req.body },        { new: true });
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+    res.status(200).json(comment);
+  } 
+  catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
-  }
-};
+  } 
 
-// Delete a comment if the user is the owner or post owner
+}
+
+// Delete a comment
 const deleteComment = async (req, res) => {
+  const { id } = req.params;
   try {
-    const comment = await Comments.findOneAndDelete({
-      _id: req.params.id,
-      $or: [{ postUserId: req.user._id }, { user: req.user._id }],
-    });
-
-    await Posts.findOneAndUpdate({ _id: comment.postId }, { $pull: { comments: req.params.id } });
-
-    res.json({ message: "Comment deleted successfully!" });
+    const comment = await Comment.findByIdAndRemove(id);
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+    res.status(200).json({ message: 'Comment deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-};
+}
 
-module.exports = {
-  createComment,
-  updateComment,
-  deleteComment,
-};
+module.exports = { getAllComments, addComment, updateComment, deleteComment };

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const requireAuth = require("../middleware/requireAuth"); // Import the requireAuth middleware
+const requireAuth = require("../middleware/requireAuth");
 const {
   loginUser,
   signupUser,
@@ -21,18 +21,18 @@ router.post("/login", loginUser);
 router.use(requireAuth);
   
 // Get all users route
-router.get("/users", getAllUsers);
+router.get("/", getAllUsers);
 
 // Get user by ID route
-router.get("/users/:id", getUser);
+router.get("/:id", getUser);
 
 // Update user profile route
-router.put("/users/:id", updateUser);
+router.put("/:id", updateUser);
 
 // Follow user route
-router.patch("/users/:id/follow", followUser);
+router.patch("/:id/follow", followUser);
 
 // Unfollow user route
-router.patch("/users/:id/unfollow", unfollowUser);
+router.patch("/:id/unfollow", unfollowUser);
 
 module.exports = router;

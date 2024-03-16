@@ -1,42 +1,38 @@
 const express = require("express");
 const router = express.Router();
 const {
-  getPosts,
   addPost,
+  getAllPosts,
+  getPostById,
   updatePost,
-  deletePost,
   likePost,
   unlikePost,
-  getUserPosts,
-  getPostById,
+  deletePost,
 } = require("../controllers/postController");
 const requireAuth = require("../middleware/requireAuth");
 
 // Require authentication for all routes
 router.use(requireAuth);
 
-// Get all posts
-router.get("/posts", getPosts);
-
 // Add a new post
-router.post("/posts", addPost);
+router.post("/", addPost);
+
+// Get all posts
+router.get("/", getAllPosts);
+
+// Get a post by POST id
+router.get("/:id", getPostById);
 
 // Update a post by ID
-router.patch("/posts/:id", updatePost);
-
-// Delete a post by ID
-router.delete("/posts/:id", deletePost);
+router.patch("/:id", updatePost);
 
 // Like a post
-router.patch("/posts/:id/like", likePost);
+router.patch("/:id/like", likePost);
 
 // Unlike a post
-router.patch("/posts/:id/unlike", unlikePost);
+router.patch("/:id/unlike", unlikePost);
 
-// Get posts by a specific user
-router.get("/user_posts/:id", getUserPosts);
-
-// Get a post by ID
-router.get("/posts/:id", getPostById);
+// Delete a post by ID
+router.delete("/:id", deletePost);
 
 module.exports = router;
