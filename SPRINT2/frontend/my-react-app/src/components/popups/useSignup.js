@@ -72,7 +72,7 @@ const useSignup = (apiUrl, isTestModeSignup) => {
 
           if (response.ok) {
             // Check if signup was successful
-            if (responseData.token) {
+            if (responseData.accessToken) {
               // Successful signup
               console.log('Signup successful');
               // Perform additional actions or redirect the user

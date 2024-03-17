@@ -1,49 +1,41 @@
-import { useState, useEffect } from 'react';
-import { useTestModeInstance } from '../../components/testmode/useTestMode';
+import { useEffect, useState } from 'react';
+import { useTestModeInstance } from '../testmode/useTestMode';
 
-const usePostFetch = (accessToken) => {
+const usePostFetch = () => {
   const [posts, setPosts] = useState([]);
   const { isTestMode, simulateTestMode } = useTestModeInstance();
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        if (isTestMode) {
-          // Simulate test mode behavior for fetching posts
-          simulateTestMode('Simulating fetchPosts in test mode');
-          // Simulate test data or behavior here
-        } else {
-          // Make an actual API call for fetching posts
-          const response = await fetch('/api/posts', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-
+        if (!isTestMode) { // Check if test mode is active
+          const response = await fetch('http://localhost:5000/api/posts');
+          
           if (!response.ok) {
-            console.error(`Failed to fetch posts: ${response.statusText}`);
-            return;
+            throw new Error(`Failed to fetch posts: ${response.status} ${response.statusText}`);
           }
-
+  
+          const contentType = response.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Invalid response format: expected JSON');
+          }
+  
           const data = await response.json();
           setPosts(data);
+        } else {
+          // Simulate test mode behavior
+          console.log('Test mode: Simulating fetchPosts');
+          // Add any additional test mode behavior for fetchPosts
+          simulateTestMode('Simulating fetchPosts');
         }
       } catch (error) {
-        console.error('Error during initial post fetch:', error.message);
+        console.error('Error fetching posts:', error.message);
+        // Handle error gracefully, such as displaying an error message to the user
       }
     };
 
     fetchPosts();
-  }, [accessToken, isTestMode, simulateTestMode]);
-
-  useEffect(() => {
-    if (isTestMode) {
-      // Simulate test mode behavior
-      console.log('Test mode: Simulating fetchPosts');
-      // Add any additional test mode behavior for fetchPosts
-      simulateTestMode('Simulating fetchPosts');
-    }
-  }, [isTestMode, simulateTestMode]);
+  }, [isTestMode]); // Include isTestMode here
 
   return posts;
 };

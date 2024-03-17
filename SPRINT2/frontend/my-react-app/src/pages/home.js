@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useTestModeInstance } from '../components/testmode/useTestMode';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Removed unused import
 import useSearch from '../components/searchbar/useSearch';
 import usePopupPost from '../components/popups/usePopupPost';
 import usePopupComment from '../components/popups/usePopupComment';
 import useLikes from '../components/likes/useLikes';
 import usePostFetch from '../components/posts/usePostFetch';
+import { useTestModeInstance } from '../components/testmode/useTestMode';
 import '../style/home.css';
 import '../style/searchbar.css';
 import '../style/sidebar.css';
@@ -13,7 +13,6 @@ import '../style/popuppost.css';
 import '../style/popupcomment.css';
 
 function Home() {
-  // State variables
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [feedItems, setFeedItems] = useState([]);
   const [likeCounts, setLikeCounts] = useState({});
@@ -21,14 +20,22 @@ function Home() {
   const [selectedText, setSelectedText] = useState('');
   const [commentSelectedText, setCommentSelectedText] = useState('');
   const [commentSubmitting, setCommentSubmitting] = useState(false);
-  const [userData, setUserData] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const [testModeVisible, setTestModeVisible] = useState(false);
-  const [refreshToken, setRefreshToken] = useState(null);
-  
-  const posts = usePostFetch();
+  const [postId, setPostId] = useState(''); 
 
-  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
+  useEffect(() => {
+    const fetchedAccessToken = localStorage.getItem('accessToken'); // Update key to 'accessToken'
+    if (fetchedAccessToken) {
+      console.log('Access token retrieved:', fetchedAccessToken);
+      setAccessToken(fetchedAccessToken);
+    } else {
+      console.error('Access token not found in localStorage');
+    }
+  }, []);
+
+  // Call the usePostFetch hook with the accessToken
+  const posts = usePostFetch(accessToken);
 
   const {
     popupPostVisible,
@@ -41,127 +48,71 @@ function Home() {
     submitting: postSubmitting,
     setSubmitting: setPostSubmitting,
     updatePopupVisibility,
-  } = usePopupPost(isTestMode, setFeedItems);
+  } = usePopupPost(isTestMode, setFeedItems, accessToken, postId, simulateTestMode);
 
   const {
-    comments,
-    submitting: popupCommentSubmitting,
-    setSelectedText: setPopupCommentSelectedText,
-    submitComment,
-    openPopupComment,
-    closePopupComment,
-    popupCommentVisible,
-    setCurrentImage,
-    currentImage,
-  } = usePopupComment({
-    commentsUrl: '/api/comments',
-    access_token: accessToken, // Pass accessToken to handle authentication
-    refresh_token: refreshToken, // Pass refreshToken for token refresh
-    selectedImages: postSelectedImages,
-    currentImage: postSelectedImages.length > 0 ? postSelectedImages[0] : null,
-    setFeedItems,
-  });
+  comments,
+  submitting: popupCommentSubmitting,
+  setSelectedText: setPopupCommentSelectedText,
+  submitComment,
+  openPopupComment,
+  closePopupComment,
+  popupCommentVisible,
+  setCurrentImage,
+  currentImage,
+} = usePopupComment({
+  postId: postId, // Make sure postId is defined and passed here
+  accessToken: accessToken,
+  selectedImages: postSelectedImages,
+  setFeedItems,
+});
 
   const { likeCounts: likesData, likedImages: likedImagesData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
 
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {
-    // Handle search logic here, if needed
-  }, navigate);
+  const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {}, navigate);
 
   const handleChange = (e) => {
     setSelectedText(e.target.value);
     console.log('selectedText updated:', e.target.value);
   };
 
-  const fetchHomeFeedPosts = useCallback(async () => {
-  try {
-    if (!isComponentMounted) {
-      return; // Stop fetching if the component is not mounted
-    }
-
-    if (isTestMode) {
-      simulateTestMode('Fetching home feed posts in test mode');
-      // Simulate test data or behavior here
-      return;
-    }
-
-    const url = `${apiUrl}/api/posts`;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`, // Pass access token in headers
-      },
-    };
-
-    const response = await fetch(url, config);
-
-    if (response.ok) {
-      const responseData = await response.json();
-
-      if (responseData && responseData.data && responseData.data.posts) {
-        const postsArray = responseData.data.posts;
-
-        setFeedItems((prevItems) => {
-          const updatedItems = [...prevItems, ...postsArray];
-          console.log('Updated Feed Items:', updatedItems);
-          return updatedItems;
+  useEffect(() => {
+  const fetchHomeFeedPosts = async () => {
+    try {
+      if (!isTestMode) { // Check if test mode is active
+        const response = await fetch('http://localhost:5000/api/posts', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Set authorization header with access token
+          },
         });
-      } else {
-        console.error('Invalid response format. Expected data.posts to be an array. Received:', responseData);
-      }
-    } else {
-      console.error(
-        'Failed to fetch posts:',
-        response.status,
-        response.statusText
-      );
-    }
-  } catch (error) {
-    console.error('Error during initial post fetch:', error.message);
-  }
-}, [setFeedItems, apiUrl, isTestMode, simulateTestMode, accessToken]);
+        const data = await response.json();
 
-  const [isComponentMounted, setIsComponentMounted] = useState(true);
-
-  useEffect(() => {
-    setIsComponentMounted(true);
-
-    // Cleanup function to handle component unmounting
-    return () => {
-      setIsComponentMounted(false);
-    };
-  }, []);
-
-  useEffect(() => {
-    fetchHomeFeedPosts();
-  }, []);
-
-  useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        if (!isTestMode) {
-          // Perform your token retrieval logic here
-          // For example, fetch token from local storage or any other source
-          const fetchedAccessToken = 'yourAccessToken'; // Replace with your token retrieval logic
-
-          setAccessToken(fetchedAccessToken);
+        if (response.ok) {
+          setFeedItems(data);
+        } else {
+          console.error('Failed to fetch posts:', response.status, response.statusText);
         }
-      } catch (error) {
-        console.error(`Error fetching access token: ${error.message}`);
-        // Handle error as needed
+      } else {
+        // Simulate test mode behavior for fetching posts
+        console.log('Test mode: Simulating fetchHomeFeedPosts');
+        // You can add any test mode behavior here
       }
-    };
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
 
-    fetchAccessToken();
-  }, [isTestMode]);
+  fetchHomeFeedPosts();
+}, [accessToken, isTestMode]);
+
 
   useEffect(() => {
     if (likesTestModeVisible) {
-      simulateTestMode({ /* Add any test data or behavior needed for useLikes */ });
-      setTestModeVisible(true); // Set visibility in test mode
-      likeCounts && setLikeCounts(likesData);
+      simulateTestMode({ /* Add test data for useLikes */ });
+      setLikeCounts(likesData);
     }
-  }, [likesTestModeVisible]);
+  }, [likesTestModeVisible, likesData]);
 
   useEffect(() => {
     setLikedImages(likedImagesData);

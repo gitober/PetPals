@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
-const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
+const usePopupPost = (accessToken, setFeedItems, fetchInitialPosts) => {
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [popupPostVisible, setPopupPostVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
@@ -44,7 +44,7 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
 
   const handleSubmit = async () => {
     console.log('Inside handleSubmit');
-    console.log('Access Token:', token);
+    console.log('Access Token:', accessToken);
     console.log('Selected Images:', selectedImages);
     console.log('Submit button clicked');
 
@@ -82,10 +82,10 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
       } else {
         try {
           // Make an actual API call for creating a post
-          const response = await fetch('http://localhost:5000/api/posts', {
+          const response = await fetch(`http://localhost/5000/api/posts`, {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${accessToken}`,
             },
             body: formData,
           });
@@ -97,7 +97,7 @@ const usePopupPost = (token, setFeedItems, fetchInitialPosts) => {
             console.log('Response:', responseData);
 
             // Fetch initial posts after successful submission
-            fetchInitialPosts(token);
+            fetchInitialPosts(accessToken);
 
             // Close the post popup after successful submission
             closePopupPost();

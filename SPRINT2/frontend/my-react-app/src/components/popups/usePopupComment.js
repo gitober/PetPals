@@ -1,124 +1,82 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
-const usePopupComment = ({ commentsUrl, access_token, refresh_token }) => {
+const usePopupComment = ({ commentsUrl, postId }) => {
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [popupCommentVisible, setPopupCommentVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
   const [currentImage, setCurrentImage] = useState(null);
-  const { simulateTestMode } = useTestModeInstance(); // Include the useTestModeInstance hook
+  const { simulateTestMode } = useTestModeInstance();
 
   useEffect(() => {
-    const fetchComments = async () => {
-  try {
-    const response = await fetch(commentsUrl, {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-
-    if (!response.ok) {
-      if (response.status === 401) {
-        const newAccessToken = await refreshToken(refresh_token);
-        if (newAccessToken) {
-          // Retry fetching comments with the new access token
-          fetchComments();
-        } else {
-          throw new Error('Failed to refresh access token.');
+  const fetchComments = async () => {
+    try {
+      if (!simulateTestMode) { // Check if not in test mode
+        const response = await fetch(commentsUrl, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+        if (!response.ok) {
+          console.error(`Failed to fetch comments: ${response.status}`);
+          return;
         }
-      } else {
-        throw new Error(`Error fetching comments: ${response.statusText}`);
-      }
-    } else {
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
         const data = await response.json();
         setComments(data);
-      } else {
-        throw new Error('Response is not in JSON format.');
       }
+    } catch (error) {
+      console.error('Error fetching comments:', error.message);
     }
-  } catch (error) {
-    // Handle the error gracefully
-    console.error('Error fetching comments:', error.message);
-  }
-};
+  };
+  fetchComments();
+}, [commentsUrl, simulateTestMode]);
 
-    fetchComments();
-  }, [commentsUrl, access_token, refresh_token]);
+  const submitComment = async () => {
+  try {
+    setSubmitting(true);
+    const formData = new FormData();
+    formData.append('image', selectedImages[0]);
+    formData.append('content', selectedText);
 
-  const refreshToken = async (refreshToken) => {
-    try {
-      const response = await fetch('/api/refresh_token', {
+    if (!simulateTestMode) { // Check if not in test mode
+      const response = await fetch(`http://localhost:5000/api/posts/${postId}/comments`, {
         method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refresh_token }),
+        body: formData,
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to refresh access token: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data.access_token;
-    } catch (error) {
-      // Handle the error gracefully
-      console.error('Error refreshing access token:', error.message);
-      return null;
-    }
-  };
-
-  const submitComment = async () => {
-    try {
-      setSubmitting(true);
-
-      if (selectedImages.length === 0 || !selectedText) {
-        console.error('Selected image or comment text is missing.');
+        console.error(`Failed to submit comment: ${response.status}`);
         return;
       }
 
-      const formData = new FormData();
-      formData.append('image', selectedImages[0]);
-      formData.append('content', selectedText);
-
-      if (simulateTestMode) {
-        console.log('Test mode: Simulating successful comment submission');
-        // Simulate test mode behavior here
-      } else {
-        const response = await fetch('/api/comments', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-          body: formData,
-        });
-
-        if (!response.ok) {
-          console.error(`Failed to submit comment: ${response.status}`);
-          return;
-        }
-
-        const responseData = await response.json();
-        setComments((prevComments) =>
-          prevComments.map((item) =>
-            item.images.includes(selectedImages[0]) ? { ...item, comments: responseData.comments } : item
-          )
-        );
-
-        closePopupComment();
-        setSelectedText('');
-      }
-    } catch (error) {
-      console.error('Error during comment submission:', error);
-    } finally {
-      setSubmitting(false);
+      const responseData = await response.json();
+      // Update local comments state with the new comment
+      setComments((prevComments) =>
+        prevComments.map((item) =>
+          item.images.includes(selectedImages[0]) ? { ...item, comments: responseData.comments } : item
+        )
+      );
+    } else {
+      console.log('Test mode: Simulating successful comment submission');
+      // Simulate adding the comment to the local state
+      const newComment = { id: Math.random().toString(), content: selectedText };
+      setComments((prevComments) =>
+        prevComments.map((item) =>
+          item.images.includes(selectedImages[0]) ? { ...item, comments: [...item.comments, newComment] } : item
+        )
+      );
     }
-  };
+
+    closePopupComment();
+    setSelectedText('');
+  } catch (error) {
+    console.error('Error during comment submission:', error);
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   const openPopupComment = (imageUrl) => {
     setSelectedImages([imageUrl]);
@@ -133,6 +91,7 @@ const usePopupComment = ({ commentsUrl, access_token, refresh_token }) => {
   };
 
   return {
+    setPopupCommentSelectedText: setSelectedText,
     comments,
     submitting,
     popupCommentVisible,
@@ -141,6 +100,7 @@ const usePopupComment = ({ commentsUrl, access_token, refresh_token }) => {
     selectedImages,
     openPopupComment,
     closePopupComment,
+    submitComment,
   };
 };
 
