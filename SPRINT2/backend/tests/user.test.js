@@ -4,37 +4,45 @@ const app = require("../app");
 const api = supertest(app);
 const User = require("../models/userModel");
 
-let token;
-
-beforeEach(async () => {
-  await User.deleteMany({}); // Clear the database before each test
+beforeAll(async () => {
+  await User.deleteMany({});
 });
 
 describe('User Routes', () => {
+
   describe('POST /api/users/signup', () => {
-    it('should create a new user with valid credentials', async () => {
+    it('should signup a new user with valid credentials', async () => {
+      // Arrange
       const userData = {
-        username: 'testi1',
-        email: 'testi1@testi.com',
-        password: 'Securepassword123#!',
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'R3g5T7#gh'
       };
 
-      const response = await api.post('/api/users/signup').send(userData);
-      token = response.body.token;
+      // Act
+      const response = await api
+        .post('/api/users/signup')
+        .send(userData);
 
-      expect(response.status).toBe(200);
+      // Assert
+      expect(response.status).toBe(200); // Adjusted to expect status code 200
       expect(response.body).toHaveProperty('token');
     });
 
-    it('should not create a new user with invalid credentials', async () => {
+    it('should return an error with invalid credentials', async () => {
+      // Arrange
       const userData = {
-        username: 'testi1',
-        email: 'testi1@testi.com',
-        password: 'invalidpassword',
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'invalidpassword'
       };
 
-      const response = await api.post('/api/users/signup').send(userData);
+      // Act
+      const response = await api
+        .post('/api/users/signup')
+        .send(userData);
 
+      // Assert
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty('error');
     });
@@ -42,155 +50,114 @@ describe('User Routes', () => {
 
   describe('POST /api/users/login', () => {
     it('should login a user with valid credentials', async () => {
+      // Arrange
       const userData = {
-        username: 'testi1',
-        password: 'Securepassword123#!',
+        username: 'testuser',
+        password: 'R3g5T7#gh'
       };
 
-      const response = await api.post('/api/users/login').send(userData);
-      token = response.body.token;
+      // Act
+      const response = await api
+        .post('/api/users/login')
+        .send(userData);
 
-      expect(response.status).toBe(200);
+      // Assert
+      expect(response.status).toBe(200); // Adjusted to expect status code 200
       expect(response.body).toHaveProperty('token');
     });
 
-    it('should not login a user with invalid credentials', async () => {
+    it('should return an error with invalid credentials', async () => {
+      // Arrange
       const userData = {
-        username: 'testi1',
-        password: 'invalidpassword',
+        username: 'testuser',
+        password: 'invalidpassword'
       };
 
-      const response = await api.post('/api/users/login').send(userData);
-      token = response.body.token;
+      // Act
+      const response = await api
+        .post('/api/users/login')
+        .send(userData);
 
+      // Assert
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty('error');
     });
   });
 
-  describe('GET /api/users', () => {
-    it('should return all users', async () => {
+   describe('GET /api/users', () => {
+    it('should get all users', async () => {
+      // Act
       const response = await api
-        .get('/api/users')
-        .set('Authorization', `Bearer ${token}`); // Include the authentication token
+        .get('/api/users');
 
+      // Assert
       expect(response.status).toBe(200);
-      expect(response.body).toHaveLength(1); // Assuming only one user is signed up
+      expect(response.body).toBeInstanceOf(Array);
     });
   });
 
-  describe('GET /api/users/:id', () => {
-    it('should return a user by id', async () => {
-      const userData = {
-        username: 'testi1',
-        email: 'testi1@testi.com',
-        password: 'Securepassword123#!',
-      };
+  describe('GET /api/users/:username', () => {
+    it('should get a user by username', async () => {
+      // Arrange
+      const username = 'testuser';
 
-      const newUser = await api.post('/api/users/signup').send(userData);
-
-      const response = await api.get(`/api/users/${newUser.body._id}`);
-
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('username', 'testi1');
-      expect(response.body).toHaveProperty('email', 'testi1@testi.com');
-    });
-  });
-
-  describe('PUT /api/users/:id', () => {
-    it('should update a user profile', async () => {
-      const userData = {
-        username: 'testi1',
-        email: 'testi1@testi.com',
-        password: 'Securepassword123#!',
-      };
-
-      const newUser = await api.post('/api/users/signup').send(userData);
-
-      const updatedUserData = {
-        bioText: 'I am a test user',
-      };
-
+      // Act
       const response = await api
-        .put(`/api/users/${newUser.body._id}`)
-        .send(updatedUserData);
+        .get(`/api/users/${username}`);
 
+      // Assert
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('bioText');
+      expect(response.body).toHaveProperty('username', username);
     });
-  });
 
-  describe('PATCH /api/users/:id/follow', () => {
-    it('should follow a user', async () => {
-      const userData1 = {
-        username: 'testi1',
-        email: 'testi1@testi.com',
-        password: 'Securepassword123#!',
-      };
+    it('should return an error if user not found', async () => {
+      // Arrange
+      const username = 'unknownuser';
 
-      const userData2 = {
-        username: 'testi2',
-        email: 'testi2@testi.com',
-        password: 'Securepassword1234#!',
-      };
-
-      const user1 = await api.post('/api/users/signup').send(userData1);
-      const user2 = await api.post('/api/users/signup').send(userData2);
-
-      const loginResponse = await api
-        .post('/api/users/login')
-        .send({ username: userData1.username, password: userData1.password });
-
-      const token = loginResponse.body.token;
-
+      // Act
       const response = await api
-        .patch(`/api/users/${user1.body._id}/follow`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({ userId: user2.body._id });
+        .get(`/api/users/${username}`);
 
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('following');
+      // Assert
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty('error');
     });
   });
 
-  describe('PATCH /api/users/:id/unfollow', () => {
-    it('should unfollow a user', async () => {
-      const userData1 = {
-        username: 'testi1',
-        email: 'testi1@testi.com',
-        password: 'Securepassword123#!',
-      };
+  describe('PATCH /api/users/:username', () => {
+    it('should update a user by username', async () => {
+      // Arrange
+      const username = 'testuser';
+      const updatedEmail = 'updated@example.com';
+      const updatedPassword = 'NewPassword123';
 
-      const userData2 = {
-        username: 'testi2',
-        email: 'testi2@testi.com',
-        password: 'Securepassword1234#!',
-      };
-
-      const user1 = await api.post('/api/users/signup').send(userData1);
-      const user2 = await api.post('/api/users/signup').send(userData2);
-
-      await api
-        .patch(`/api/users/${user1.body._id}/follow`)
-        .send({ userId: user2.body._id });
-
-      const loginResponse = await api
-        .post('/api/users/login')
-        .send({ username: userData1.username, password: userData1.password });
-
-      const token = loginResponse.body.token;
-
+      // Act
       const response = await api
-        .patch(`/api/users/${user1.body._id}/unfollow`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({ userId: user2.body._id });
+        .patch(`/api/users/${username}`)
+        .send({ email: updatedEmail, password: updatedPassword });
 
+      // Assert
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('following');
+      expect(response.body).toHaveProperty('email', updatedEmail);
+    });
+
+    it('should return an error if user not found', async () => {
+      // Arrange
+      const username = 'unknownuser';
+
+      // Act
+      const response = await api
+        .patch(`/api/users/${username}`)
+        .send({ email: 'updated@example.com', password: 'NewPassword123' });
+
+      // Assert
+      expect(response.status).toBe(404);
+      expect(response.body).toHaveProperty('error');
     });
   });
+});
 
-afterAll(async () => {
-    await mongoose.connection.close(); // Close the database connection
-  });
+
+afterAll(() => {
+  mongoose.connection.close();
 });

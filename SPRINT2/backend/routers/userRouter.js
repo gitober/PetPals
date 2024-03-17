@@ -1,34 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const {
-  loginUser,
-  signupUser,
-  getAllUsers,
-  getUser,
-  updateUser,
-  followUser,
-  unfollowUser,
-} = require("../controllers/userController");
+const { loginUser, signupUser, getAllUsers, getUserByUsername, updateUserByUsername } = require("../controllers/userController");
 
-// Signup route (No authentication required)
+// login route
+router.post("/login", loginUser);
+
+// signup route
 router.post("/signup", signupUser);
 
-// Login route (No authentication required)
-router.post("/login", loginUser);
-  
-// Get all users route
+// Get all users
 router.get("/", getAllUsers);
 
-// Get user by ID route
-router.get("/:id", getUser);
+// Get a user by username
+router.get("/:username", getUserByUsername);
 
-// Update user profile route
-router.put("/:id", updateUser);
-
-// Follow user route
-router.patch("/:id/follow", followUser);
-
-// Unfollow user route
-router.patch("/:id/unfollow", unfollowUser);
+// Update a user
+router.patch("/:username", updateUserByUsername);
 
 module.exports = router;

@@ -1,14 +1,26 @@
 const mongoose = require('mongoose');
 const Post = require('../models/postModel');
 
-// Create a new post
-const addPost = async (req, res) => {
-  const { content, images } = req.body;
+// Get all Posts
+const getPosts = async (req, res) => {
+  const user_id = req.user._id;
 
   try {
-    // Assuming user ID is available in req.user._id
+    const posts = await Post.find({ user_id }).sort({ createdAt: -1 });
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+};
+
+// Add one Post
+const addPost = async (req, res) => {
+  const { content, image } = req.body;
+
+  try {
     const user_id = req.user._id;
-    const newPost = new Post({ content, images, user_id });
+    const newPost = new Post({ content, image, user_id });
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
@@ -17,70 +29,33 @@ const addPost = async (req, res) => {
   }
 };
 
-const getAllPosts = async (req, res) => {
-  try {
-    // Check if req.user exists before accessing its properties
-    if (!req.user) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    // If req.user exists, extract user_id and fetch posts
-    const user_id = req.user._id;
-    const posts = await Post.find({ user_id }).sort({ createdAt: -1 });
-    res.status(200).json(posts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server Error' });
-  }
-}
-  
-// Get a post by ID
-  const getPostById = async (req, res) => {
-    const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({error: 'Post not found'});
-  }
-
-  try {
-    const user_id = req.user._id;
-    const posts = await Post.findById(id).where('user_id').equals(user_id);
-    if (!posts) {
-      return res.status(404).json({ message: 'Post not found' });
-    }
-    res.status(200).json(posts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server Error' });
-  }
-}
-
-// Update a post
-const updatePost = async (req, res) => {
+// Get Post by ID
+const getPost = async (req, res) => {
   const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such post' });
+  }
+
   try {
     const user_id = req.user._id;
-    const posts = await Post.findOneAndUpdate(
-      { _id: id, user_id: user_id },
-      { ...req.body },
-      { new: true }
-    );
-    if (!posts) {
+    const post = await Post.findById(id).where('user_id').equals(user_id);
+    if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
-    res.status(200).json(posts);
+    res.status(200).json(post);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-}
+};
 
-// Delete a post
+// Delete Post by ID
 const deletePost = async (req, res) => {
   const { id } = req.params;
   try {
     const user_id = req.user._id;
-    const posts = await Post.findOneAndDelete({ _id: id, user_id });
-    if (!posts) {
+    const post = await Post.findByIdAndDelete({ _id: id, user_id: user_id });
+    if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
     res.status(200).json({ message: 'Post deleted successfully' });
@@ -88,53 +63,32 @@ const deletePost = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-}
+};
 
-// Like a post
- const likePost = async (req, res) => {
+// Update Post by ID
+const updatePost = async (req, res) => {
   const { id } = req.params;
-    try {
-    const user_id = req.user._id;
-    const posts = await Post.findById(id);
-    if (!posts) {
-      return res.status(404).json({ message: 'Post not found' });
-    }
-    if (posts.likes.includes(user_id)) {
-      return res.status(400).json({ message: 'Post already liked' });
-    }
-    posts.likes.push(user_id);
-    await posts.save();
-    res.status(200).json({ message: 'Post liked successfully' });
-  }
-  catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server Error' });
-  }
-}
-
-// Unlike a post
- const unlikePost = async (req, res) => {
-  const { id } = req.params;
-
   try {
     const user_id = req.user._id;
-    const posts = await Post.findById(id);
-    if (!posts) {
+    const post = await Post.findOneAndUpdate(
+      { _id: id, user_id: user_id },
+      { ...req.body },
+      { new: true }
+    );
+    if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
-    if (!posts.likes.includes(user_id)) {
-      return res.status(400).json({ message: 'Post not liked' });
-    }
-    posts.likes = posts.likes.filter((id) => id !== user_id);
-    await posts.save();
-    res.status(200).json({ message: 'Post unliked successfully' });
-  }
-  catch (error) {
+    res.status(200).json(post);
+  } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server Error' });
   }
-}
+};
 
-
-
-module.exports = { addPost, getAllPosts, getPostById, updatePost, deletePost, likePost, unlikePost }
+module.exports = {
+  getPosts,
+  addPost,
+  getPost,
+  deletePost,
+  updatePost,
+};

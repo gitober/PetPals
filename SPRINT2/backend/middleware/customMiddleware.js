@@ -1,4 +1,3 @@
-// Middleware for logging request details
 const requestLogger = (request, response, next) => {
     console.log("Method:", request.method);
     console.log("Path:  ", request.path);
@@ -7,21 +6,21 @@ const requestLogger = (request, response, next) => {
     next();
 };
 
-// Middleware for handling unknown endpoints
 const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: "Unknown endpoint" });
+    response.status(404).send({ error: "unknown endpoint" });
 };
 
-// Middleware for handling errors
 const errorHandler = (error, request, response, next) => {
     console.error(error.message);
 
-    // Set response status code based on error status or default to 500
-    response.status(error.status || 500);
-
+    response.status(500);
     response.json({
-        error: error.message,
+      message: error.message,
     });
 };
 
-module.exports = { requestLogger, errorHandler, unknownEndpoint};
+module.exports = {
+    requestLogger,
+    unknownEndpoint,
+    errorHandler,
+};

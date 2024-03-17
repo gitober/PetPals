@@ -3,67 +3,59 @@ const supertest = require("supertest");
 const app = require("../app");
 const api = supertest(app);
 const Comment = require("../models/commentModel");
-const Post = require("../models/postModel");
+const User = require("../models/userModel");
 
 beforeAll(async () => {
-  await mongoose.connect('mongodb://localhost:27017/testDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-  });
-});
-
-afterEach(async () => {
+  await User.deleteMany({});
   await Comment.deleteMany({});
-  await Post.deleteMany({});
 });
 
-describe('Comment Controller', () => {
-  describe('POST /api/comments', () => {
-    it('should create a new comment', async () => {
-      const post = await Post.create({ /* create a new post object */ });
-      const response = await api
-        .post('/api/comments')
-        .send({
-          content: 'Test comment',
-          postId: post._id,
-          postUserId: post.user,
-          /* other necessary fields */
-        });
+describe("Comment Routes", () => {
+  let token = null;
+  let postId = null;
 
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('newComment');
-      /* additional assertions as needed */
-    });
+  beforeAll(async () => {
+    const user = {
+      username: "testuser",
+      email: "testi@testi.com",
+      password: "R3g5T7#gh",
+    };
+    const response = await api.post("/api/users/signup").send(user);
+    token = response.body.token;
+
+    const post = {
+      content: "Test post content",
+      image: "test_image.jpg",
+    };
+    const postResponse = await api
+      .post("/api/posts")
+      .set("Authorization", "bearer " + token)
+      .send(post);
+    postId = postResponse.body._id;
+  }); 
+
+  it("should return all comments as JSON when GET /api/posts/:postId/comments is called", async () => {
+    const response = await api
+      .get(`/api/posts/${postId}/comments`)
+      .set("Authorization", "bearer " + token)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
   });
 
-  describe('PUT /api/comments/:id', () => {
-    it('should update the content of a comment', async () => {
-      const comment = await Comment.create({ /* create a new comment object */ });
-      const response = await api
-        .put(`/api/comments/${comment._id}`)
-        .send({ content: 'Updated comment content' });
-
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('message', 'Updated successfully');
-      /* additional assertions as needed */
-    });
-  });
-
-  describe('DELETE /api/comments/:id', () => {
-    it('should delete a comment', async () => {
-      const comment = await Comment.create({ /* create a new comment object */ });
-      const response = await api
-        .delete(`/api/comments/${comment._id}`);
-
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('message', 'Comment deleted successfully!');
-      /* additional assertions as needed */
-    });
+  it("should create one comment when POST /api/posts/:postId/comments is called", async () => {
+    const newComment = {
+      post_id: postId,
+      username: "testuser",
+      content: "Test comment content",
+    };
+    await api
+      .post(`/api/posts/${postId}/comments`)
+      .set("Authorization", "bearer " + token)
+      .send(newComment)
+      .expect(201);
   });
 });
 
-afterAll(async () => {
-  await mongoose.connection.close();
+afterAll(() => {
+  mongoose.connection.close();
 });
