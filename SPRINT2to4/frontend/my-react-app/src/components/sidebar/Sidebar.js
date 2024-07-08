@@ -1,5 +1,5 @@
 import React from 'react';
-import '../style/sidebar.css';
+import '../../style/sidebar.css';
 
 const Sidebar = ({ openPopupPost }) => (
   <div className="sidebar">
