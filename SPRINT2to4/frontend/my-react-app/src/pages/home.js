@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import useSearch from '../components/searchbar/useSearch';
 import usePopupPost from '../components/posting/usePopupPost';
 import PostPopup from '../components/posting/PostPopup';
-import usePopupComment from '../components/comment/usePopupComment';
-import CommentPopup from '../components/comment/CommentPopup';
+import usePopupComment from '../components/comments/usePopupComment';
+import CommentPopup from '../components/comments/CommentPopup';
 import useLikes from '../components/likes/useLikes';
 import LikeSection from '../components/likes/LikeSection';
 import Sidebar from '../components/sidebar/Sidebar';
@@ -17,6 +17,8 @@ import '../style/searchbar.css';
 import '../style/sidebar.css';
 import '../style/popuppost.css';
 import '../style/popupcomment.css';
+import '../style/likes.css';
+import '../style/icons.css';
 
 function Home() {
   const navigate = useNavigate();
@@ -161,7 +163,7 @@ function Home() {
       <PostPopup
         popupPostVisible={popupPostVisible}
         closePopupPost={closePopupPost}
-        selectedText={selectedText}
+        selectedText={setSelectedText}
         handleChange={handleChange}
         postSelectedImages={postSelectedImages}
         handleFileChange={handleFileChange}

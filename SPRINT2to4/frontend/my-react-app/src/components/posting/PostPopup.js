@@ -3,7 +3,7 @@ import React from 'react';
 const PostPopup = ({
   popupPostVisible,
   closePopupPost,
-  selectedText,
+  postText, // Use postText instead of selectedText
   handleChange,
   postSelectedImages,
   handleFileChange,
@@ -23,7 +23,7 @@ const PostPopup = ({
               <img src={postSelectedImages[0]} alt="Selected" className="preview-image" />
               <input
                 type="text"
-                value={selectedText}
+                value={postText} // Use postText
                 onChange={handleChange}
                 placeholder="Enter your text here"
               />

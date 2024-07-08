@@ -4,7 +4,7 @@ import { useTestModeInstance } from '../testmode/useTestMode';
 const usePopupPost = (accessToken, setFeedItems, fetchInitialPosts) => {
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [popupPostVisible, setPopupPostVisible] = useState(false);
-  const [selectedText, setSelectedText] = useState('');
+  const [postText, setPostText] = useState(''); // Renamed for clarity
   const [selectedImages, setSelectedImages] = useState([]);
   const [submitting, setSubmitting] = useState(false);
 
@@ -31,15 +31,15 @@ const usePopupPost = (accessToken, setFeedItems, fetchInitialPosts) => {
     console.log('Closing post popup');
     setPopupPostVisible(false);
     setSelectedImages([]);
-    setSelectedText('');
+    setPostText(''); // Clear post text on close
     if (simulateTestMode) {
       simulateTestMode('Closing post popup');
     }
   };
 
   const handleChange = (e) => {
-    setSelectedText(e.target.value);
-    console.log('selectedText updated:', e.target.value);
+    setPostText(e.target.value); // Update post text
+    console.log('postText updated:', e.target.value);
   };
 
   const handleSubmit = async () => {
@@ -60,7 +60,7 @@ const usePopupPost = (accessToken, setFeedItems, fetchInitialPosts) => {
       selectedImages.forEach((imageDataUrl, index) => {
         formData.append(`images[${index}]`, imageDataUrl);
       });
-      formData.append('content', selectedText);
+      formData.append('content', postText); // Use postText
 
       if (isTestMode) {
         console.log('Test mode: Simulating successful post submission');
@@ -69,7 +69,7 @@ const usePopupPost = (accessToken, setFeedItems, fetchInitialPosts) => {
         const newPost = {
           id: Math.random().toString(),
           images: selectedImages,
-          content: selectedText,
+          content: postText, // Use postText
           comments: [],
         };
 
@@ -139,8 +139,8 @@ const usePopupPost = (accessToken, setFeedItems, fetchInitialPosts) => {
     handleSubmit,
     handleFileChange,
     handleChange,
-    selectedText,
-    setSelectedText,
+    postText, // Provide postText
+    setPostText,
     selectedImages,
     setSelectedImages,
     submitting,

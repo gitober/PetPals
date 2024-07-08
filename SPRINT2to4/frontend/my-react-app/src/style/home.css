@@ -59,32 +59,7 @@
   color: #d6baff;
 }
 
-/* Icons Styles */
-.icons {
-  display: flex;
-  align-items: row;
-  gap: 170px;
-  margin-bottom: 20px;
-}
 
-/* Like Container Styles */
-.icons .like-container img,
-.icons img {
-  width: 30px;
-}
-
-/* Like Container Height */
-.like-container {
-  margin: auto;
-}
-
-/* Likes Container Styles */
-.likes-container {
-  color: #000000;
-  margin-top: 10px;
-  font-weight: 600;
-  font-size: 100%;
-}
 
 /* Lorem Text Styles */
 .lorem-text {
