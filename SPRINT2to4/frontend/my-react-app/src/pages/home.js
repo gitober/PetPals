@@ -30,7 +30,6 @@ function Home() {
   const [commentSelectedText, setCommentSelectedText] = useState('');
   const [commentSubmitting, setCommentSubmitting] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
-  const [postId, setPostId] = useState('');
 
   const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {}, navigate);
 
@@ -58,7 +57,7 @@ function Home() {
     submitting: postSubmitting,
     setSubmitting: setPostSubmitting,
     updatePopupVisibility,
-  } = usePopupPost(isTestMode, setFeedItems, accessToken, postId, simulateTestMode);
+  } = usePopupPost(isTestMode, setFeedItems, accessToken, simulateTestMode);
 
   const {
     comments,
@@ -72,9 +71,6 @@ function Home() {
     setCurrentImage,
     currentImage,
   } = usePopupComment({
-    postId,
-    accessToken,
-    commentsUrl: `http://localhost:5000/api/posts/${postId}/comments`, // Assuming you need a comments URL here
     setFeedItems,
   });
 
@@ -137,7 +133,7 @@ function Home() {
             {feedItems.map((item, index) => (
               <div key={index} className="feed-item">
                 <a href="../userprofile">
-                  <h3>username</h3>
+                  <h3>{item.username}</h3>
                 </a>
                 <img src={item.images[0]} alt={`User's Post ${index}`} />
                 <div className="icons">
@@ -146,13 +142,13 @@ function Home() {
                     toggleLike={toggleLike}
                     imageUrl={item.images[0]}
                     likeCount={likeCounts[item.images[0]]}
-                    postId={item.postId}
+                    postId={item.id}
                   />
                   <img
                     src="../img/comment.png"
-                    alt="Image"
+                    alt="Comment"
                     className="icon"
-                    onClick={() => openPopupComment(item.images[0])}
+                    onClick={() => openPopupComment(item.id, item.images[0])} // Pass postId and image URL
                   />
                 </div>
                 <p>{item.content}</p>
@@ -164,7 +160,7 @@ function Home() {
       <PostPopup
         popupPostVisible={popupPostVisible}
         closePopupPost={closePopupPost}
-        selectedText={setSelectedText}
+        selectedText={selectedText}
         handleChange={handleChange}
         postSelectedImages={postSelectedImages}
         handleFileChange={handleFileChange}
@@ -175,8 +171,7 @@ function Home() {
         popupCommentVisible={popupCommentVisible}
         closePopupComment={closePopupComment}
         currentImage={currentImage}
-        comments={comments}
-        setComments={setComments} // Ensure this is passed
+        comments={comments} // Pass comments specific to current post
         commentSelectedText={commentSelectedText}
         setCommentSelectedText={setCommentSelectedText}
         submitComment={submitComment}

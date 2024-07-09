@@ -1,20 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useTestModeInstance } from '../testmode/useTestMode';
 
-const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
-  const [comments, setComments] = useState([]);
+const usePopupComment = ({ setFeedItems }) => {
+  const [comments, setComments] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [popupCommentVisible, setPopupCommentVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
-  const [selectedImages, setSelectedImages] = useState([]);
   const [currentImage, setCurrentImage] = useState(null);
+  const [currentPostId, setCurrentPostId] = useState(null); // Track current post ID
   const { simulateTestMode } = useTestModeInstance();
 
   useEffect(() => {
     const fetchComments = async () => {
+      if (!currentPostId) return;
+
       try {
         if (!simulateTestMode) {
-          const response = await fetch(commentsUrl, {
+          const response = await fetch(`http://localhost:5000/api/posts/${currentPostId}/comments`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             },
@@ -24,26 +26,29 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
             return;
           }
           const data = await response.json();
-          setComments(data);
+          setComments(prevComments => ({ ...prevComments, [currentPostId]: data }));
         }
       } catch (error) {
         console.error('Error fetching comments:', error.message);
       }
     };
     fetchComments();
-  }, [commentsUrl, simulateTestMode]);
+  }, [currentPostId, simulateTestMode]);
 
   const submitComment = async () => {
     try {
       setSubmitting(true);
-      const formData = new FormData();
-      formData.append('image', selectedImages[0]);
-      formData.append('content', selectedText);
 
       if (!simulateTestMode) {
-        const response = await fetch(`http://localhost:5000/api/posts/${postId}/comments`, {
+        const response = await fetch(`http://localhost:5000/api/posts/${currentPostId}/comments`, {
           method: 'POST',
-          body: formData,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+          body: JSON.stringify({
+            content: selectedText,
+          }),
         });
 
         if (!response.ok) {
@@ -54,16 +59,19 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
         const responseData = await response.json();
         const newComment = {
           id: Math.random().toString(),
-          content: selectedText,
-          image: selectedImages[0],
+          content: responseData.content,
           username: responseData.username, // Assuming the API response contains username
           date: new Date().toISOString(), // Assuming the current date/time as comment time
         };
 
-        setComments(prevComments => [...prevComments, newComment]);
+        setComments(prevComments => ({
+          ...prevComments,
+          [currentPostId]: [...(prevComments[currentPostId] || []), newComment]
+        }));
+
         setFeedItems(prevItems =>
           prevItems.map(item =>
-            item.id === postId ? { ...item, comments: [...item.comments, newComment] } : item
+            item.id === currentPostId ? { ...item, comments: [...item.comments, newComment] } : item
           )
         );
       } else {
@@ -71,22 +79,24 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
         const simulatedComment = {
           id: Math.random().toString(),
           content: selectedText,
-          image: selectedImages[0], // assuming comments in test mode might also include images
           username: 'TestUser', // Simulated username
           date: new Date().toISOString(), // Simulated current date/time
         };
 
-        setComments(prevComments => [...prevComments, simulatedComment]);
+        setComments(prevComments => ({
+          ...prevComments,
+          [currentPostId]: [...(prevComments[currentPostId] || []), simulatedComment]
+        }));
+
         setFeedItems(prevItems =>
           prevItems.map(item =>
-            item.id === postId ? { ...item, comments: [...item.comments, simulatedComment] } : item
+            item.id === currentPostId ? { ...item, comments: [...item.comments, simulatedComment] } : item
           )
         );
 
         console.log('Test mode: Comment submitted and added to state');
       }
 
-      closePopupComment();
       setSelectedText('');
     } catch (error) {
       console.error('Error during comment submission:', error);
@@ -95,27 +105,26 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
     }
   };
 
-  const openPopupComment = (imageUrl) => {
-    setSelectedImages([imageUrl]);
+  const openPopupComment = (postId, imageUrl) => {
+    setCurrentPostId(postId);
     setCurrentImage(imageUrl);
-    setSelectedText('');
     setPopupCommentVisible(true);
   };
 
   const closePopupComment = () => {
     setPopupCommentVisible(false);
     setCurrentImage(null);
+    setCurrentPostId(null);
   };
 
   return {
     setPopupCommentSelectedText: setSelectedText,
-    comments,
-    setComments, // Ensure this is returned
+    comments: comments[currentPostId] || [], // Get comments for the current post ID
+    setComments,
     submitting,
     popupCommentVisible,
     selectedText,
     setSelectedText,
-    selectedImages,
     openPopupComment,
     closePopupComment,
     submitComment,
