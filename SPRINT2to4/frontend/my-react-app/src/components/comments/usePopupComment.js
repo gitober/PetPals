@@ -110,6 +110,7 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
   return {
     setPopupCommentSelectedText: setSelectedText,
     comments,
+    setComments, // Ensure this is returned
     submitting,
     popupCommentVisible,
     selectedText,

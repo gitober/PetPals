@@ -62,6 +62,7 @@ function Home() {
 
   const {
     comments,
+    setComments,
     submitting: popupCommentSubmitting,
     setSelectedText: setPopupCommentSelectedText,
     submitComment,
@@ -73,7 +74,7 @@ function Home() {
   } = usePopupComment({
     postId,
     accessToken,
-    selectedImages: postSelectedImages,
+    commentsUrl: `http://localhost:5000/api/posts/${postId}/comments`, // Assuming you need a comments URL here
     setFeedItems,
   });
 
@@ -175,6 +176,7 @@ function Home() {
         closePopupComment={closePopupComment}
         currentImage={currentImage}
         comments={comments}
+        setComments={setComments} // Ensure this is passed
         commentSelectedText={commentSelectedText}
         setCommentSelectedText={setCommentSelectedText}
         submitComment={submitComment}
