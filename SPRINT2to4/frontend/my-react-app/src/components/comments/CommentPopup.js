@@ -5,11 +5,22 @@ const CommentPopup = ({
   closePopupComment,
   currentImage,
   comments,
+  setComments,
   commentSelectedText,
   setCommentSelectedText,
   popupCommentSubmitting,
   submitComment
 }) => {
+  const handleSubmit = () => {
+    const newComment = {
+      username: 'Anonymous', // Default username, or you can handle this differently
+      date: new Date().toISOString(), // Current date and time
+      content: commentSelectedText
+    };
+    setComments([...comments, newComment]); // Append new comment to existing comments
+    setCommentSelectedText(''); // Clear the input field
+  };
+
   return (
     <div className="comment-popup" style={{ display: popupCommentVisible ? "block" : "none" }}>
       <div>
@@ -40,7 +51,7 @@ const CommentPopup = ({
         />
       </div>
       <div className="submit-comment">
-        <button onClick={submitComment} disabled={popupCommentSubmitting}>
+        <button onClick={handleSubmit} disabled={popupCommentSubmitting}>
           {popupCommentSubmitting ? "Submitting..." : "Submit"}
         </button>
       </div>
