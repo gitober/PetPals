@@ -31,6 +31,7 @@ function Home() {
   const [commentSubmitting, setCommentSubmitting] = useState(false);
   const [accessToken, setAccessToken] = useState(null);
   const [postId, setPostId] = useState('');
+  const [selectedComments, setSelectedComments] = useState([]);
 
   const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {}, navigate);
 
@@ -73,8 +74,7 @@ function Home() {
     currentImage,
   } = usePopupComment({
     postId,
-    accessToken,
-    commentsUrl: `http://localhost:5000/api/posts/${postId}/comments`, // Assuming you need a comments URL here
+    commentsUrl: `http://localhost:5000/api/posts/${postId}/comments`,
     setFeedItems,
   });
 
@@ -97,7 +97,11 @@ function Home() {
           const data = await response.json();
 
           if (response.ok) {
-            setFeedItems(data);
+            const postsWithComments = data.map(post => ({
+              ...post,
+              comments: []
+            }));
+            setFeedItems(postsWithComments);
           } else {
             console.error('Failed to fetch posts:', response.status, response.statusText);
           }
@@ -123,6 +127,12 @@ function Home() {
     setLikedImages(likedImagesData);
   }, [likedImagesData]);
 
+  const handleCommentIconClick = (image, id, comments) => {
+    setPostId(id);
+    setSelectedComments(comments);
+    openPopupComment(image);
+  };
+
   return (
     <div>
       <div className="home-page-container">
@@ -137,7 +147,7 @@ function Home() {
             {feedItems.map((item, index) => (
               <div key={index} className="feed-item">
                 <a href="../userprofile">
-                  <h3>username</h3>
+                  <h3>{item.username}</h3>
                 </a>
                 <img src={item.images[0]} alt={`User's Post ${index}`} />
                 <div className="icons">
@@ -152,7 +162,7 @@ function Home() {
                     src="../img/comment.png"
                     alt="Image"
                     className="icon"
-                    onClick={() => openPopupComment(item.images[0])}
+                    onClick={() => handleCommentIconClick(item.images[0], item.id, item.comments)}
                   />
                 </div>
                 <p>{item.content}</p>
@@ -175,8 +185,13 @@ function Home() {
         popupCommentVisible={popupCommentVisible}
         closePopupComment={closePopupComment}
         currentImage={currentImage}
-        comments={comments}
-        setComments={setComments} // Ensure this is passed
+        comments={selectedComments}
+        setComments={(newComments) => {
+          setSelectedComments(newComments);
+          setFeedItems(feedItems.map(item => 
+            item.id === postId ? { ...item, comments: newComments } : item
+          ));
+        }}
         commentSelectedText={commentSelectedText}
         setCommentSelectedText={setCommentSelectedText}
         submitComment={submitComment}

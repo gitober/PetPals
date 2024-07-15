@@ -13,12 +13,12 @@ const CommentPopup = ({
 }) => {
   const handleSubmit = () => {
     const newComment = {
-      username: 'Anonymous', // Default username, or you can handle this differently
-      date: new Date().toISOString(), // Current date and time
+      username: 'Anonymous',
+      date: new Date().toISOString(),
       content: commentSelectedText
     };
-    setComments([...comments, newComment]); // Append new comment to existing comments
-    setCommentSelectedText(''); // Clear the input field
+    setComments([...comments, newComment]);
+    setCommentSelectedText('');
   };
 
   return (

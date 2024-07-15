@@ -6,7 +6,6 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
   const [submitting, setSubmitting] = useState(false);
   const [popupCommentVisible, setPopupCommentVisible] = useState(false);
   const [selectedText, setSelectedText] = useState('');
-  const [selectedImages, setSelectedImages] = useState([]);
   const [currentImage, setCurrentImage] = useState(null);
   const { simulateTestMode } = useTestModeInstance();
 
@@ -37,7 +36,6 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
     try {
       setSubmitting(true);
       const formData = new FormData();
-      formData.append('image', selectedImages[0]);
       formData.append('content', selectedText);
 
       if (!simulateTestMode) {
@@ -55,7 +53,6 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
         const newComment = {
           id: Math.random().toString(),
           content: selectedText,
-          image: selectedImages[0],
           username: responseData.username, // Assuming the API response contains username
           date: new Date().toISOString(), // Assuming the current date/time as comment time
         };
@@ -71,7 +68,6 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
         const simulatedComment = {
           id: Math.random().toString(),
           content: selectedText,
-          image: selectedImages[0], // assuming comments in test mode might also include images
           username: 'TestUser', // Simulated username
           date: new Date().toISOString(), // Simulated current date/time
         };
@@ -96,7 +92,6 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
   };
 
   const openPopupComment = (imageUrl) => {
-    setSelectedImages([imageUrl]);
     setCurrentImage(imageUrl);
     setSelectedText('');
     setPopupCommentVisible(true);
@@ -110,12 +105,11 @@ const usePopupComment = ({ commentsUrl, postId, setFeedItems }) => {
   return {
     setPopupCommentSelectedText: setSelectedText,
     comments,
-    setComments, // Ensure this is returned
+    setComments,
     submitting,
     popupCommentVisible,
     selectedText,
     setSelectedText,
-    selectedImages,
     openPopupComment,
     closePopupComment,
     submitComment,
