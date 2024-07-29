@@ -98,9 +98,11 @@ function Home() {
 
   const handleCommentIconClick = (image, id, comments) => {
     setPostId(id);
-    setSelectedComments(comments);
-    openPopupComment(image);
+    setSelectedComments(comments || []); // Ensure comments is an array
+    openPopupComment(image || ''); // Provide a fallback image or handle null appropriately
   };
+  
+  
 
   return (
     <div>
@@ -113,30 +115,35 @@ function Home() {
             handleKeyPress={handleKeyPress}
           />
           <div className="home-feed">
-            {feedItems.map((item, index) => (
-              <div key={index} className="feed-item">
-                <a href="../userprofile">
-                  <h3>{item.username}</h3>
-                </a>
-                <img src={item.images[0]} alt={`User's Post ${index}`} />
-                <div className="icons">
-                  <LikeSection
-                    liked={likedPosts[item.id]}
-                    toggleLike={toggleLike}
-                    likeCount={likeCounts[item.id]}
-                    postId={item.id}
-                  />
-                  <img
-                    src="../img/comment.png"
-                    alt="Image"
-                    className="icon"
-                    onClick={() => handleCommentIconClick(item.images[0], item.id, item.comments)}
-                  />
-                </div>
-                <p>{item.content}</p>
-              </div>
-            ))}
-          </div>
+  {feedItems
+    .filter(item => item.images && item.images.length > 0) // Filter out posts without images
+    .map((item, index) => (
+      <div key={index} className="feed-item">
+        <a href="../userprofile">
+          <h3>{item.username}</h3>
+        </a>
+        <img src={item.images[0]} alt={`User's Post ${index}`} />
+        <div className="icons">
+          <LikeSection
+            liked={likedPosts[item.id]}
+            toggleLike={toggleLike}
+            likeCount={likeCounts[item.id]}
+            postId={item.id}
+          />
+          <img
+            src="../img/comment.png"
+            alt="Comment"
+            className="icon"
+            onClick={() => handleCommentIconClick(item.images[0], item.id, item.comments)}
+          />
+        </div>
+        <p>{item.content}</p>
+      </div>
+    ))}
+</div>
+
+
+
         </div>
       </div>
       <PostPopup

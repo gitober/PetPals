@@ -4,7 +4,7 @@ const CommentPopup = ({
   popupCommentVisible,
   closePopupComment,
   currentImage,
-  comments,
+  comments = [], // Ensure comments is an array by default
   setComments,
   commentSelectedText,
   setCommentSelectedText,
