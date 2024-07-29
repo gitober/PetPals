@@ -8,8 +8,8 @@ import CommentPopup from '../components/comments/CommentPopup';
 import useLikes from '../components/likes/useLikes';
 import LikeSection from '../components/likes/LikeSection';
 import Sidebar from '../components/sidebar/Sidebar';
-import SearchBar from '../components/searchbar/SearchBar'; // Import the new SearchBar component
-import usePostFetch from '../components/posts/usePostFetch';
+import SearchBar from '../components/searchbar/SearchBar';
+import usePostFetch from '../components/homefeed/usePostFetch';
 import { useTestModeInstance } from '../components/testmode/useTestMode';
 
 import '../style/home.css';
@@ -25,7 +25,7 @@ function Home() {
   const { isTestMode, simulateTestMode } = useTestModeInstance();
   const [feedItems, setFeedItems] = useState([]);
   const [likeCounts, setLikeCounts] = useState({});
-  const [likedImages, setLikedImages] = useState([]);
+  const [likedPosts, setLikedPosts] = useState({});
   const [selectedText, setSelectedText] = useState('');
   const [commentSelectedText, setCommentSelectedText] = useState('');
   const [commentSubmitting, setCommentSubmitting] = useState(false);
@@ -45,7 +45,7 @@ function Home() {
     }
   }, []);
 
-  const posts = usePostFetch(accessToken);
+  usePostFetch(setFeedItems);
 
   const {
     popupPostVisible,
@@ -78,43 +78,12 @@ function Home() {
     setFeedItems,
   });
 
-  const { likeCounts: likesData, likedImages: likedImagesData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
+  const { likeCounts: likesData, likedPosts: likedPostsData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
 
   const handleInputChange = (e) => {
     setSelectedText(e.target.value);
     console.log('selectedText updated:', e.target.value);
   };
-
-  useEffect(() => {
-    const fetchHomeFeedPosts = async () => {
-      try {
-        if (!isTestMode) {
-          const response = await fetch('http://localhost:5000/api/posts', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-          const data = await response.json();
-
-          if (response.ok) {
-            const postsWithComments = data.map(post => ({
-              ...post,
-              comments: []
-            }));
-            setFeedItems(postsWithComments);
-          } else {
-            console.error('Failed to fetch posts:', response.status, response.statusText);
-          }
-        } else {
-          console.log('Test mode: Simulating fetchHomeFeedPosts');
-        }
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
-
-    fetchHomeFeedPosts();
-  }, [accessToken, isTestMode]);
 
   useEffect(() => {
     if (likesTestModeVisible) {
@@ -124,8 +93,8 @@ function Home() {
   }, [likesTestModeVisible, likesData]);
 
   useEffect(() => {
-    setLikedImages(likedImagesData);
-  }, [likedImagesData]);
+    setLikedPosts(likedPostsData);
+  }, [likedPostsData]);
 
   const handleCommentIconClick = (image, id, comments) => {
     setPostId(id);
@@ -152,11 +121,10 @@ function Home() {
                 <img src={item.images[0]} alt={`User's Post ${index}`} />
                 <div className="icons">
                   <LikeSection
-                    liked={likedImages[item.images[0]]}
+                    liked={likedPosts[item.id]}
                     toggleLike={toggleLike}
-                    imageUrl={item.images[0]}
-                    likeCount={likeCounts[item.images[0]]}
-                    postId={item.postId}
+                    likeCount={likeCounts[item.id]}
+                    postId={item.id}
                   />
                   <img
                     src="../img/comment.png"

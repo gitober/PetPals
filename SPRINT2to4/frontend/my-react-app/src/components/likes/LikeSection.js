@@ -1,12 +1,12 @@
 import React from 'react';
 
-const LikeSection = ({ liked, toggleLike, imageUrl, likeCount, postId }) => (
+const LikeSection = ({ liked, toggleLike, likeCount, postId }) => (
   <div className="like-container">
     <img
       src={liked ? "../img/liked.png" : "../img/like.png"}
       alt={liked ? "Image Liked" : "Image Not Liked"}
       className="like-icon"
-      onClick={() => toggleLike(imageUrl, postId)}
+      onClick={() => toggleLike(postId)}
     />
     <div className="likes-container">
       <p className="likes">

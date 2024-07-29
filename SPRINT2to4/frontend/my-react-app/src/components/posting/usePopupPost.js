@@ -47,71 +47,72 @@ const usePopupPost = (accessToken, setFeedItems, fetchInitialPosts) => {
     console.log('Access Token:', accessToken);
     console.log('Selected Images:', selectedImages);
     console.log('Submit button clicked');
-
+  
     if (selectedImages.length === 0) {
       console.error('No image selected for submission.');
       return;
     }
-
+  
     try {
       setSubmitting(true);
-
+  
       const formData = new FormData();
       selectedImages.forEach((imageDataUrl, index) => {
         formData.append(`images[${index}]`, imageDataUrl);
       });
       formData.append('content', postText); // Use postText
-
+  
       if (isTestMode) {
         console.log('Test mode: Simulating successful post submission');
-        console.log('Test mode: Closing post popup');
-
+  
         const newPost = {
           id: Math.random().toString(),
           images: selectedImages,
-          content: postText, // Use postText
+          content: postText,
           comments: [],
         };
-
-        setSelectedImages([]);
-        console.log('New Post Data:', newPost);
-
-        setFeedItems((prevFeedItems) => [newPost, ...prevFeedItems]);
-
+  
+        // Retrieve current posts from localStorage, add the new post to the start, and save it back to localStorage
+        const currentPosts = JSON.parse(localStorage.getItem('testPosts')) || [];
+        currentPosts.unshift(newPost); // Use unshift instead of push to add to the start
+        localStorage.setItem('testPosts', JSON.stringify(currentPosts));
+  
+        // Update the state with the new list of posts
+        setFeedItems(currentPosts);
+  
+        console.log('Test mode: Closing post popup');
         closePopupPost();
       } else {
-        try {
-          // Make an actual API call for creating a post
-          const response = await fetch(`http://localhost/5000/api/posts`, {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-            body: formData,
-          });
-
-          if (response.ok) {
-            const responseData = await response.json();
-
-            // Log the entire response for debugging
-            console.log('Response:', responseData);
-
-            // Fetch initial posts after successful submission
-            fetchInitialPosts(accessToken);
-
-            // Close the post popup after successful submission
-            closePopupPost();
-          } else {
-            console.error('Failed to submit post:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error during post submission:', error);
+        // Make an actual API call for creating a post
+        const response = await fetch(`http://localhost:5000/api/posts`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        });
+  
+        if (response.ok) {
+          const responseData = await response.json();
+  
+          // Log the entire response for debugging
+          console.log('Response:', responseData);
+  
+          // Fetch initial posts after successful submission
+          fetchInitialPosts();
+  
+          // Close the post popup after successful submission
+          closePopupPost();
+        } else {
+          console.error('Failed to submit post:', response.statusText);
         }
       }
     } finally {
       setSubmitting(false);
     }
   };
+  
+  
 
   const handleFileChange = (event) => {
     const files = event.target.files;
