@@ -32,6 +32,7 @@ function Home() {
   const [accessToken, setAccessToken] = useState(null);
   const [postId, setPostId] = useState('');
   const [selectedComments, setSelectedComments] = useState([]);
+  const [postText, setPostText] = useState('');
 
   const [searchTerm, setSearchTerm, handleKeyPress] = useSearch('', (term) => {}, navigate);
 
@@ -81,8 +82,8 @@ function Home() {
   const { likeCounts: likesData, likedPosts: likedPostsData, toggleLike, testModeVisible: likesTestModeVisible } = useLikes();
 
   const handleInputChange = (e) => {
-    setSelectedText(e.target.value);
-    console.log('selectedText updated:', e.target.value);
+    setPostText(e.target.value); // Update postText, not selectedText
+    console.log('postText updated:', e.target.value);
   };
 
   useEffect(() => {
@@ -114,7 +115,8 @@ function Home() {
             setSearchTerm={setSearchTerm}
             handleKeyPress={handleKeyPress}
           />
-          <div className="home-feed">
+
+<div className="home-feed">
   {feedItems
     .filter(item => item.images && item.images.length > 0) // Filter out posts without images
     .map((item, index) => (
@@ -123,6 +125,7 @@ function Home() {
           <h3>{item.username}</h3>
         </a>
         <img src={item.images[0]} alt={`User's Post ${index}`} />
+        <p className="post-content">{item.content}</p> {/* Text content here */}
         <div className="icons">
           <LikeSection
             liked={likedPosts[item.id]}
@@ -137,25 +140,25 @@ function Home() {
             onClick={() => handleCommentIconClick(item.images[0], item.id, item.comments)}
           />
         </div>
-        <p>{item.content}</p>
       </div>
     ))}
 </div>
 
 
 
+
         </div>
       </div>
       <PostPopup
-        popupPostVisible={popupPostVisible}
-        closePopupPost={closePopupPost}
-        selectedText={setSelectedText}
-        handleChange={handleChange}
-        postSelectedImages={postSelectedImages}
-        handleFileChange={handleFileChange}
-        handleSubmit={handleSubmit}
-        postSubmitting={postSubmitting}
-      />
+  popupPostVisible={popupPostVisible}
+  closePopupPost={closePopupPost}
+  postText={postText}
+  handleChange={handleInputChange} // Pass the correct handler
+  postSelectedImages={postSelectedImages}
+  handleFileChange={handleFileChange}
+  handleSubmit={handleSubmit}
+  postSubmitting={postSubmitting}
+/>
       <CommentPopup
         popupCommentVisible={popupCommentVisible}
         closePopupComment={closePopupComment}

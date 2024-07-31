@@ -89,3 +89,7 @@
   font-weight: bold;
   text-align: center;
 }
+
+.post-image {
+  width: 50%; 
+}

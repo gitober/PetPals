@@ -31,6 +31,7 @@
   margin-bottom: 20px;
   border: 5px solid #d6baff;
   border-radius: 5px;
+  padding: 10px; /* Optional padding inside the post container */
 }
 
 .feed-item img {
@@ -39,7 +40,14 @@
   object-fit: contain;
   border-radius: 5px;
   margin-top: 20px;
-  
+}
+
+.post-content {
+  margin-top: 10px; /* Add space between image and text */
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  padding: 0 10px; /* Optional padding for text container */
 }
 
 .feed-item p1 {

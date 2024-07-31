@@ -3,9 +3,9 @@ import React from 'react';
 const PostPopup = ({
   popupPostVisible,
   closePopupPost,
-  postText, // Use postText instead of selectedText
+  postText = "", // Ensure a default value is provided
   handleChange,
-  postSelectedImages,
+  postSelectedImages = [], // Ensure postSelectedImages is initialized as an empty array
   handleFileChange,
   handleSubmit,
   postSubmitting,
@@ -18,12 +18,12 @@ const PostPopup = ({
       <div className="content-wrapper">
         <h2>Add a new picture</h2>
         <div className="empty-area">
-          {postSelectedImages.length === 1 && (
+          {postSelectedImages.length === 1 && ( // Only access length if postSelectedImages is defined
             <div className="postPicAndComment">
               <img src={postSelectedImages[0]} alt="Selected" className="preview-image" />
               <input
                 type="text"
-                value={postText} // Use postText
+                value={postText}
                 onChange={handleChange}
                 placeholder="Enter your text here"
               />
