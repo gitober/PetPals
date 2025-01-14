@@ -25,6 +25,7 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#documentation">Documentation</a></li>
     <li><a href="#technologies-used">Technologies Used</a></li>
+    <li><a href="#highlights-of-the-backend-and-frontend">Highlights of the Backend and Frontend/a></li>
     <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributions-and-acknowledgments">Contributions and Acknowledgments</a></li>
@@ -38,7 +39,7 @@
 
 ## About The Project
 
-**PetPals** is a full-stack web application that started as a school project and has since evolved into a personal initiative to create a vibrant social platform for pet owners. With features like profile management, post sharing, commenting, and following systems, PetPals aims to foster a community where pet enthusiasts can connect and share their pet stories.
+**PetPals** is a full-stack web application that began as a school project and has since evolved into an ongoing initiative to create a vibrant social platform for pet owners. With features like profile management, post sharing, commenting, and following systems, PetPals aims to foster a community where pet enthusiasts can connect and share their pet stories.
 
 This project represents a journey of learning, creativity, and passion for both web development and pet communities. The contributors have put great effort into making PetPals a feature-rich, user-friendly application.
 
@@ -70,6 +71,28 @@ PetPals was built with the following technologies:
 - ![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white) **MongoDB**: NoSQL database.
 - ![JWT](https://img.shields.io/badge/JWT-Authentication-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white) **JWT**: Secure token-based authentication.
 - ![Multer](https://img.shields.io/badge/Multer-File%20Uploads-FC8804?style=for-the-badge&logo=multer&logoColor=white) **Multer**: File upload middleware for images.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+### Highlights of the Backend and Frontend
+
+#### Backend Highlights:
+- **Secure Authentication**: Utilizes JSON Web Tokens (JWT) for robust and scalable user authentication.
+- **Modular Architecture**: Follows a clean separation of concerns with models, controllers, routers, and utility functions for better maintainability and scalability.
+- **Image Handling**: Incorporates Multer for seamless image uploads with validation and storage.
+- **Error Management**: Centralized error-handling middleware ensures consistent responses and debugging ease.
+- **Optimized Database Operations**: Implements Mongoose schemas with validation and indexing for performance.
+
+#### Frontend Highlights:
+- **Responsive Design**: Fully adaptable layouts for desktops, tablets, and mobile devices.
+- **Dynamic Interactions**: Real-time updates for likes, comments, and user follow/unfollow actions.
+- **User-Friendly Navigation**: Intuitive UI with clear navigation flows between pages.
+- **Global State Management**: Efficient state management for consistent app behavior using Context API or similar tools.
+- **Component-Based Architecture**: Modular React components for reusable and maintainable code.
+
+For a complete system architecture, refer to the [System Design](docs/architecture/system-design.md).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
