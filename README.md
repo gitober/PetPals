@@ -78,7 +78,7 @@ PetPals was built with the following technologies:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get started with PetPals, follow the detailed setup guide in the [Settings Overview](docs/settings-overview.md), which covers environment configuration, dependencies, and more.
+To get started with PetPals, follow the detailed setup guide in the [Settings Overview](docs/development/project-settings/settings-overview.md), which covers environment configuration, dependencies, and more.
 
 ### Quick Setup
 
@@ -108,7 +108,7 @@ PetPals allows users to:
 - Interact with others through likes and comments.
 - Follow other pet owners to stay updated on their posts.
 
-For a complete guide, refer to the [Application Walkthrough](docs/user-documentation/application-walkthrough.md).
+For a complete guide, refer to the [Application Walkthrough](docs/user-documentation/application-features.md).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
