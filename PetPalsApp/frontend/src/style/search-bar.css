@@ -1,0 +1,335 @@
+/* Search Bar */
+.search-bar {
+  position: relative;
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  z-index: 1;
+  margin: 0 auto; 
+  height: 50px; 
+  width: 100%; 
+  padding-bottom: 6px;
+}
+
+.search-bar input[type="text"] {
+  padding: clamp(10px, 2vw, 20px);
+  text-align: center;
+  width: clamp(200px, 80%, 1200px); 
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  font-size: clamp(16px, 1.5vw, 20px); 
+  background-color: white;
+}
+
+/* Search Results */
+.search-results {
+  position: absolute; 
+  top: 100%; 
+  left: 50%; 
+  transform: translateX(-50%);
+  width: clamp(200px, 80%, 1200px);
+  max-height: 250px; 
+  overflow-y: auto; 
+  z-index: 100; 
+  display: none; 
+  background-color: rgba(255, 255, 255, 0.9); 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding-left: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); 
+}
+
+/* Styled Scrollbar for Search Results */
+.search-results::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background-color: #d6baff; 
+  border-radius: 5px; 
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+  background-color: #bda9eb; 
+}
+
+.search-results::-webkit-scrollbar-track {
+  background: #f0f0f0; 
+}
+
+/* Search Results Display */
+.search-results.show {
+  display: block; 
+}
+
+/* Individual Result Item */
+.user {
+  height: 50px;
+  padding: clamp(8px, 1.5vw, 10px);
+  border-bottom: 3px solid #eee; 
+  background-color: white;
+  cursor: pointer;
+}
+
+.user:last-child {
+  border-bottom: none; 
+}
+
+.user:hover {
+  background-color: #ececec; 
+}
+
+/* Error Message */
+.error {
+  color: red;
+  text-align: center;
+  font-size: clamp(12px, 1.5vw, 14px); 
+  margin-top: clamp(5px, 1vw, 10px); 
+}
+
+/* Clickable Username */
+.clickable-username {
+  cursor: pointer;
+  color: rgb(89, 29, 149);
+}
+
+.clickable-username:hover {
+  color: rgb(51, 9, 94);
+}
+
+/* Responsive Design */
+
+/* Small Mobile Horizontal 320px */
+@media screen and (max-width: 320px) and (max-height: 240px) and (orientation: landscape) {
+  .search-bar {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .search-bar input[type="text"] {
+    text-align: center;
+    width: 80%;
+    outline: none;
+    font-size: 12px;
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-height: 100px;
+    overflow-y: auto;
+    z-index: 1;
+    display: none;
+  }
+
+  .user {
+    height: 50px;
+    padding: 5px;
+  }
+
+  .error {
+    font-size: 8px;
+    margin-top: 5px;
+    text-align: center;
+  }
+}
+
+/* Small Mobile Vertical 240x320 */
+@media screen and (max-width: 240px) and (max-height: 320px) and (orientation: portrait) {
+  .search-bar {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .search-bar input[type="text"] {
+    text-align: center;
+    width: 90%;
+    outline: none;
+    font-size: 10px;
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-height: 80px;
+    overflow-y: auto;
+    z-index: 10;
+    display: none;
+  }
+
+  .user {
+    height: 30px;
+    padding: 5px;
+  }
+
+  .user:last-child {
+    border-bottom: none;
+  }
+
+  .error {
+    font-size: 8px;
+    margin-top: 3px;
+    text-align: center;
+  }
+
+  .clickable-username {
+    font-size: 10px;
+  }
+}
+
+/* For Small Screen (720x540)*/
+@media screen and (max-width: 720px) and (min-height: 540px) and (orientation: landscape) {
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .search-bar input[type="text"] {
+    width: 100%;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .search-results {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+}
+
+/* Tablet/Laptop Portrait */
+@media screen and (max-width: 800px) and (max-height: 600px) and (orientation: landscape) {
+  .search-bar {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .search-bar input[type="text"] {
+    text-align: center;
+    width: 80%;
+    outline: none;
+    font-size: 12px;
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-height: 100px;
+    overflow-y: auto;
+    z-index: 1;
+    display: none;
+  }
+
+  .user {
+    height: 50px;
+    padding: 5px;
+  }
+
+  .error {
+    font-size: 8px;
+    margin-top: 5px;
+    text-align: center;
+  }
+}
+
+/* Tablet/Laptop Portrait */
+@media screen and (min-width: 1024px) and (orientation: portrait) {
+  .search-bar {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .search-bar input[type="text"] {
+    text-align: center;
+    width: 90%;
+    height: 40px;
+    outline: none;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1;
+    display: none;
+  }
+
+  .user {
+    height: 60px;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .error {
+    font-size: 12px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+
+/* Responsive Design for Large Screens */
+@media screen and (min-width: 1920px) and (orientation: landscape) {
+  .search-bar {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .search-bar input[type="text"] {
+    text-align: center;
+    width: 80%;
+    height: 35px;
+    outline: none;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1;
+    display: none;
+  }
+
+  .user {
+    height: 60px;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .error {
+    font-size: 12px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,914 @@
+/* Settings Page Container */
+.settings-page-container {
+  background-color: #e6f3ff;
+  display: flex;
+  overflow: hidden;
+  flex-direction: row;
+  height: 100vh;
+}
+
+/* Main Content */
+.settings-main-content {
+  flex: 1;
+  padding: clamp(20px, 3vw, 50px);
+  box-sizing: border-box;
+  margin-left: 240px;
+  overflow: hidden;
+}
+
+/* Settings Feed */
+.settings-feed {
+  width: clamp(90%, 80vw, 95%);
+  height: calc(95vh - 100px);
+  margin: clamp(30px, 4vw, 60px) auto;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.settings-feed h1 {
+  font-size: 25px;
+  text-align: center;
+  padding-top: 80px;
+  padding-bottom: 50px;
+}
+
+/* Settings Grid */
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  align-items: center;
+  justify-items: center;
+}
+
+/* Settings Item */
+.settings-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e6f3ff;
+  border-radius: 5px;
+  padding: 20px;
+  box-sizing: border-box;
+  width: clamp(250px, 80vw, 350px);
+  height: clamp(120px, 80vw, 220px);
+  text-align: center;
+}
+
+/* Profile Picture */
+.settings-profilepicture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Settings Text */
+.settings-text {
+  font-size: 22px;
+  font-weight: 500;
+  margin: auto 0;
+}
+
+/* Settings Button */
+.settings-button {
+  margin-top: auto;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(213, 233, 243);
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.settings-button:hover {
+  background-color: rgb(226, 236, 240);
+}
+
+/* Responsive Design */
+
+/* Mobile Portrait Vertical Small */
+@media screen and (min-width: 240px) and (max-height: 320px) and (orientation: portrait) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    margin-left: 0;
+    padding: clamp(10px, 2vw, 20px);
+    width: 100%;
+    max-width: clamp(300px, 90vw, 550px);
+    text-align: center;
+  }
+
+  .settings-feed {
+    width: clamp(90%, 80vw, 95%);
+    max-width: clamp(800px, 90vw, 1200px);
+    min-height: calc(100vh - 50px);
+    height: auto;
+    margin: 15px auto;
+    padding: clamp(10px, 2vw, 20px);
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .settings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 2vw, 20px);
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(200px, 80vw, 300px);
+    padding: clamp(10px, 2vw, 20px);
+    height: auto;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(80px, 20vw, 100px);
+    height: clamp(80px, 20vw, 100px);
+    margin-bottom: 10px;
+  }
+
+  .settings-feed h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+
+  .settings-text {
+    font-size: clamp(10px, 3vw, 12px);
+    margin: 10px 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 8px;
+    font-size: clamp(12px, 3vw, 14px);
+  }
+}
+
+/* Mobile Landscape Horizontal Small */
+@media screen and (min-width: 320px) and (max-height: 240px) and (orientation: landscape) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    padding: clamp(5px, 1.5vw, 10px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(250px, 85vw, 400px);
+    text-align: center;
+  }
+
+  .settings-feed {
+    width: 100%;
+    max-width: clamp(250px, 85vw, 400px);
+    margin: clamp(5px, 2vw, 10px) auto;
+    padding: clamp(5px, 2vw, 10px);
+    min-height: calc(100vh - 50px);
+    height: auto;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .settings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(5px, 1.5vw, 10px);
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(200px, 80vw, 300px);
+    padding: clamp(5px, 1.5vw, 10px);
+    height: auto;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(80px, 20vw, 100px);
+    height: clamp(80px, 20vw, 100px);
+    margin-bottom: 10px;
+  }
+
+  .settings-text {
+    font-size: clamp(12px, 3vw, 14px);
+    margin: 5px 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 8px;
+    font-size: clamp(12px, 3vw, 14px);
+  }
+
+  .settings-separator {
+    margin: clamp(5px, 1vw, 10px) 0;
+  }
+}
+
+/* Mobile Portrait Vertical - Sidebar on top */
+@media screen and (min-width: 300px) and (max-height: 1138px) and (orientation: portrait) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    margin-left: 0;
+    padding: clamp(10px, 2vw, 20px);
+    width: 100%;
+    min-width: clamp(300px, 90vw, 600px);
+    text-align: center;
+  }
+
+  .settings-feed {
+    width: clamp(90%, 80vw, 95%);
+    max-width: clamp(800px, 90vw, 1200px);
+    min-height: calc(100vh - 100px);
+    height: auto;
+    margin: 15px auto;
+    padding: clamp(15px, 2vw, 30px);
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .settings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 2vw, 40px);
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(250px, 80vw, 350px);
+    padding: clamp(10px, 2vw, 20px);
+    height: clamp(220px, 15vw, 300px);
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(100px, 25vw, 150px);
+    height: clamp(100px, 25vw, 150px);
+    margin-bottom: 10px;
+  }
+
+  .settings-feed h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+
+  .settings-text {
+    font-size: 18px;
+    margin: auto 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal (720x540) - Sidebar on left side */
+@media screen and (max-width: 720px) and (min-height: 540px) and (orientation: landscape) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    margin-left: clamp(180px, 20vw, 220px);
+    padding: clamp(10px, 2vw, 15px);
+    flex: 1;
+    max-width: 100%;
+    overflow-y: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .settings-feed {
+    width: 95%;
+    margin: clamp(10px, 1.5vw, 15px) auto;
+    padding: clamp(10px, 1.5vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 50px);
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 2vw, 15px);
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(300px, 45vw, 350px);
+    padding: clamp(10px, 2vw, 15px);
+    height: 180;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(150px, 20vw, 200px);
+    height: clamp(150px, 20vw, 200px);
+    margin-bottom: 10px;
+    object-fit: cover;
+  }
+
+  .settings-feed h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+
+  .settings-text {
+    font-size: clamp(18px, 2vw, 22px);
+    margin: auto 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 10px;
+    font-size: clamp(14px, 2vw, 16px);
+  }
+}
+
+/* Tablet Portrait Vertical - Sidebar on Top */
+@media screen and (min-width: 758px) and (orientation: portrait) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    padding: clamp(8px, 2vw, 15px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(500px, 90vw, 800px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .settings-feed {
+    width: 100%;
+    max-width: clamp(500px, 90vw, 850px);
+    margin: clamp(20px, 2vw, 30px) auto;
+    padding: clamp(10px, 2vw, 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(50vh - 280px);
+    height: auto;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(15px, 2vw, 20px);
+    width: 100%;
+    max-width: clamp(500px, 90vw, 800px);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(350px, 45vw, 400px);
+    padding: clamp(10px, 2vw, 20px);
+    height: 280px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(150px, 25vw, 200px);
+    height: clamp(150px, 25vw, 200px);
+    margin-bottom: 10px;
+    object-fit: cover;
+  }
+
+  .settings-feed h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+
+  .settings-text {
+    font-size: clamp(20px, 2.5vw, 24px);
+    margin: auto 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 10px;
+    font-size: clamp(16px, 2.5vw, 18px);
+  }
+}
+
+/* Tablet/Laptop Portrait Vertical - Sidebar on Top */
+@media screen and (min-width: 913px) and (orientation: portrait) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    padding: clamp(20px, 2vw, 40px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(1000px, 80vw, 1400px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .settings-feed {
+    width: 100%;
+    max-width: clamp(600px, 85vw, 900px); 
+    margin: clamp(20px, 2vw, 35px) auto;
+    padding: clamp(15px, 2vw, 25px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(80vh - 300px);
+    height: auto;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(25px, 2vw, 35px);
+    width: 100%;
+    max-width: clamp(600px, 85vw, 850px);
+    align-items: stretch;
+    justify-content: center;
+}
+
+.settings-item {
+    width: 100%;
+    max-width: clamp(200px, 40vw, 300px);
+    padding: clamp(10px, 2vw, 20px);
+    height: clamp(270px, 20vw, 300px);
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-profilepicture {
+    width: clamp(140px, 20vw, 180px);
+    height: clamp(140px, 20vw, 180px);
+    margin-bottom: 15px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+  .settings-feed h1 {
+    font-size: clamp(24px, 2vw, 28px);
+    text-align: center;
+    padding: clamp(25px, 1vw, 28px) 0;
+  }
+
+  .settings-text {
+    font-size: clamp(16px, 2vw, 20px); 
+    margin: auto 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: clamp(10px, 2vw, 15px);
+    font-size: clamp(16px, 2vw, 20px);
+  }
+}
+
+
+/* Mobile Landscape Horizontal - Sidebar on Top */
+@media screen and (max-width: 932px) and (max-height: 480px) and (orientation: landscape) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    padding: clamp(8px, 2vw, 15px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(700px, 150vw, 1000px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .settings-feed {
+    width: 100%;
+    max-width: clamp(800px, 90vw, 1000px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    padding: clamp(10px, 2vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 50px);
+    height: auto;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(15px, 2vw, 20px);
+    width: 100%;
+    max-width: clamp(800px, 90vw, 1000px);
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(350px, 45vw, 450px);
+    padding: clamp(10px, 2vw, 20px);
+    height: 220px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(100px, 25vw, 150px);
+    height: clamp(100px, 25vw, 150px);
+    margin-bottom: 10px;
+    object-fit: cover;
+  }
+
+  .settings-feed h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+
+  .settings-text {
+    font-size: clamp(16px, 2.5vw, 18px);
+    margin: auto 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 10px;
+    font-size: clamp(14px, 2.5vw, 16px);
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal */
+@media screen and (max-width: 932px) and (min-height: 541px) and (orientation: landscape) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .settings-main-content {
+    margin-top: clamp(20px, 5vw, 40px);
+    padding: clamp(10px, 2vw, 20px);
+    width: 100%;
+    max-width: clamp(600px, 90vw, 900px);
+    overflow-y: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 0;
+  }
+
+  .settings-feed {
+    width: 100%;
+    max-width: clamp(600px, 95vw, 900px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    padding: clamp(10px, 2vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 50px);
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(15px, 2vw, 30px);
+    width: 100%;
+    max-width: clamp(600px, 90vw, 900px);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(300px, 45vw, 400px);
+    padding: clamp(10px, 2vw, 20px);
+    height: clamp(220px, 30vw, 250px);
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(100px, 20vw, 120px);
+    height: clamp(100px, 20vw, 120px);
+    margin-bottom: 10px;
+    object-fit: cover;
+  }
+
+  .settings-feed h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+
+  .settings-text {
+    font-size: clamp(20px, 2vw, 24px);
+    margin: 10px 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 10px;
+    font-size: clamp(16px, 1.5vw, 18px);
+  }
+
+  .settings-separator {
+    margin: clamp(15px, 2vw, 25px) 0;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal - Sidebar on left side */
+@media screen and (min-width: 960px) and (max-height: 768px) and (orientation: landscape) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .settings-main-content {
+    flex: 1;
+    padding: clamp(15px, 2vw, 40px);
+    box-sizing: border-box;
+    margin-left: clamp(180px, 15vw, 300px);
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .settings-feed {
+    width: clamp(90%, 80vw, 95%);
+    min-width: clamp(600px, 90vw, 800px);
+    min-height: calc(100vh - 50px);
+    height: auto;
+    margin: clamp(15px, 2vw, 30px) auto clamp(30px, 3vw, 50px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .settings-feed h1 {
+    font-size: 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 2vw, 20px);
+    max-width: clamp(500px, 70vw, 800px);
+    margin: 0 auto;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .settings-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(15px, 2vw, 20px);
+    box-sizing: border-box;
+    width: clamp(200px, 30vw, 260px);
+    height: clamp(140px, 30vw, 200px);
+    text-align: center;
+  }
+
+  .settings-profilepicture {
+    width: clamp(80px, 10vw, 120px);
+    height: clamp(80px, 10vw, 120px);
+    object-fit: cover;
+    margin-bottom: clamp(8px, 1vw, 12px);
+  }
+
+  .settings-text {
+    font-size: clamp(16px, 1.8vw, 20px);
+    margin: auto 0;
+  }
+
+  .settings-button {
+    margin-top: auto;
+    padding: clamp(8px, 1vw, 12px) clamp(12px, 1.5vw, 18px);
+    font-size: clamp(14px, 1.5vw, 16px);
+    border: none;
+    width: 100%;
+  }
+}
+
+/* Responsive Design for Large Screens */
+@media screen and (min-width: 1920px) and (orientation: landscape) {
+  .settings-page-container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .settings-main-content {
+    flex: 1;
+    padding: clamp(20px, 3vw, 50px);
+    box-sizing: border-box;
+    margin-left: clamp(200px, 15vw, 300px);
+    overflow: hidden;
+  }
+
+  .settings-feed {
+    width: clamp(90%, 80vw, 95%);
+    height: calc(95vh - 100px);
+    margin: clamp(30px, 4vw, 60px) auto;
+    padding: clamp(15px, 4vw, 35px);
+    box-sizing: border-box;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(15px, 2vw, 20px);
+    width: 100%;
+    max-width: clamp(800px, 80vw, 1100px);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .settings-item {
+    width: 100%;
+    max-width: clamp(400px, 30vw, 500px);
+    padding: clamp(20px, 2vw, 30px);
+    height: 310px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .settings-profilepicture {
+    width: clamp(100px, 20vw, 150px);
+    height: clamp(100px, 20vw, 150px);
+    object-fit: cover;
+  }
+
+  .settings-feed h1 {
+    font-size: 32px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 50px;
+  }
+
+  .settings-text {
+    font-size: clamp(24px, 2vw, 32px);
+    margin: auto 0;
+  }
+
+  .settings-button {
+    width: 100%;
+    padding: 20px;
+    font-size: clamp(18px, 1.8vw, 24px);
+  }
+}

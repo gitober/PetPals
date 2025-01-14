@@ -1,0 +1,1022 @@
+/* Signup Popup Overlay */
+.signup-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+/* Popup Container */
+.signup-popup {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 20px;
+    z-index: 9999;
+    color: #000;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+/* Popup Content */
+.signup-popup-content {
+    position: relative;
+    text-align: center;
+    padding: 10px;
+}
+
+.signup-header {
+    font-size: 24px;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+/* Messages Styling */
+.signup-status-container {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.signup-status {
+    font-size: 16px;
+    font-weight: bold;
+    animation: fadeInFromCenter 0.5s ease;
+}
+
+.signup-message {
+    position: relative;
+    display: inline-block;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-size: 16px;
+    white-space: nowrap;
+    color: inherit;
+}
+
+.signup-error-message,
+.username-error,
+.email-error,
+.password-error {
+    color: rgb(184, 47, 47);
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    margin: 0;
+}
+
+.signup-success {
+    color: #320a6e;
+    font-weight: bold;
+}
+
+.signup-error {
+    color: red;
+    font-weight: bold;
+}
+
+.input-error {
+    border-color: red;
+}
+
+/* Fade-in Animation */
+@keyframes fadeInFromCenter {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Styling */
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup-form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signup-label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.signup-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #E6F3FF;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Password Input Styling */
+.signup-password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.signup-password-input {
+    width: 100%;
+    padding-right: 40px;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #E6F3FF;
+    font-family: 'Poppins', sans-serif;
+}
+
+.signup-toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #6C63FF;
+    background: none;
+    border: none;
+    padding: 0;
+    outline: none;
+}
+
+.signup-toggle-password:hover {
+    color: #4b49ff;
+}
+
+/* Submit Button Styling */
+.signup-submit-btn {
+    margin-top: 25px;
+    width: 50%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #D6BAFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signup-submit-btn:hover {
+    background-color: #c198ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button Styling */
+.signup-close-btn {
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    border: none;
+    background: none;
+    line-height: 1;
+    padding: 0px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.signup-close-btn:hover {
+    color: rgba(75, 73, 255, 0.1);
+}
+
+/* Responsive Design */
+
+/* Mobile Portrait Small */
+@media screen and (min-width: 240px) and (max-height: 320px) and (orientation: portrait) {
+    .signup-popup {
+        width: 90%;
+        max-width: none;
+        height: 80%;
+        padding: 20px;
+        overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: 10px;
+    }
+
+    .signup-header {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 40px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+    }
+
+    .signup-submit-btn {
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        border: none;
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        font-size: 18px;
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: 10px;
+    }
+}
+
+/* Mobile Landscape Small */
+@media screen and (min-width: 320px) and (max-height: 240px) and (orientation: landscape) {
+    .signup-popup {
+        width: 90%;
+        max-width: none;
+        height: 90%;
+        padding: 15px;
+        overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: 8px;
+    }
+
+    .signup-header {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: 8px;
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 35px;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+    }
+
+    .signup-submit-btn {
+        margin-top: 10px;
+        width: 100%;
+        padding: 10px;
+        font-size: 12px;
+        border: none;
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        font-size: 16px;
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: 10px;
+    }
+}
+
+/* Mobile Portrait */
+@media screen and (min-width: 300px) and (max-height: 1138px) and (orientation: portrait) {
+    .signup-popup {
+        max-width: 70%;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    .signup-header {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .signup-form {
+        align-items: stretch;
+    }
+
+    .signup-form-group {
+        margin-bottom: 15px;
+    }
+
+    .signup-label {
+        font-size: 14px;
+    }
+
+    .signup-input,
+    .signup-password-input {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .signup-submit-btn {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .signup-close-btn {
+        top: 1px;
+        right: 5px;
+        font-size: 13px;
+    }
+
+    .signup-message {
+        font-size: 14px;
+    }
+
+    .signup-error-message {
+        font-size: 12px;
+    }
+}
+
+/* Mobile/Tablet Landscape Horizontal (720x540) */
+@media screen and (max-width: 720px) and (min-height: 540px) and (orientation: landscape) {
+    .signup-popup {
+        width: clamp(60%, 70%, 80%);
+        height: clamp(50%, 60%, 70%);
+        padding: clamp(15px, 25px, 35px);
+        overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: clamp(15px, 20px, 30px);
+    }
+
+    .signup-header {
+        font-size: clamp(20px, 24px, 28px);
+        margin-bottom: clamp(15px, 20px, 30px);
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(10px, 15px, 20px);
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: clamp(10px, 15px, 20px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: clamp(14px, 16px, 18px);
+        font-weight: 500;
+        margin-bottom: clamp(5px, 10px, 15px);
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: clamp(10px, 15px, 20px);
+        font-size: clamp(14px, 16px, 18px);
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 40px;
+        padding: clamp(10px, 15px, 20px);
+        font-size: clamp(14px, 16px, 18px);
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: clamp(14px, 18px, 22px);
+    }
+
+    .signup-submit-btn {
+        margin-top: clamp(10px, 15px, 20px);
+        width: 100%;
+        padding: clamp(10px, 15px, 20px);
+        font-size: clamp(14px, 16px, 18px);
+        border: none;
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: clamp(16px, 20px, 24px);
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: clamp(12px, 14px, 16px);
+    }
+}
+
+/* Tablet Portrait */
+@media screen and (min-width: 758px) and (orientation: portrait) {
+    .signup-popup {
+        width: 60%;
+        max-width: none;
+        height: 50%;
+        padding: 30px;
+        overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: 20px;
+    }
+
+    .signup-header {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 40px;
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+    }
+
+    .signup-submit-btn {
+        margin-top: 20px;
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+        border: none;
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 1px;
+        right: 5px;
+        font-size: 22px;
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: 14px;
+    }
+}
+
+/* Tablet/Laptop Portrait */
+@media screen and (min-width: 912px) and (orientation: portrait) {
+    .signup-popup {
+        width: clamp(40%, 50%, 60%);
+        height: clamp(40%, 50%, 70%);
+        padding: clamp(20px, 40px, 60px);
+        overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: clamp(20px, 30px, 40px);
+    }
+
+    .signup-header {
+        font-size: clamp(20px, 28px, 36px);
+        margin-bottom: clamp(15px, 30px, 40px);
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(10px, 20px, 30px);
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: clamp(10px, 20px, 30px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: clamp(14px, 18px, 22px);
+        font-weight: 500;
+        margin-bottom: clamp(5px, 10px, 15px);
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: clamp(10px, 15px, 20px);
+        font-size: clamp(14px, 18px, 22px);
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 40px;
+        padding: clamp(10px, 15px, 20px);
+        font-size: clamp(14px, 18px, 22px);
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: clamp(16px, 20px, 24px);
+    }
+
+    .signup-submit-btn {
+        margin-top: clamp(10px, 20px, 30px);
+        width: 100%;
+        padding: clamp(10px, 15px, 20px);
+        font-size: clamp(14px, 18px, 22px);
+        border: none;
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: clamp(16px, 22px, 28px);
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: clamp(10px, 14px, 18px);
+    }
+}
+
+/* Mobile/Tablet Landscape Horizontal */
+@media screen and (max-width: 932px) and (max-height: 480px) and (orientation: landscape) {
+    .signup-popup {
+        width: 80%;
+        max-width: none;
+        height: 70%;
+        padding: 20px;
+        overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: 15px;
+    }
+
+    .signup-header {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 40px;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+    }
+
+    .signup-submit-btn {
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+        border: none;
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 1px;
+        right: 5px;
+        font-size: 20px;
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: 12px;
+    }
+}
+
+/* Mobile/Tablet Landscape Horizontal */
+@media screen and (max-width: 932px) and (min-height: 541px) and (orientation: landscape) {
+    .signup-popup {
+        width: clamp(55%, 65%, 75%);
+        height: clamp(50%, 60%, 70%);
+        padding: clamp(20px, 30px, 40px);
+        overflow-y: auto;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: clamp(20px, 25px, 35px);
+    }
+
+    .signup-header {
+        font-size: clamp(22px, 26px, 30px);
+        margin-bottom: clamp(20px, 25px, 30px);
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(15px, 20px, 25px);
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: clamp(15px, 20px, 25px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: clamp(16px, 18px, 20px);
+        font-weight: 500;
+        margin-bottom: clamp(5px, 10px, 15px);
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: clamp(15px, 20px, 25px);
+        font-size: clamp(16px, 18px, 20px);
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 40px;
+        padding: clamp(15px, 20px, 25px);
+        font-size: clamp(16px, 18px, 20px);
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: clamp(16px, 20px, 24px);
+    }
+
+    .signup-submit-btn {
+        margin-top: clamp(15px, 20px, 25px);
+        width: 100%;
+        padding: clamp(15px, 20px, 25px);
+        font-size: clamp(16px, 18px, 20px);
+        border: none;
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: clamp(18px, 22px, 26px);
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: clamp(14px, 16px, 18px);
+    }
+}
+
+/* Responsive Design for Large Screens */
+@media screen and (min-width: 1920px) and (orientation: landscape) {
+    .signup-popup {
+        width: 100%;
+        max-width: 700px;
+        height: clamp(75%, 85%, 90%);
+        padding: clamp(40px, 50px, 60px);
+        overflow: hidden;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        box-sizing: border-box;
+    }
+
+    .signup-popup-content {
+        padding: clamp(30px, 40px, 50px);
+    }
+
+    .signup-header {
+        font-size: clamp(32px, 36px, 40px);
+        margin-bottom: clamp(30px, 40px, 50px);
+    }
+
+    .signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-form-group {
+        width: 100%;
+        margin-bottom: clamp(20px, 30px, 40px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .signup-label {
+        font-size: clamp(18px, 20px, 24px);
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .signup-input {
+        width: 100%;
+        padding: clamp(15px, 20px, 25px);
+        font-size: clamp(16px, 18px, 20px);
+        box-sizing: border-box;
+    }
+
+    .signup-password-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .signup-password-input {
+        width: 100%;
+        padding-right: 50px;
+        padding: clamp(15px, 20px, 25px);
+        font-size: clamp(16px, 18px, 20px);
+    }
+
+    .signup-toggle-password {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: clamp(18px, 20px, 22px);
+    }
+
+    .signup-submit-btn {
+        margin-top: 30px;
+        width: clamp(30%, 40%, 50%);
+        padding: clamp(15px, 20px, 25px);
+        font-size: clamp(18px, 20px, 24px);
+    }
+
+    .signup-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: clamp(24px, 28px, 32px);
+    }
+
+    .signup-error-message,
+    .signup-success {
+        font-size: clamp(14px, 16px, 18px);
+    }
+}

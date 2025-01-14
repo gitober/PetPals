@@ -1,0 +1,204 @@
+/* Interaction Container for likes, comments and follow */
+.interaction-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Text alignment with icons */
+.interaction-container span {
+  font-size: clamp(14px, 1.5vw, 18px);
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Icon adjustments */
+.like-icon,
+.comment-icon {
+  width: clamp(20px, 3vw, 25px);
+  height: clamp(20px, 3vw, 25px);
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  margin: 0;
+}
+
+.likes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: clamp(14px, 1.5vw, 18px);
+  line-height: 1.2;
+}
+
+.likes span {
+  line-height: 1.2;
+}
+
+/* Likes Container for the Comment Popup in Profile and Userprofile */
+.likes-container {
+  display: flex;
+  align-items: center;
+  gap: clamp(5px, 1vw, 10px);
+  font-size: clamp(12px, 1.2vw, 16px);
+  font-weight: 600;
+  color: #000000;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+/* Follow Button in User-profile page*/
+.follow-button-container {
+  align-items: start;
+  margin-top: 5px;
+}
+
+/* Follow Button */
+.follow-button {
+  background-color: #d6baff;
+  color: black;
+  border: none;
+  padding: clamp(8px, 1.5vw, 12px) clamp(15px, 2vw, 25px);
+  border-radius: 5px;
+  font-size: clamp(12px, 1.5vw, 18px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin: 0;
+}
+
+.follow-button:hover {
+  background-color: #aa78f7;
+  color: #333;
+}
+
+.follow-button.following {
+  background-color: #e6f3ff;
+  gap: 50px;
+}
+
+.follow-button.following:hover {
+  background-color: #d6ebff;
+}
+
+/* Responsive Design - Only for Follow Button */
+
+/* Mobile Portrait Small */
+@media screen and (min-width: 240px) and (max-height: 320px) and (orientation: portrait) {
+  .follow-button {
+    padding: 5px 10px;
+    font-size: 10px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 20px;
+  }
+}
+
+/* Mobile Landscape Small */
+@media screen and (min-width: 320px) and (max-height: 240px) and (orientation: landscape) {
+  .follow-button {
+    padding: 6px 30px;
+    font-size: 11px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 25px;
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (min-width: 300px) and (orientation: portrait) {
+  .follow-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 30px;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal (720x540) */
+@media screen and (max-width: 720px) and (min-width: 540px) and (orientation: landscape) {
+  .follow-button {
+    padding: 12px 25px;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 40px;
+  }
+}
+
+/* Tablet Portrait */
+@media screen and (min-width: 754px) and (orientation: portrait) {
+  .follow-button {
+    padding: 15px 30px;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 50px;
+  }
+}
+
+/* Tablet/Laptop Portrait */
+@media screen and (min-width: 912px) and (orientation: portrait) {
+  .follow-button {
+    padding: 18px 35px;
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 50px;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal */
+@media screen and (max-width: 932px) and (max-height: 539px) and (orientation: landscape) {
+  .follow-button {
+    padding: 14px 30px;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 45px;
+  }
+}
+
+/* Mobile/Tablet Landscape */
+@media screen and (max-width: 1024px) and (min-height: 600px) and (orientation: landscape) {
+  .follow-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 50px;
+  }
+}
+
+/* Responsive Design for Large Screens */
+@media screen and (min-width: 1920px) and (orientation: landscape) {
+  .follow-button {
+    padding: 22px 42px;
+    font-size: 22px;
+    margin: 0;
+  }
+
+  .follow-button.following {
+    gap: 60px;
+  }
+}

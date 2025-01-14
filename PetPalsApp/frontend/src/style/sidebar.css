@@ -1,0 +1,754 @@
+/* Sidebar Container */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  width: clamp(240px, 15vw, 320px);
+  height: 100vh;
+  align-items: center;
+  transition: transform 0.3s ease;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+/* Sidebar Logo */
+.sidebar img {
+  width: 80%;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+  margin-top: 30px;
+  padding-top: 15px;
+}
+
+/* Sidebar Menu */
+.sidebar ul {
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  text-decoration: none;
+  color: #000000;
+  font-size: 25px;
+  margin-top: 40px;
+  cursor: default;
+}
+
+.sidebar ul li a:hover {
+  color: #d6baff;
+}
+
+.sidebar ul li a span {
+  display: flex;
+  align-items: center;
+}
+
+/* Sidebar Icons */
+.sidebar ul li a span img {
+  width: 20px;
+  height: auto;
+  margin-right: 5px;
+}
+
+/* Sidebar Separators */
+.sidebar ul li:first-child::before {
+  content: "";
+  display: block;
+  border-bottom: 1px solid #ccc;
+  margin: 0 auto 30px;
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+.sidebar ul li:last-child::after {
+  content: "";
+  display: block;
+  border-bottom: 1px solid #ccc;
+  margin: 0 auto 50px;
+  width: 100%;
+  padding-top: 50px;
+}
+
+/* Logout Button */
+.logout {
+  margin: 0;
+}
+
+.logout a {
+  color: #d6baff;
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  align-items: center;
+  cursor: default;
+}
+
+.logout a:hover {
+  color: #000000;
+}
+
+/* Responsive Design */
+
+/* Mobile Portrait Small */
+@media screen and (max-width: 240px) and (max-height: 320px) and (orientation: portrait) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    height: auto;
+    padding: clamp(5px, 2vw, 10px);
+    overflow-y: auto;
+  }
+
+  .sidebar img {
+    width: clamp(40px, 20%, 60px);
+    height: auto;
+    margin-top: clamp(10px, 1vw, 25px);
+    margin-bottom: -25px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: clamp(5px, 1vw, 10px) 0;
+    list-style: none;
+    gap: clamp(5px, 2vw, 10px);
+  }
+
+  .sidebar ul li {
+    margin: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: clamp(10px, 1vw, 12px);
+    text-align: center;
+    padding: clamp(2px, 0.5vw, 5px);
+  }
+
+  .logout {
+    margin-top: clamp(5px, 1vw, 10px);
+    margin-bottom: clamp(5px, 1vw, 10px);
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout a {
+    font-size: clamp(10px, 1vw, 12px);
+  }
+
+  .sidebar ul li:first-child::before,
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+}
+
+/* Mobile Landscape Small */
+@media screen and (max-width: 320px) and (max-height: 240px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
+    height: auto;
+    overflow: visible;
+    padding: clamp(5px, 1vw, 10px);
+  }
+
+  .sidebar img {
+    width: clamp(50px, 25%, 70px);
+    height: auto;
+    margin-top: clamp(0px, 1vw, 5px);
+    margin-bottom: clamp(-15px, -1vw, -10px);
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin: 0 auto;
+    list-style: none;
+    gap: clamp(5px, 1.5vw, 10px);
+    width: clamp(250px, 90%, 300px);
+  }
+
+  .sidebar ul li {
+    margin-bottom: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: clamp(10px, 1.2vw, 14px);
+    text-align: center;
+    padding: clamp(3px, 1vw, 5px);
+  }
+
+  .logout {
+    margin-top: clamp(5px, 1vw, 10px);
+    margin-bottom: clamp(5px, 1vw, 10px);
+  }
+
+  .logout a {
+    font-size: clamp(10px, 1.2vw, 14px);
+  }
+
+  .sidebar ul li:first-child::before,
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+}
+
+/* Mobile Portrait Vertical - Sidebar on top */
+@media screen and (min-width: 300px) and (max-height: 1138px) and (orientation: portrait) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    height: auto;
+    padding: clamp(5px, 2vw, 10px);
+    overflow-y: auto;
+  }
+
+  .sidebar img {
+    width: clamp(100px, 20%, 140px);
+    height: auto;
+    margin-top: clamp(10px, 1vw, 25px);
+    margin-bottom: -25px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: clamp(5px, 1vw, 10px) 0;
+    list-style: none;
+    gap: clamp(12px, 2vw, 16px);
+  }
+
+  .sidebar ul li {
+    margin: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: clamp(16px, 1.5vw, 20px);
+    text-align: center;
+    padding: clamp(2px, 0.5vw, 5px);
+  }
+
+  .logout {
+    margin-top: clamp(5px, 1vw, 10px);
+    margin-bottom: clamp(15px, 1vw, 18px);
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout a {
+    font-size: clamp(16px, 1vw, 18px);
+  }
+
+  .sidebar ul li:first-child::before,
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal (720x540) - Sidebar on Left Side */
+@media screen and (max-width: 720px) and (min-height: 540px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: clamp(180px, 15vw, 240px);
+    height: 100vh;
+    align-items: center;
+    transition: transform 0.3s ease;
+    text-align: center;
+    position: fixed;
+  }
+
+  .sidebar img {
+    width: 60%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: -25px;
+    margin-top: 40px;
+    padding-top: 20px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 45px;
+  }
+
+  .sidebar ul li a {
+    display: inline-block;
+    text-align: center;
+    font-size: clamp(20px, 1vw, 24px);
+    width: auto;
+
+  }
+
+  .sidebar ul li {
+    width: 100%;
+    text-align: start;
+    
+  }
+
+  .sidebar ul li a span {
+    display: inline-block;
+    vertical-align: top;
+    
+  }
+
+  .sidebar ul li a span img {
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .sidebar ul li:first-child::before {
+    content: none;
+  }
+
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+
+  .logout a {
+    font-size: clamp(15px, 2vw, 20px);
+    align-items: center;
+  }
+}
+
+/* Tablet Portrait Vertical - Sidebar on Top */
+@media screen and (min-width: 758px) and (orientation: portrait) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    height: auto;
+    padding: clamp(5px, 2vw, 10px);
+    overflow-y: auto;
+  }
+
+  .sidebar img {
+    width: clamp(120px, 20%, 160px);
+    height: auto;
+    margin-top: clamp(10px, 1vw, 25px);
+    margin-bottom: -25px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: clamp(5px, 1vw, 10px) 0;
+    list-style: none;
+    gap: clamp(20px, 2vw, 25px);
+  }
+
+  .sidebar ul li {
+    margin: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: clamp(20px, 1vw, 24px);
+    text-align: center;
+    padding: clamp(2px, 0.5vw, 5px);
+  }
+
+  .logout {
+    margin-top: clamp(10px, 1vw, 15px);
+    margin-bottom: clamp(20px, 1vw, 25px);
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout a {
+    font-size: clamp(18px, 1vw, 20px);
+  }
+
+  .sidebar ul li:first-child::before,
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+}
+
+/* Tablet/Laptop Portrait Vertical - Sidebar on Top */
+@media screen and (min-width: 913px) and (orientation: portrait) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    height: auto;
+    padding: clamp(5px, 2vw, 10px);
+    overflow-y: auto;
+  }
+
+  .sidebar img {
+    width: clamp(200px, 30%, 220px);
+    height: auto;
+    margin-top: clamp(10px, 1vw, 25px);
+    margin-bottom: -25px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: clamp(5px, 1vw, 10px) 0;
+    list-style: none;
+    gap: clamp(18px, 2vw, 22px);
+  }
+
+  .sidebar ul li {
+    margin: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: clamp(36px, 2vw, 38px);
+    text-align: center;
+    padding: clamp(2px, 0.5vw, 5px);
+  }
+
+  .logout {
+    margin-top: clamp(25px, 1vw, 30px);
+    margin-bottom: clamp(25px, 1vw, 30px);
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout a {
+    font-size: clamp(30px, 1vw, 32px);
+  }
+
+  .sidebar ul li:first-child::before,
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+}
+
+/* Mobile Landscape Horizontal - Sidebar on Top */
+@media screen and (max-width: 932px) and (max-height: 480px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    height: auto;
+    padding: clamp(5px, 2vw, 10px);
+    overflow-y: auto;
+  }
+
+  .sidebar img {
+    width: clamp(60px, 20%, 100px);
+    height: auto;
+    margin-top: clamp(10px, 1vw, 25px);
+    margin-bottom: -25px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: clamp(5px, 1vw, 10px) 0;
+    list-style: none;
+    gap: clamp(5px, 2vw, 10px);
+  }
+
+  .sidebar ul li {
+    margin: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: clamp(18px, 1vw, 20px);
+    text-align: center;
+    padding: clamp(2px, 0.5vw, 5px);
+  }
+
+  .logout {
+    margin-top: clamp(5px, 1vw, 10px);
+    margin-bottom: clamp(20px, 1vw, 12px);
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout a {
+    font-size: clamp(16px, 1vw, 20px);
+  }
+
+  .sidebar ul li:first-child::before,
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal (932x541) - Sidebar on the Top */
+@media screen and (max-width: 932px) and (min-height: 541px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    height: auto;
+    padding: clamp(5px, 2vw, 10px);
+    overflow-y: auto;
+  }
+
+  .sidebar img {
+    width: clamp(60px, 20%, 100px);
+    height: auto;
+    margin-top: clamp(10px, 1vw, 25px);
+    margin-bottom: -25px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: clamp(5px, 1vw, 10px) 0;
+    list-style: none;
+    gap: clamp(5px, 2vw, 10px);
+  }
+
+  .sidebar ul li {
+    margin: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: clamp(14px, 1vw, 18px);
+    text-align: center;
+    padding: clamp(2px, 0.5vw, 5px);
+  }
+
+  .logout {
+    margin-top: clamp(5px, 1vw, 10px);
+    margin-bottom: clamp(5px, 1vw, 10px);
+    width: 100%;
+    text-align: center;
+  }
+
+  .logout a {
+    font-size: clamp(12px, 1vw, 14px);
+  }
+
+  .sidebar ul li:first-child::before,
+  .sidebar ul li:last-child::after {
+    content: none;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal - Sidebar on left side */
+@media screen and (min-width: 960px) and (max-height: 768px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: clamp(180px, 15vw, 240px);
+    height: 100vh;
+    align-items: center;
+    transition: transform 0.3s ease;
+    text-align: center;
+    position: fixed;
+  }
+
+  .sidebar img {
+    width: 60%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: -25px;
+    margin-top: 40px;
+    padding-top: 20px;
+  }
+
+  .sidebar ul {
+    margin-bottom: -28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar ul li a {
+    display: inline-block;
+    text-align: center;
+    font-size: clamp(20px, 1vw, 24px);
+    width: auto;
+  }
+
+  .sidebar ul li {
+    width: 100%;
+    text-align: start;
+  }
+
+  .sidebar ul li a span {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .sidebar ul li a span img {
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .sidebar ul li:first-child::before {
+    content: "";
+    display: block;
+    margin: 0;
+    width: 100%;
+  }
+
+  .sidebar ul li:last-child::after {
+    content: "";
+    display: block;
+    width: 100%;
+  }
+
+  .logout a {
+    font-size: clamp(15px, 2vw, 20px);
+    align-items: center;
+  }
+}
+
+/* Responsive Design for Large Screens */
+@media screen and (min-width: 1960px) and (orientation: landscape) {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: clamp(300px, 15vw, 400px);
+    height: 100vh;
+    align-items: center;
+    transition: transform 0.3s ease;
+    padding: 40px;
+    text-align: center;
+    position: fixed;
+  }
+
+  .sidebar img {
+    width: 70%;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: -25px;
+    margin-top: 40px;
+    padding-top: 20px;
+  }
+
+  .sidebar ul {
+    padding: 0;
+    margin-bottom: -25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar ul li a {
+    display: inline-block;
+    text-align: center;
+    font-size: clamp(35px, 1vw, 45px);
+    margin-top: 50px;
+    margin-bottom: -25px;
+    text-decoration: none;
+    width: auto;
+  }
+
+  .sidebar ul li {
+    width: 100%;
+    text-align: start;
+  }
+
+  .sidebar ul li a span {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .sidebar ul li a span img {
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .sidebar ul li:first-child::before {
+    content: "";
+    display: block;
+    margin: 0 auto 40px;
+    width: 70%;
+    padding: 25px;
+  }
+
+  .sidebar ul li:last-child::after {
+    content: "";
+    display: block;
+    margin: 0 auto 60px;
+    width: 60%;
+    padding: 45px;
+  }
+
+  .logout {
+    margin-bottom: 40px;
+  }
+
+  .logout a {
+    font-size: clamp(30px, 2vw, 35px);
+    align-items: center;
+  }
+}
+

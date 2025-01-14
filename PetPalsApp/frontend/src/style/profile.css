@@ -1,0 +1,1093 @@
+/* Page Container */
+.profile-page-container {
+  background-color: #e6f3ff;
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Main Content */
+.profile-page-main-content {
+  flex: 1;
+  padding: clamp(15px, 2vw, 40px);
+  box-sizing: border-box;
+  margin-left: clamp(240px, 1vw, 300px);
+}
+
+/* Profile Info */
+.profilepage-info {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 100px;
+  margin: 40px auto;
+  margin-left: 60px;
+  max-width: 1100px;
+}
+
+/* Profile Picture */
+.profilepage-profilepicture-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+.profilepage-profilepicture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Profile Details */
+.profilepage-details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.profilepage-username {
+  font-size: 25px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profilepage-follower-following {
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #d6baff;
+}
+
+.profilepage-follower-following p:hover {
+  color: #e6d7fc;
+}
+
+.profilepage-bio {
+  margin-top: 0;
+  font-size: 23px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Feed Section */
+.profile-page-feed {
+  width: 95%;
+  max-width: 1600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+/* Feed Pictures */
+.profilepage-feed-pictures-container {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Picture Container */
+.profilepage-feed-picture-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.profilepage-feed-picture-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profilepage-feed-picture-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Separator */
+.profilepage-separator {
+  border: 0;
+  height: 1px;
+  background-color: #ccc;
+  margin: 20px 0;
+}
+
+/* Responsive Design */
+
+/* Mobile Portrait Vertical Small - Sidebar on top */
+@media screen and (min-width: 240px) and (max-height: 320px) and (orientation: portrait) {
+  .profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    padding: clamp(5px, 2vw, 10px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(250px, 90vw, 350px);
+    text-align: center;
+  }
+
+  .profilepage-info {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(5px, 2vw, 10px);
+    margin: clamp(5px, 2vw, 10px) auto;
+    width: 100%;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(80px, 20vw, 100px);
+    height: clamp(80px, 20vw, 100px);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-username {
+    font-size: clamp(14px, 4vw, 16px);
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: clamp(5px, 1.5vw, 10px);
+    font-size: clamp(12px, 3vw, 14px);
+  }
+
+  .profilepage-bio {
+    font-size: clamp(12px, 3vw, 14px);
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .profile-page-feed {
+    width: 100%;
+    max-width: clamp(250px, 90vw, 350px);
+    margin: clamp(5px, 2vw, 10px) auto;
+    padding: clamp(5px, 2vw, 10px);
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(5px, 2vw, 10px);
+    width: 100%;
+    align-items: center;
+  }
+
+  .profilepage-feed-picture-container {
+    width: 100%;
+    max-width: clamp(200px, 80vw, 300px);
+    padding-top: 100%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-separator {
+    margin: clamp(5px, 1vw, 10px) 0;
+  }
+}
+
+/* Mobile Landscape Horizontal Small - Sidebar on top */
+@media screen and (min-width: 320px) and (max-height: 240px) and (orientation: landscape) {
+  .profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    padding: clamp(5px, 1.5vw, 10px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(250px, 85vw, 400px);
+    text-align: center;
+  }
+
+  .profilepage-info {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(5px, 1.5vw, 10px);
+    margin: clamp(5px, 2vw, 10px) auto;
+    width: 100%;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(80px, 20vw, 100px);
+    height: clamp(80px, 20vw, 100px);
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-username {
+    font-size: clamp(14px, 4vw, 16px);
+    font-weight: bold;
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: clamp(5px, 1.5vw, 10px);
+    font-size: clamp(12px, 3vw, 14px);
+  }
+
+  .profilepage-bio {
+    font-size: clamp(12px, 3vw, 14px);
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .profile-page-feed {
+    width: 100%;
+    max-width: clamp(250px, 85vw, 400px);
+    margin: clamp(5px, 2vw, 10px) auto;
+    padding: clamp(5px, 2vw, 10px);
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(5px, 2vw, 10px);
+    width: 100%;
+    align-items: center;
+  }
+
+  .profilepage-feed-picture-container {
+    width: 100%;
+    max-width: clamp(200px, 80vw, 300px);
+    padding-top: 100%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-separator {
+    margin: clamp(5px, 1vw, 10px) 0;
+  }
+}
+
+/* Mobile Portrait Vertical - Sidebar on top */
+@media screen and (min-width: 300px) and (max-height: 1138px) and (orientation: portrait) {
+  .profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    margin-left: 0;
+    padding: clamp(10px, 2vw, 20px);
+    width: 100%;
+    text-align: center;
+  }
+
+  .profilepage-info {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 2vw, 20px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(140px, 30vw, 180px);
+    height: clamp(140px, 30vw, 180px);
+  }
+
+  .profile-page-feed {
+    width: 100%;
+    max-width: auto;
+    margin: clamp(10px, 2vw, 20px) auto;
+    padding: clamp(10px, 2vw, 20px);
+    border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 2vw, 20px);
+    width: 100%;
+    align-items: center;
+  }
+
+  .profilepage-feed-picture-container {
+    width: 100%;
+    max-width: auto;
+    padding-top: 100%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-separator {
+    margin: clamp(10px, 2vw, 20px) 0;
+  }
+
+  .profilepage-username {
+    font-size: 22px;
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: 15px;
+    font-size: 20px;
+  }
+
+  .profilepage-bio {
+    margin-top: 0;
+    font-size: 20px;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal (720x540) - Sidebar on left side */
+@media screen and (max-width: 720px) and (min-height: 540px) and (orientation: landscape) {
+  .profile-page-container {
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    flex: 1;
+    padding: clamp(10px, 1.5vw, 30px);
+    box-sizing: border-box;
+    margin-left: clamp(180px, 4vw, 220px);
+  }
+
+  .profilepage-info {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 25px;
+    margin: 30px auto;
+    margin-left: 30px;
+    max-width: 1000px;
+  }
+
+  .profilepage-profilepicture-container {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-details-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profilepage-username {
+    font-size: 20px;
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+  }
+
+  .profilepage-bio {
+    margin-top: 0;
+    font-size: 16px;
+  }
+
+  .profile-page-feed {
+    width: 90%;
+    max-width: 1400px;
+    margin: 30px auto;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profilepage-feed-picture-container {
+    position: relative;
+    width: 100%;
+    padding-top: 90%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .profilepage-feed-picture-container:hover img {
+    transform: scale(1.05);
+  }
+
+  .profilepage-separator {
+    border: 0;
+    height: 1px;
+    margin: 15px 0;
+  }
+}
+
+/* Tablet Portrait Vertical - Sidebar on Top */
+@media screen and (min-width: 758px) and (orientation: portrait) {
+  .profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    padding: clamp(8px, 2vw, 15px);
+    margin: 0 auto;
+    width: 100%;
+    min-width: clamp(500px, 90vw, 800px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profilepage-info {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(15px, 2vw, 25px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    max-width: clamp(500px, 90vw, 800px);
+    text-align: center;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(150px, 25vw, 200px);
+    height: clamp(150px, 25vw, 200px);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-username {
+    font-size: clamp(20px, 2.5vw, 24px);
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: clamp(10px, 2vw, 20px);
+    font-size: clamp(16px, 2.5vw, 18px);
+  }
+
+  .profilepage-bio {
+    font-size: clamp(14px, 2.5vw, 18px);
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .profile-page-feed {
+    width: 100%;
+    max-width: clamp(500px, 90vw, 800px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    padding: clamp(8px, 2vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(15px, 2vw, 20px);
+    width: 100%;
+    align-items: center;
+  }
+
+  .profilepage-feed-picture-container {
+    width: 100%;
+    max-width: clamp(350px, 45vw, 400px);
+    padding-top: 100%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-separator {
+    margin: clamp(10px, 2vw, 20px) 0;
+  }
+}
+
+/* Tablet/Laptop Portrait Vertical - Sidebar on Top */
+@media screen and (min-width: 913px) and (orientation: portrait) {
+  .profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    padding: clamp(30px, 3vw, 40px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(700px, 150vw, 1000px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profilepage-info {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(15px, 2vw, 25px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    max-width: clamp(500px, 90vw, 800px);
+    text-align: center;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(150px, 25vw, 200px);
+    height: clamp(150px, 25vw, 200px);
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-username {
+    font-size: clamp(28px, 2.5vw, 30px);
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: clamp(30px, 1.5vw, 34px);
+    font-size: clamp(16px, 2.5vw, 18px);
+  }
+
+  .profilepage-bio {
+    font-size: clamp(28px, 2.5vw, 30px);
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .profile-page-feed {
+    width: 100%;
+    max-width: clamp(800px, 90vw, 1000px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    padding: clamp(10px, 2vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    align-items: center;
+  }
+
+  .profilepage-feed-picture-container {
+    width: 100%;
+    max-width: clamp(450px, 45vw, 400px);
+    padding-top: 100%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-separator {
+    margin: clamp(10px, 2vw, 20px) 0;
+  }
+}
+
+/* Mobile Landscape Horizontal - Sidebar on Top */
+@media screen and (max-width: 932px) and (max-height: 480px) and (orientation: landscape) {
+  .profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .profile-page-main-content {
+    padding: clamp(8px, 2vw, 15px);
+    margin: 0 auto;
+    width: 100%;
+    max-width: clamp(700px, 150vw, 1000px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profilepage-info {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(15px, 2vw, 25px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    max-width: clamp(500px, 90vw, 800px);
+    text-align: center;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(150px, 25vw, 200px);
+    height: clamp(150px, 25vw, 200px);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-username {
+    font-size: clamp(20px, 2.5vw, 24px);
+    font-weight: bold;
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: clamp(10px, 2vw, 20px);
+    font-size: clamp(16px, 2.5vw, 18px);
+  }
+
+  .profilepage-bio {
+    font-size: clamp(14px, 2.5vw, 18px);
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .profile-page-feed {
+    width: 100%;
+    max-width: clamp(800px, 90vw, 1000px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    padding: clamp(10px, 2vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: clamp(15px, 2vw, 20px);
+    align-items: center;
+  }
+
+  .profilepage-feed-picture-container {
+    width: 100%;
+    max-width: clamp(450px, 45vw, 400px);
+    padding-top: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-separator {
+    margin: clamp(10px, 2vw, 20px) 0;
+  }
+}
+
+/* Mobile/Tablet Landscape Horizontal - Sidebar on the Top*/
+@media screen and (max-width: 932px) and (min-height: 541px) and (orientation: landscape) {
+  .profile-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .profile-page-main-content {
+    margin-top: clamp(20px, 5vw, 40px);
+    padding: clamp(10px, 2vw, 20px);
+    width: 100%;
+    max-width: clamp(600px, 90vw, 900px);
+    overflow-y: auto;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .profilepage-info {
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(15px, 2vw, 25px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    width: 95%;
+    max-width: clamp(600px, 90vw, 900px);
+    text-align: center;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(180px, 20vw, 250px);
+    height: clamp(180px, 20vw, 250px);
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-username {
+    font-size: clamp(20px, 2vw, 24px);
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: clamp(10px, 1.5vw, 20px);
+    font-size: clamp(16px, 1.5vw, 18px);
+  }
+
+  .profilepage-bio {
+    font-size: clamp(14px, 1.5vw, 16px);
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .profile-page-feed {
+    width: 100%;
+    max-width: clamp(600px, 95vw, 900px);
+    margin: clamp(10px, 2vw, 20px) auto;
+    padding: clamp(10px, 2vw, 15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(15px, 2vw, 30px);
+    width: 100%;
+    align-items: center;
+  }
+
+  .profilepage-feed-picture-container {
+    width: 100%;
+    max-width: clamp(400px, 85vw, 700px);
+    padding-top: 100%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-separator {
+    margin: clamp(15px, 2vw, 25px) 0;
+  }
+}
+
+
+/* Mobile/Tablet Landscape Horizontal - Sidebar on left side */
+@media screen and (min-width: 960px) and (max-height: 768px) and (orientation: landscape) {
+  .profile-page-container {
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    flex: 1;
+    padding: clamp(10px, 1.5vw, 30px);
+    box-sizing: border-box;
+    margin-left: clamp(180px, 4vw, 260px);
+  }
+
+  .profilepage-info {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 80px;
+    margin: 30px auto;
+    margin-left: 50px;
+    max-width: 1000px;
+  }
+
+  .profilepage-profilepicture-container {
+    width: 180px;
+    height: 180px;
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-details-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profilepage-username {
+    font-size: 22px;
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: 10px;
+    font-size: 18px;
+  }
+
+  .profilepage-bio {
+    margin-top: 0;
+    font-size: 20px;
+  }
+
+  .profile-page-feed {
+    width: 90%;
+    max-width: 1400px;
+    margin: 30px auto;
+  }
+
+  .profilepage-feed-pictures-container {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profilepage-feed-picture-container {
+    position: relative;
+    width: 100%;
+    padding-top: 90%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .profilepage-feed-picture-container:hover img {
+    transform: scale(1.05);
+  }
+
+  .profilepage-separator {
+    border: 0;
+    height: 1px;
+    margin: 15px 0;
+  }
+}
+
+/* Responsive Design for Large Screens */
+@media screen and (min-width: 1920px) and (orientation: landscape) {
+  .profile-page-container {
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .profile-page-main-content {
+    flex: 1;
+    padding: clamp(30px, 3vw, 50px);
+    box-sizing: border-box;
+    margin-left: clamp(300px, 15vw, 400px);
+  }
+
+  .profilepage-info {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 150px;
+    margin: clamp(50px, 3vw, 70px) auto;
+    margin-left: 100px;
+    max-width: 1600px;
+  }
+
+  .profilepage-profilepicture-container {
+    width: clamp(250px, 20vw, 350px);
+    height: clamp(250px, 20vw, 350px);
+    overflow: hidden;
+  }
+
+  .profilepage-profilepicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .profilepage-details-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profilepage-username {
+    font-size: clamp(35px, 2vw, 45px);
+  }
+
+  .profilepage-follower-following {
+    display: flex;
+    gap: 30px;
+    font-size: clamp(25px, 1.8vw, 30px);
+  }
+
+  .profilepage-bio {
+    margin-top: 0;
+    font-size: clamp(28px, 1.8vw, 35px);
+  }
+
+  .profile-page-feed {
+    width: 95%;
+    max-width: 1900px;
+    margin: clamp(30px, 3vw, 50px) auto;
+    padding: clamp(30px, 3vw, 50px);
+  }
+
+  .profilepage-feed-pictures-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profilepage-feed-picture-container {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    overflow: hidden;
+  }
+
+  .profilepage-feed-picture-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .profilepage-feed-picture-container:hover img {
+    transform: scale(1.05);
+  }
+
+  .profilepage-separator {
+    border: 0;
+    height: 1px;
+    margin: clamp(30px, 2vw, 50px) 0;
+  }
+}
