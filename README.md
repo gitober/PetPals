@@ -120,7 +120,7 @@ This project was envisioned and built by its creators, whose hard work and dedic
 We value the hard work of everyone contributing to this project. Below are the creators and top contributors who have helped shape it:
 
 <a href="https://github.com/gitober/PetPals/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=gitober/PetPals" alt="Creators and Top Contributors" />
+  <img src="https://contrib.rocks/image?repo=gitober/PetPals" />
 </a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
