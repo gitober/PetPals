@@ -25,7 +25,7 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#documentation">Documentation</a></li>
     <li><a href="#technologies-used">Technologies Used</a></li>
-    <li><a href="#highlights-of-the-backend-and-frontend">Highlights of the Backend and Frontend/a></li>
+    <li><a href="#highlights-of-the-backend-and-frontend">Highlights of the Backend and Frontend</li>
     <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributions-and-acknowledgments">Contributions and Acknowledgments</a></li>
